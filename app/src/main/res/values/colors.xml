@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="transparent">#00000000</color>
+    <color name="half_transparent">#44000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="ash_ash">#7f7e7e</color>
+    <color name="red">#EA212D</color>
+    <color name="tab_selected">#4B0A6B</color>
+    <color name="tab_deselected">#00000000</color>
+
+
+
+</resources>
