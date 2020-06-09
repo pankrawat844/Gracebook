@@ -40,6 +40,12 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout layout_notificaion;
     private SlidingMenu slidingMenu;
     private int selection = 0;
+    private LinearLayout layoutdailyverse;
+    private LinearLayout layoutmyposts;
+    private LinearLayout searchbeliever;
+    private LinearLayout layoutfeedback;
+    private LinearLayout layoutsettings;
+    private LinearLayout layoutLogout;
 
 
     @Override
@@ -52,10 +58,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public void bottomView() {
         slidingMenu = new SlidingMenu(this);
-        if (PersistentUser.isLanguage(mContext))
-            slidingMenu.setMode(SlidingMenu.LEFT);
-        else
-            slidingMenu.setMode(SlidingMenu.RIGHT);
+        slidingMenu.setMode(SlidingMenu.LEFT);
 
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         slidingMenu.setShadowDrawable(R.drawable.shadow);
@@ -65,7 +68,7 @@ public class BaseActivity extends AppCompatActivity {
         slidingMenu.setMenu(R.layout.home_side_menu);
         slidingMenu.setSlidingEnabled(true);
 
-
+        frameLayout=(FrameLayout)this.findViewById(R.id.content_frame);
         layout_home = (LinearLayout) this.findViewById(R.id.layout_home);
         layout_prayer = (LinearLayout) this.findViewById(R.id.layout_prayer);
         layout_profile = (LinearLayout) this.findViewById(R.id.layout_profile);
@@ -76,7 +79,15 @@ public class BaseActivity extends AppCompatActivity {
         layout_profile.setOnClickListener(listenerForTab);
         layout_notificaion.setOnClickListener(listenerForTab);
 
-        LinearLayout btnmenu= (LinearLayout)this.findViewById(R.id.btnmenu);
+        layoutdailyverse = (LinearLayout) this.findViewById(R.id.layoutdailyverse);
+        layoutmyposts = (LinearLayout) this.findViewById(R.id.layoutmyposts);
+        searchbeliever = (LinearLayout) this.findViewById(R.id.searchbeliever);
+        layoutfeedback = (LinearLayout) this.findViewById(R.id.layoutfeedback);
+        layoutsettings = (LinearLayout) this.findViewById(R.id.layoutsettings);
+        layoutLogout = (LinearLayout) this.findViewById(R.id.layoutLogout);
+
+
+        LinearLayout btnmenu = (LinearLayout) this.findViewById(R.id.btnmenu);
         btnmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +95,44 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
 
+        layoutdailyverse.setOnClickListener(listener);
+        layoutmyposts.setOnClickListener(listener);
+        searchbeliever.setOnClickListener(listener);
+        layoutfeedback.setOnClickListener(listener);
+        layoutsettings.setOnClickListener(listener);
+        layoutLogout.setOnClickListener(listener);
+
     }
+
+    public View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            slidingMenu.toggle();
+            switch (v.getId()) {
+                case R.id.layoutdailyverse:
+                    break;
+
+                case R.id.layoutmyposts:
+                    break;
+
+                case R.id.searchbeliever:
+                    break;
+
+                case R.id.layoutfeedback:
+                    break;
+                case R.id.layoutsettings:
+
+                    break;
+                case R.id.layoutLogout:
+                    alertfornewuser();
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+    };
 
 
     public View.OnClickListener listenerForTab = new View.OnClickListener() {
@@ -202,6 +250,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     AlertDialog alertDialog = null;
+
     public void alertfornewuser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
         LayoutInflater inflater = getLayoutInflater();
