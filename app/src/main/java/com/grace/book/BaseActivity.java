@@ -114,18 +114,29 @@ public class BaseActivity extends AppCompatActivity {
             slidingMenu.toggle();
             switch (v.getId()) {
                 case R.id.layoutdailyverse:
+                    intent = new Intent(mContext, DailyverseActivity.class);
+                    startActivity(intent);
+
                     break;
 
                 case R.id.layoutmyposts:
+                    intent = new Intent(mContext, MyPostActivity.class);
+                    startActivity(intent);
                     break;
 
                 case R.id.searchbeliever:
+                    intent = new Intent(mContext, SearchBelievertActivity.class);
+                    startActivity(intent);
                     break;
 
                 case R.id.layoutfeedback:
+                    intent = new Intent(mContext, FeedabckActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.layoutsettings:
 
+                    intent = new Intent(mContext, SettingsActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.layoutLogout:
                     alertfornewuser();

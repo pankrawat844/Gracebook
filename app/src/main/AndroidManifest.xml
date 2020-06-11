@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.grace.book">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,8 +20,9 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,32 +31,37 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
         <activity
             android:name=".VerificationActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
         <activity
             android:name=".PasswordresetActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
 
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
 
         <activity
             android:name=".PrayerActivity"
@@ -63,17 +70,52 @@
 
         <activity
             android:name=".ProfileActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
         <activity
             android:name=".ChatActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
 
         <activity
             android:name=".NotificaionActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+        <activity
+            android:name=".DailyverseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+        <activity
+            android:name=".MyPostActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+
+        <activity
+            android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+        <activity
+            android:name=".SearchBelievertActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+        <activity
+            android:name=".FeedabckActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
 
 
     </application>
