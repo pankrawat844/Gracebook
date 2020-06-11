@@ -172,7 +172,7 @@ public class BaseActivity extends AppCompatActivity {
                     break;
                 case R.id.layout_profile:
                     selectedDeselectedLayut();
-                    intent = new Intent(mContext, ProfileActivity.class);
+                    intent = new Intent(mContext, FriendsActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
