@@ -1,6 +1,7 @@
 package com.grace.book;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -31,6 +32,13 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        findViewById(R.id.layoutEditprofile).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mm = new Intent(SettingsActivity.this, EditProfileActivity.class);
+                startActivity(mm);
             }
         });
 

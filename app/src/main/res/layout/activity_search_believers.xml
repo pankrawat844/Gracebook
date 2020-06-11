@@ -20,18 +20,15 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:src="@drawable/back_btn">
 
             </ImageView>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:text="Search believer"
-                android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal"></TextView>
@@ -39,13 +36,69 @@
 
     </RelativeLayout>
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20sp"
+            android:layout_marginEnd="20dp">
+
+            <EditText
+                android:id="@+id/edittextFname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/btnsearch"
+                android:background="@color/transparent"
+                android:fontFamily="@font/font_medium"
+                android:gravity="start|center_vertical"
+                android:hint="First Name"
+                android:inputType="none"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/ash_ash"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <ImageView
+                android:id="@+id/btnsearch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/search"
+                android:tint="#910891">
+
+            </ImageView>
+        </RelativeLayout>
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="#910891"
+            android:visibility="visible">
 
-    </RelativeLayout>
+        </View>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="10sp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </LinearLayout>
