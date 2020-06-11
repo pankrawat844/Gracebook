@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.grace.book.R;
 import com.grace.book.myapplication.Myapplication;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -146,6 +148,7 @@ public class ConstantFunctions {
                 .apply(requestOptionsNormal)
                 .into(iv);
     }
+
     public static void loadImageHeaderFirst(String url, final ImageView iv) {
         Glide.with(Myapplication.getContext()).asBitmap()
                 .load(url)
@@ -153,6 +156,7 @@ public class ConstantFunctions {
                 .apply(requestOptionsForRadiousHeader2)
                 .into(iv);
     }
+
     public static void loadImageHeader(String url, final ImageView iv) {
         Glide.with(Myapplication.getContext()).asBitmap()
                 .load(url)
@@ -223,12 +227,48 @@ public class ConstantFunctions {
         return strAdd;
     }
 
-    public static void webIntntCall(String web_url){
+    public static void webIntntCall(String web_url) {
         Intent newIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(web_url));
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Myapplication.getContext().startActivity(newIntent);
 
     }
+
+    public static String[] getAddress() {
+        double latitude = Double.parseDouble(PersistentUser.getLatitude(Myapplication.getContext())); //mGpsTracker.getLatitude();
+        double longitude = Double.parseDouble(PersistentUser.getLongitude(Myapplication.getContext()));
+        Geocoder geocoder = new Geocoder(Myapplication.getInstance().getContext(), Locale.getDefault());
+        List<Address> addresses = null;
+        String[] address = new String[2];
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses.size() > 0) {
+                String city = addresses.get(0).getLocality();
+                //String state = addresses.get(0).getAdminArea();
+                //String zip = addresses.get(0).getPostalCode();
+                String country = addresses.get(0).getCountryName();
+//                if (mStateMap.containsKey(state)) {
+//                    state = mStateMap.get(state);
+//                }
+                //  Logger.debugLog("state", state);
+                address[0] = city;
+                address[1] = country;
+                Log.e("city",city);
+                Log.e("country",country);
+
+                //address[1] = state;
+                // address[2] = zip;
+
+            }
+
+
+        } catch (IOException e) {
+            Log.e("IOException",e.getMessage());
+            e.printStackTrace();
+        }
+        return address;
+    }
+
 
 }

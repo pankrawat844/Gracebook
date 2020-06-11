@@ -236,6 +236,92 @@
 
                     </View>
 
+
+                    <EditText
+                        android:id="@+id/editChurch"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="start|center_vertical"
+                        android:hint="Church"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/ash_ash"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@android:color/darker_gray"
+                        android:visibility="visible">
+
+                    </View>
+
+                    <EditText
+                        android:id="@+id/editCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="start|center_vertical"
+                        android:hint="Country"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/ash_ash"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@android:color/darker_gray"
+                        android:visibility="visible">
+
+                    </View>
+
+
+                    <EditText
+                        android:id="@+id/editCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@color/transparent"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="start|center_vertical"
+                        android:hint="City"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@color/ash_ash"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
+                        android:background="@android:color/darker_gray"
+                        android:visibility="visible">
+
+                    </View>
+
                     <EditText
                         android:id="@+id/editpassword"
                         android:layout_width="match_parent"
@@ -292,6 +378,7 @@
                         android:visibility="visible">
 
                     </View>
+
 
 
                     <TextView

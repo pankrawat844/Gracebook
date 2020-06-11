@@ -42,7 +42,23 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@drawable/tab_prayer" />
+                android:background="@drawable/prayer_icon" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_chat"
+            android:layout_width="0dp"
+            android:background="@drawable/tab_selected_deselecte"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/tab_chat" />
 
         </LinearLayout>
 

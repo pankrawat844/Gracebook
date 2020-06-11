@@ -38,6 +38,7 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout layout_prayer;
     private LinearLayout layout_profile;
     private LinearLayout layout_notificaion;
+    private LinearLayout layout_chat;
     private SlidingMenu slidingMenu;
     private int selection = 0;
     private LinearLayout layoutdailyverse;
@@ -68,16 +69,19 @@ public class BaseActivity extends AppCompatActivity {
         slidingMenu.setMenu(R.layout.home_side_menu);
         slidingMenu.setSlidingEnabled(true);
 
-        frameLayout=(FrameLayout)this.findViewById(R.id.content_frame);
+        frameLayout = (FrameLayout) this.findViewById(R.id.content_frame);
         layout_home = (LinearLayout) this.findViewById(R.id.layout_home);
         layout_prayer = (LinearLayout) this.findViewById(R.id.layout_prayer);
         layout_profile = (LinearLayout) this.findViewById(R.id.layout_profile);
+        layout_chat = (LinearLayout) this.findViewById(R.id.layout_chat);
         layout_notificaion = (LinearLayout) this.findViewById(R.id.layout_notificaion);
+
 
         layout_home.setOnClickListener(listenerForTab);
         layout_prayer.setOnClickListener(listenerForTab);
         layout_profile.setOnClickListener(listenerForTab);
         layout_notificaion.setOnClickListener(listenerForTab);
+        layout_chat.setOnClickListener(listenerForTab);
 
         layoutdailyverse = (LinearLayout) this.findViewById(R.id.layoutdailyverse);
         layoutmyposts = (LinearLayout) this.findViewById(R.id.layoutmyposts);
@@ -173,6 +177,15 @@ public class BaseActivity extends AppCompatActivity {
 
                     break;
 
+                case R.id.layout_chat:
+                    selectedDeselectedLayut();
+                    intent = new Intent(mContext, ChatActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+
+                    break;
+
 
                 default:
                     break;
@@ -192,6 +205,7 @@ public class BaseActivity extends AppCompatActivity {
         layout_prayer.setSelected(false);
         layout_profile.setSelected(false);
         layout_notificaion.setSelected(false);
+        layout_chat.setSelected(false);
 
         if (selection == 0) {
             layout_home.setSelected(true);
@@ -201,7 +215,11 @@ public class BaseActivity extends AppCompatActivity {
             layout_profile.setSelected(true);
         } else if (selection == 3) {
             layout_notificaion.setSelected(true);
+        } else if (selection == 4) {
+            layout_chat.setSelected(true);
         }
+
+
     }
 
     @Override

@@ -7,12 +7,43 @@ import android.content.SharedPreferences.Editor;
 public class PersistentUser {
 
     //common data
-    private static final String PREFS_FILE_NAME = "darahemAXAADDDD";
+    private static final String PREFS_FILE_NAME = "geoalllocation";
     private static final String USERDetails = "user_details";
     private static final String USERID = "userid";
     private static final String USERTOKEN = "user_token";
     private static final String USERPASSWORD = "userpassword";
     private static final String PROFILEIMAGEPATH = "PROFILEIMAGEPATH";
+    private static final String Latitude = "latitude";
+    private static final String Longitude = "longitude";
+
+
+
+    public static String getLongitude(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
+                Context.MODE_PRIVATE).getString(PersistentUser.Longitude, "0.0");
+    }
+
+    public static void setLongitude(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.Longitude, data);
+        editor.commit();
+    }
+
+    public static String getLatitude(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
+                Context.MODE_PRIVATE).getString(PersistentUser.Latitude, "0.0");
+    }
+
+    public static void setLatitude(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.Latitude, data);
+        editor.commit();
+    }
+
 
     public static String getImagePath(final Context ctx) {
         return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
@@ -108,6 +139,17 @@ public class PersistentUser {
         final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
                 Context.MODE_PRIVATE);
         return prefs.getBoolean("Language", true);
+    }
+
+    public static void setFacebook(Context c, boolean flag) {
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
+                Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("Facebook", flag).commit();
+    }
+    public static boolean isFacebook(Context c) {
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
+                Context.MODE_PRIVATE);
+        return prefs.getBoolean("Facebook", false);
     }
 
     public static void resetAllData(Context c) {

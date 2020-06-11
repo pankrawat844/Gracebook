@@ -2,11 +2,17 @@ package com.grace.book;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.grace.book.utils.ConstantFunctions;
+
 public class SignupActivity extends AppCompatActivity {
+    private EditText editCity;
+    private EditText editCountry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +36,22 @@ public class SignupActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        editCountry=(EditText)this.findViewById(R.id.editCountry);
+        editCity=(EditText)this.findViewById(R.id.editCity);
 
+
+        try {
+            String[] address= ConstantFunctions.getAddress();
+            if(address.length>1){
+                editCountry.setText(address[1]);
+                editCity.setText(address[0]);
+
+            }
+        }
+        catch (Exception ex){
+            Log.e("Exception","Exception"+ex.getMessage());
+
+        }
 
     }
 }
