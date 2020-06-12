@@ -16,24 +16,23 @@ import com.grace.book.model.FeedList;
 import java.util.ArrayList;
 
 
-public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = MyPostListAdapter.class.getSimpleName();
+public class PrayRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = PrayRequestAdapter.class.getSimpleName();
     private Context mContext;
     private ArrayList<FeedList> allSearchList;
     private FilterItemCallback lFilterItemCallback;
 
-    public MyPostListAdapter(Context context, ArrayList<FeedList> myDataset) {
+    public PrayRequestAdapter(Context context, ArrayList<FeedList> myDataset) {
         mContext = context;
         this.allSearchList = new ArrayList<FeedList>();
         this.allSearchList.addAll(myDataset);
     }
 
+    public void addClickListiner(FilterItemCallback lFilterItemCallback){
+        this.lFilterItemCallback=lFilterItemCallback;
+    }
     public FeedList getModelAt(int index) {
         return allSearchList.get(index);
-    }
-
-    public void addClickListiner(FilterItemCallback lFilterItemCallback) {
-        this.lFilterItemCallback = lFilterItemCallback;
     }
 
     public int getDataSize() {
@@ -69,11 +68,10 @@ public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             FeedList mJobList = allSearchList.get(position);
             try {
 
-
                 holder.layoutchat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(1, position);
+                        lFilterItemCallback.ClickFilterItemCallback(1,position);
                     }
                 });
 
@@ -101,12 +99,14 @@ public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public ItemViewHolder(View itemView) {
             super(itemView);
             layoutchat = (LinearLayout) itemView.findViewById(R.id.layoutchat);
+
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }
 
         @Override
         public void onClick(View v) {
+
         }
 
     }

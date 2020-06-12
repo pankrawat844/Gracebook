@@ -5,42 +5,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
-import com.grace.book.model.FeedList;
+import com.grace.book.model.CommentsList;
 
 import java.util.ArrayList;
 
 
-public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = MyPostListAdapter.class.getSimpleName();
+public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = CommentsAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<FeedList> allSearchList;
+    private ArrayList<CommentsList> allSearchList;
     private FilterItemCallback lFilterItemCallback;
 
-    public MyPostListAdapter(Context context, ArrayList<FeedList> myDataset) {
+    public CommentsAdapter(Context context, ArrayList<CommentsList> myDataset) {
         mContext = context;
-        this.allSearchList = new ArrayList<FeedList>();
+        this.allSearchList = new ArrayList<CommentsList>();
         this.allSearchList.addAll(myDataset);
     }
 
-    public FeedList getModelAt(int index) {
-        return allSearchList.get(index);
+    public void addClickListiner(FilterItemCallback lFilterItemCallback){
+        this.lFilterItemCallback=lFilterItemCallback;
     }
-
-    public void addClickListiner(FilterItemCallback lFilterItemCallback) {
-        this.lFilterItemCallback = lFilterItemCallback;
+    public CommentsList getModelAt(int index) {
+        return allSearchList.get(index);
     }
 
     public int getDataSize() {
         return allSearchList.size();
     }
 
-    public void addAllList(ArrayList<FeedList> clientList) {
+    public void addAllList(ArrayList<CommentsList> clientList) {
         allSearchList.addAll(clientList);
         notifyDataSetChanged();
     }
@@ -50,14 +48,14 @@ public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyDataSetChanged();
     }
 
-    public void addnewItem(FeedList dataObj) {
+    public void addnewItem(CommentsList dataObj) {
         allSearchList.add(dataObj);
         notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_feed, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_comments, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -66,16 +64,10 @@ public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            FeedList mJobList = allSearchList.get(position);
+            CommentsList mJobList = allSearchList.get(position);
             try {
 
-
-                holder.layoutchat.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(1, position);
-                    }
-                });
+                // ConstantFunctions.loadImage(mJobList, holder.imageCon);
 
 
             } catch (Exception ex) {
@@ -96,17 +88,17 @@ public class MyPostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private LinearLayout layoutchat;
+        private ImageView imageCon;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutchat = (LinearLayout) itemView.findViewById(R.id.layoutchat);
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }
 
         @Override
         public void onClick(View v) {
+
         }
 
     }

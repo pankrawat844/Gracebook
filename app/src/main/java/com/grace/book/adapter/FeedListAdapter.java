@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.grace.book.R;
+import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.model.FeedList;
 import com.grace.book.utils.ConstantFunctions;
 
@@ -18,9 +20,9 @@ import java.util.ArrayList;
 
 public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = FeedListAdapter.class.getSimpleName();
-    private static ClickListener clickListener;
     private Context mContext;
     private ArrayList<FeedList> allSearchList;
+    private FilterItemCallback lFilterItemCallback;
 
     public FeedListAdapter(Context context, ArrayList<FeedList> myDataset) {
         mContext = context;
@@ -28,6 +30,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.allSearchList.addAll(myDataset);
     }
 
+    public void addClickListiner(FilterItemCallback lFilterItemCallback){
+        this.lFilterItemCallback=lFilterItemCallback;
+    }
     public FeedList getModelAt(int index) {
         return allSearchList.get(index);
     }
@@ -67,6 +72,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 // ConstantFunctions.loadImage(mJobList, holder.imageCon);
 
+                holder.layoutchat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(1,position);
+                    }
+                });
 
             } catch (Exception ex) {
 
@@ -86,18 +97,18 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageCon;
+        private LinearLayout layoutchat;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-//            imageCon = (ImageView) itemView.findViewById(R.id.imageCon);
+            layoutchat = (LinearLayout) itemView.findViewById(R.id.layoutchat);
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }
 
         @Override
         public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v);
+
         }
 
     }

@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".PrayerActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_feed"
+        android:layout_marginLeft="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 
 </LinearLayout>

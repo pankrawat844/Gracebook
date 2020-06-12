@@ -13,6 +13,7 @@ public class Myapplication extends Application {
     private RequestQueue requestQueue;
     private static Context mContext;
     public static  int selection =0;
+    public static String  NEW_MESSAGE_ACTION ="NEW_MESSAGE_ACTION";
 
     @Override
     public void onCreate() {
