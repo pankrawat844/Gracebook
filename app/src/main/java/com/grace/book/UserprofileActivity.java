@@ -1,6 +1,7 @@
 package com.grace.book;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.adapter.MyPostListAdapter;
+import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.FeedList;
 import com.headerfooter.songhang.library.SmartRecyclerAdapter;
@@ -66,5 +68,18 @@ public class UserprofileActivity extends AppCompatActivity {
 
     }
 
+    public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
+        @Override
+        public void ClickFilterItemCallback(int type, int position) {
+            if (position == 0) {
+                Intent mm = new Intent(UserprofileActivity.this, UserprofileActivity.class);
+                startActivity(mm);
+            } else if (position == 1) {
+                Intent mm = new Intent(UserprofileActivity.this, CommentActivity.class);
+                startActivity(mm);
+            }
+
+        }
+    };
 
 }

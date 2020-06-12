@@ -72,6 +72,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 // ConstantFunctions.loadImage(mJobList, holder.imageCon);
 
+                holder.userView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(0,position);
+                    }
+                });
                 holder.layoutchat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -98,10 +104,19 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private LinearLayout layoutchat;
+        private LinearLayout userView;
+        private LinearLayout shareView;
+        private LinearLayout likeView;
+
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            userView = (LinearLayout) itemView.findViewById(R.id.userView);
+            likeView = (LinearLayout) itemView.findViewById(R.id.likeView);
             layoutchat = (LinearLayout) itemView.findViewById(R.id.layoutchat);
+            shareView = (LinearLayout) itemView.findViewById(R.id.shareView);
+
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }

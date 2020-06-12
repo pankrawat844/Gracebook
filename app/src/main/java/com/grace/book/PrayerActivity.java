@@ -73,11 +73,17 @@ public class PrayerActivity extends BaseActivity {
 
 
     }
-    public FilterItemCallback lFilterItemCallback =new FilterItemCallback() {
+    public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
-            Intent mm = new Intent(PrayerActivity.this, CommentActivity.class);
-            startActivity(mm);
+            if (type == 0) {
+                Intent mm = new Intent(PrayerActivity.this, UserprofileActivity.class);
+                startActivity(mm);
+            } else if (type == 1) {
+                Intent mm = new Intent(PrayerActivity.this, CommentActivity.class);
+                startActivity(mm);
+            }
+
         }
     };
 }

@@ -47,10 +47,7 @@ public class HomeActivity extends BaseActivity {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
-
         SmartRecyclerAdapter smartRecyclerAdapter = new SmartRecyclerAdapter(mFeedListAdapter);
-       // smartRecyclerAdapter.setFooterView(footerView);
-
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.header_home_screen, null);
 
@@ -62,24 +59,32 @@ public class HomeActivity extends BaseActivity {
 
         smartRecyclerAdapter.setHeaderView(view);
 
-        EditText edittextHomePost=(EditText)view.findViewById(R.id.edittextHomePost);
+        EditText edittextHomePost = (EditText) view.findViewById(R.id.edittextHomePost);
         edittextHomePost.setFocusable(false);
         edittextHomePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(HomeActivity.this, PostallActivity.class);
-                mIntent.putExtra("screenType",0);
+                mIntent.putExtra("screenType", 0);
                 startActivity(mIntent);
             }
         });
+        mFeedListAdapter.addClickListiner(lFilterItemCallback);
 
 
     }
-    public FilterItemCallback lFilterItemCallback =new FilterItemCallback() {
+
+    public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
-            Intent mm = new Intent(HomeActivity.this, CommentActivity.class);
-            startActivity(mm);
+            if (type == 0) {
+                Intent mm = new Intent(HomeActivity.this, UserprofileActivity.class);
+                startActivity(mm);
+            } else if (type == 1) {
+                Intent mm = new Intent(HomeActivity.this, CommentActivity.class);
+                startActivity(mm);
+            }
+
         }
     };
 }
