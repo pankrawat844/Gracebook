@@ -36,6 +36,18 @@
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/postView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="POST"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
 
     <LinearLayout
