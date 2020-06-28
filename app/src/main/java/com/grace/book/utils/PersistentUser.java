@@ -7,7 +7,7 @@ import android.content.SharedPreferences.Editor;
 public class PersistentUser {
 
     //common data
-    private static final String PREFS_FILE_NAME = "geoalllocation";
+    private static final String PREFS_FILE_NAME = "PersistentUser";
     private static final String USERDetails = "user_details";
     private static final String USERID = "userid";
     private static final String USERTOKEN = "user_token";
@@ -15,7 +15,21 @@ public class PersistentUser {
     private static final String PROFILEIMAGEPATH = "PROFILEIMAGEPATH";
     private static final String Latitude = "latitude";
     private static final String Longitude = "longitude";
+    private static final String PUSHTOKEN = "PushToken";
 
+
+    public static String getPushToken(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
+                Context.MODE_PRIVATE).getString(PersistentUser.PUSHTOKEN, "");
+    }
+
+    public static void setPushToken(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.PUSHTOKEN, data);
+        editor.commit();
+    }
 
 
     public static String getLongitude(final Context ctx) {

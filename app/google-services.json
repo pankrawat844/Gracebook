@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "340572528307",
+    "firebase_url": "https://gracebook-8f9a1.firebaseio.com",
+    "project_id": "gracebook-8f9a1",
+    "storage_bucket": "gracebook-8f9a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340572528307:android:67a9a57c69186245441ac6",
+        "android_client_info": {
+          "package_name": "com.grace.book"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340572528307-ud8t7d194jcabl3ho86laloft0ufsr2u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHaDS4BoZW-CNPI4T9giUNdP6wVhuzq0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340572528307-ud8t7d194jcabl3ho86laloft0ufsr2u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
