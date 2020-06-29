@@ -36,6 +36,7 @@
 
 
         <TextView
+            android:id="@+id/btinSave"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -60,7 +61,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/userImage"
+                android:id="@+id/userImageEdit"
                 android:layout_width="100dp"
                 android:layout_marginTop="40sp"
                 android:layout_height="100dp"
@@ -109,6 +110,33 @@
                 android:fontFamily="@font/font_medium"
                 android:gravity="start|center_vertical"
                 android:hint="Last Name"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/ash_ash"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@android:color/darker_gray"
+                android:visibility="visible">
+
+            </View>
+            <EditText
+                android:id="@+id/edittextchurch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="40dp"
+                android:background="@color/transparent"
+                android:fontFamily="@font/font_medium"
+                android:gravity="start|center_vertical"
+                android:hint="Church"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"

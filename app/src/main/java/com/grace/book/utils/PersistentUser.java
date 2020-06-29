@@ -16,6 +16,35 @@ public class PersistentUser {
     private static final String Latitude = "latitude";
     private static final String Longitude = "longitude";
     private static final String PUSHTOKEN = "PushToken";
+    private static final String VERSE_DATA = "VERSE_DATA";
+    private static final String VERSE_DATE = "VERSE_DATE";
+
+
+    public static String getVerseDate(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
+                Context.MODE_PRIVATE).getString(PersistentUser.VERSE_DATE, "");
+    }
+
+    public static void setVerseDate(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.VERSE_DATE, data);
+        editor.commit();
+    }
+
+    public static String getVerse(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME,
+                Context.MODE_PRIVATE).getString(PersistentUser.VERSE_DATA, "");
+    }
+
+    public static void setVerse(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.VERSE_DATA, data);
+        editor.commit();
+    }
 
 
     public static String getPushToken(final Context ctx) {
@@ -143,33 +172,10 @@ public class PersistentUser {
         return prefs.getBoolean("LOGIN", false);
     }
 
-    public static void setLanguage(Context c, boolean flag) {
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("Language", flag).commit();
-    }
-
-    public static boolean isLanguage(Context c) {
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        return prefs.getBoolean("Language", true);
-    }
-
-    public static void setFacebook(Context c, boolean flag) {
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("Facebook", flag).commit();
-    }
-    public static boolean isFacebook(Context c) {
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        return prefs.getBoolean("Facebook", false);
-    }
 
     public static void resetAllData(Context c) {
         setUserID(c, "");
         logOut(c);
-
 
     }
 

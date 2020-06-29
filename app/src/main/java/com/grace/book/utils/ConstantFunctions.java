@@ -130,7 +130,7 @@ public class ConstantFunctions {
     }
 
     public static void loadImageForCircel(String url, final ImageView iv) {
-        if (url.toString().equalsIgnoreCase("")) {
+        if (url ==null || url.toString().equalsIgnoreCase("")) {
 
         } else {
             Glide.with(Myapplication.getContext()).asBitmap()

@@ -1,17 +1,20 @@
 package com.grace.book.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
-import com.grace.book.model.BelieverList;
+import com.grace.book.model.Usersdata;
+import com.grace.book.utils.ConstantFunctions;
 
 import java.util.ArrayList;
 
@@ -19,25 +22,32 @@ import java.util.ArrayList;
 public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = SearchbelieverListAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<BelieverList> allSearchList;
+    private ArrayList<Usersdata> allSearchList;
     private FilterItemCallback lFilterItemCallback;
-    public SearchbelieverListAdapter(Context context, ArrayList<BelieverList> myDataset) {
+
+    public SearchbelieverListAdapter(Context context, ArrayList<Usersdata> myDataset) {
         mContext = context;
-        this.allSearchList = new ArrayList<BelieverList>();
+        this.allSearchList = new ArrayList<Usersdata>();
         this.allSearchList.addAll(myDataset);
     }
-    public void addFilterItemCallback(FilterItemCallback _lFilterItemCallback){
-        lFilterItemCallback=_lFilterItemCallback;
+
+    public void addFilterItemCallback(FilterItemCallback _lFilterItemCallback) {
+        lFilterItemCallback = _lFilterItemCallback;
     }
-    public BelieverList getModelAt(int index) {
+
+    public Usersdata getModelAt(int index) {
         return allSearchList.get(index);
+    }
+    public void  deletePostion(int index) {
+        allSearchList.remove(index);
+         notifyDataSetChanged();
     }
 
     public int getDataSize() {
         return allSearchList.size();
     }
 
-    public void addAllList(ArrayList<BelieverList> clientList) {
+    public void addAllList(ArrayList<Usersdata> clientList) {
         allSearchList.addAll(clientList);
         notifyDataSetChanged();
     }
@@ -47,7 +57,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
-    public void addnewItem(BelieverList dataObj) {
+    public void addnewItem(Usersdata dataObj) {
         allSearchList.add(dataObj);
         notifyDataSetChanged();
     }
@@ -63,18 +73,25 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            BelieverList mJobList = allSearchList.get(position);
+            Usersdata mJobList = allSearchList.get(position);
             try {
-
-
                 holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(0,position);
+                        lFilterItemCallback.ClickFilterItemCallback(0, position);
                     }
                 });
+                holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(1, position);
+                    }
+                });
+                ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
 
             } catch (Exception ex) {
+                Log.e("Exception",ex.getMessage());
 
             }
 
@@ -92,14 +109,17 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageCon;
+        private ImageView userImage;
         private LinearLayout layoutProfile;
         private LinearLayout AddBeliever;
+        private TextView username;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutProfile=(LinearLayout)itemView.findViewById(R.id.layoutProfile);
-            AddBeliever=(LinearLayout)itemView.findViewById(R.id.AddBeliever);
+            layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
+            AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
+            userImage = (ImageView) itemView.findViewById(R.id.userImage);
+            username = (TextView) itemView.findViewById(R.id.usernameSearc);
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

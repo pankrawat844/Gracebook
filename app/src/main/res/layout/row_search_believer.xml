@@ -12,17 +12,15 @@
             android:id="@+id/userImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-
-            android:src="@drawable/profile_dmmy"></ImageView>
+            android:src="@drawable/user_icon"></ImageView>
 
 
         <TextView
-            android:id="@+id/username"
+            android:id="@+id/usernameSearc"
             android:layout_toRightOf="@+id/userImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Sandra Augustine"
             android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="18sp"

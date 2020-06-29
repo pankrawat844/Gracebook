@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
-import com.grace.book.model.BelieverList;
 import com.grace.book.model.FriendList;
 
 import java.util.ArrayList;

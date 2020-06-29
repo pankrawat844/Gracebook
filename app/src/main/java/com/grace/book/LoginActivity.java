@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                             PersistentUser.setUserID(mContext, userId);
                             PersistentUser.setUserToken(mContext, auth_token);
                             PersistentUser.setLogin(mContext);
+                            PersistentUser.setUserDetails(mContext,responseServer);
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -166,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent.putExtra("otp_code", otp_code);
                             intent.putExtra("phone", phone);
                             intent.putExtra("country_code", country_code);
+                            startActivity(intent);
                         }
 
                     } else {
@@ -252,6 +254,7 @@ public class LoginActivity extends AppCompatActivity {
                         intent.putExtra("otp_code", otp_code);
                         intent.putExtra("phone", phone);
                         intent.putExtra("country_code", country_code);
+                        startActivity(intent);
 
                     } else {
                         String message = mJsonObject.getString("message");
