@@ -190,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     AlertDialog alertDialog;
-
     public void showDialogForVideo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();

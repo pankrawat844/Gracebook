@@ -21,6 +21,8 @@ public class Usersdata implements Serializable {
     private String church="";
     @SerializedName("country")
     private String country="";
+    @SerializedName("city")
+    private String city="";
     @SerializedName("latitude")
     private String latitude="";
     @SerializedName("longitude")
@@ -35,6 +37,36 @@ public class Usersdata implements Serializable {
     private String isnotification="";
     @SerializedName("profile_pic")
     private String profile_pic="";
+
+    @SerializedName("is_friend")
+    private String is_friend="";
+
+    @SerializedName("friend_type")
+    private String friend_type="";
+
+    public String getIs_friend() {
+        return is_friend;
+    }
+
+    public void setIs_friend(String is_friend) {
+        this.is_friend = is_friend;
+    }
+
+    public String getFriend_type() {
+        return friend_type;
+    }
+
+    public void setFriend_type(String friend_type) {
+        this.friend_type = friend_type;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getId() {
         return id;

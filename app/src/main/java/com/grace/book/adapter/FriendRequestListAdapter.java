@@ -1,17 +1,21 @@
 package com.grace.book.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.model.FriendList;
+import com.grace.book.model.Usersdata;
+import com.grace.book.utils.ConstantFunctions;
 
 import java.util.ArrayList;
 
@@ -21,14 +25,17 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
     private Context mContext;
     private ArrayList<FriendList> allSearchList;
     private FilterItemCallback lFilterItemCallback;
+
     public FriendRequestListAdapter(Context context, ArrayList<FriendList> myDataset) {
         mContext = context;
         this.allSearchList = new ArrayList<FriendList>();
         this.allSearchList.addAll(myDataset);
     }
-    public void addFilterItemCallback(FilterItemCallback _lFilterItemCallback){
-        lFilterItemCallback=_lFilterItemCallback;
+
+    public void addFilterItemCallback(FilterItemCallback _lFilterItemCallback) {
+        lFilterItemCallback = _lFilterItemCallback;
     }
+
     public FriendList getModelAt(int index) {
         return allSearchList.get(index);
     }
@@ -58,29 +65,38 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
         return new ItemViewHolder(view);
     }
 
+    public void deletePostion(int index) {
+        allSearchList.remove(index);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            FriendList mJobList = allSearchList.get(position);
+            Usersdata mJobList = allSearchList.get(position).getmUsersdata();
             try {
 
 
-                holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
+                holder.layoutaccepted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                      //  lFilterItemCallback.ClickFilterItemCallback(0,position);
+                        lFilterItemCallback.ClickFilterItemCallback(1, position);
                     }
                 });
-                holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
+                holder.layoutDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //  lFilterItemCallback.ClickFilterItemCallback(0,position);
+                        lFilterItemCallback.ClickFilterItemCallback(2, position);
                     }
                 });
 
+                ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImageFriendrequet);
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+
             } catch (Exception ex) {
+                Log.e("Exception", ex.getMessage());
 
             }
 
@@ -98,14 +114,17 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageCon;
-        private LinearLayout layoutProfile;
-        private LinearLayout AddBeliever;
+        private ImageView userImageFriendrequet;
+        private LinearLayout layoutaccepted;
+        private LinearLayout layoutDelete;
+        private TextView username;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutProfile=(LinearLayout)itemView.findViewById(R.id.layoutProfile);
-            AddBeliever=(LinearLayout)itemView.findViewById(R.id.AddBeliever);
+            layoutaccepted = (LinearLayout) itemView.findViewById(R.id.layoutaccepted);
+            layoutDelete = (LinearLayout) itemView.findViewById(R.id.layoutDelete);
+            userImageFriendrequet = (ImageView) itemView.findViewById(R.id.userImageFriendrequet);
+            username = (TextView) itemView.findViewById(R.id.username);
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
@@ -113,7 +132,7 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         @Override
         public void onClick(View v) {
-            lFilterItemCallback.ClickFilterItemCallback(0,getAdapterPosition());
+            lFilterItemCallback.ClickFilterItemCallback(0, getAdapterPosition());
         }
 
     }

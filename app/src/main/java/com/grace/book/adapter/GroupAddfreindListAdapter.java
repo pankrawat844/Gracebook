@@ -13,21 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
+import com.grace.book.model.FriendList;
 import com.grace.book.model.Usersdata;
 import com.grace.book.utils.ConstantFunctions;
 
 import java.util.ArrayList;
 
 
-public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = SearchbelieverListAdapter.class.getSimpleName();
+public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = GroupAddfreindListAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<Usersdata> allSearchList;
+    private ArrayList<FriendList> allSearchList;
     private FilterItemCallback lFilterItemCallback;
 
-    public SearchbelieverListAdapter(Context context, ArrayList<Usersdata> myDataset) {
+    public GroupAddfreindListAdapter(Context context, ArrayList<FriendList> myDataset) {
         mContext = context;
-        this.allSearchList = new ArrayList<Usersdata>();
+        this.allSearchList = new ArrayList<FriendList>();
         this.allSearchList.addAll(myDataset);
     }
 
@@ -35,19 +36,20 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
         lFilterItemCallback = _lFilterItemCallback;
     }
 
-    public Usersdata getModelAt(int index) {
+    public FriendList getModelAt(int index) {
         return allSearchList.get(index);
     }
-    public void  deletePostion(int index) {
+
+    public void deletePostion(int index) {
         allSearchList.remove(index);
-         notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
     public int getDataSize() {
         return allSearchList.size();
     }
 
-    public void addAllList(ArrayList<Usersdata> clientList) {
+    public void addAllList(ArrayList<FriendList> clientList) {
         allSearchList.addAll(clientList);
         notifyDataSetChanged();
     }
@@ -57,7 +59,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
-    public void addnewItem(Usersdata dataObj) {
+    public void addnewItem(FriendList dataObj) {
         allSearchList.add(dataObj);
         notifyDataSetChanged();
     }
@@ -73,7 +75,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            Usersdata mJobList = allSearchList.get(position);
+            Usersdata mJobList = allSearchList.get(position).getmUsersdata();
             try {
                 holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -90,9 +92,10 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
 
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                holder.addText.setText("Add");
 
             } catch (Exception ex) {
-                Log.e("Exception",ex.getMessage());
+                Log.e("Exception", ex.getMessage());
 
             }
 
@@ -114,6 +117,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
         private LinearLayout layoutProfile;
         private LinearLayout AddBeliever;
         private TextView username;
+        private TextView addText;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -121,6 +125,8 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
             AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
             userImage = (ImageView) itemView.findViewById(R.id.userImage);
             username = (TextView) itemView.findViewById(R.id.usernameSearc);
+            addText = (TextView) itemView.findViewById(R.id.addText);
+
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

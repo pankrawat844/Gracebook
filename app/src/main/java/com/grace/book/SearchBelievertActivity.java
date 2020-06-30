@@ -113,10 +113,13 @@ public class SearchBelievertActivity extends AppCompatActivity {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
             Usersdata mUsersdata = mSearchbelieverListAdapter.getModelAt(position);
-
             if (type == 0) {
-                Intent mm = new Intent(SearchBelievertActivity.this, UserprofileActivity.class);
-                startActivity(mm);
+                Intent mIntent = new Intent(mContext, UserprofileActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mUsersdata);
+                mIntent.putExtra("extra", extra);
+                startActivity(mIntent);
+
             } else {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());

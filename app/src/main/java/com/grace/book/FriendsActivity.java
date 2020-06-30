@@ -1,7 +1,10 @@
 package com.grace.book;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,6 +20,7 @@ import com.grace.book.myapplication.Myapplication;
 public class FriendsActivity extends BaseActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class FriendsActivity extends BaseActivity {
         getLayoutInflater().inflate(R.layout.activity_profile, frameLayout);
         Myapplication.selection = 2;
         selectedDeselectedLayut();
+        mContext = this;
         intiUi();
 
     }
@@ -34,7 +39,7 @@ public class FriendsActivity extends BaseActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Friend Requests"));
         tabLayout.addTab(tabLayout.newTab().setText("Friends"));
 
-       // tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        // tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
         final MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(),
                 tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -51,6 +56,14 @@ public class FriendsActivity extends BaseActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        LinearLayout add_new_group = (LinearLayout) this.findViewById(R.id.add_new_group);
+        add_new_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, SearchBelievertActivity.class);
+                startActivity(intent);
             }
         });
     }

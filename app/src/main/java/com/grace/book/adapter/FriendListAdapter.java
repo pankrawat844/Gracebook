@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.model.FriendList;
+import com.grace.book.model.Usersdata;
+import com.grace.book.utils.ConstantFunctions;
 
 import java.util.ArrayList;
 
@@ -66,9 +69,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            FriendList mJobList = allSearchList.get(position);
-            try {
+            Usersdata mJobList = allSearchList.get(position).getmUsersdata();
 
+            try {
 
                 holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,10 +82,12 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        //  lFilterItemCallback.ClickFilterItemCallback(0,position);
+                        lFilterItemCallback.ClickFilterItemCallback(1,position);
+
                     }
                 });
-
+                ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
 
 
             } catch (Exception ex) {
@@ -103,14 +108,19 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageCon;
+        private ImageView userImage;
         private LinearLayout layoutProfile;
         private LinearLayout AddBeliever;
+        private TextView username;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
             AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
+            userImage = (ImageView) itemView.findViewById(R.id.userImage);
+            username = (TextView) itemView.findViewById(R.id.username);
+
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,13 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.grace.book.adapter.GroupAddfreindListAdapter;
 import com.grace.book.adapter.GroupListAdapter;
-import com.grace.book.adapter.MessageFriendListAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
+import com.grace.book.model.FriendList;
 import com.grace.book.model.GroupList;
-import com.grace.book.model.MesageUserList;
 import com.grace.book.model.Usersdata;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
@@ -33,7 +34,6 @@ import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
-import com.hbb20.CountryCodePicker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,106 +43,83 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class GroupActivity extends BaseActivity {
-    private static final String TAG = GroupActivity.class.getSimpleName();
+public class AddGroupFriendActivity extends BaseActivity {
+    private static final String TAG = AddGroupFriendActivity.class.getSimpleName();
     private final int VERTICAL_ITEM_SPACE = 20;
-    private GroupListAdapter mGroupListAdapter;
-    private  RecyclerView recycler_feed;
+    private GroupAddfreindListAdapter mGroupAddfreindListAdapter;
+    private RecyclerView recycler_feed;
     private Context mContext;
-    private LinearLayout add_new_group;
     private BusyDialog mBusyDialog;
+    private GroupList mGroupList;
+    private ImageView moreInformation;
+    private TextView textHeader;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_group, frameLayout);
-        Myapplication.selection = 5;
-        selectedDeselectedLayut();
-        mContext=this;
+        setContentView(R.layout.activity_group_post);
+        Bundle extra = getIntent().getBundleExtra("extra");
+        mGroupList = (GroupList) extra.getSerializable("objects");
+        mContext = this;
         initUi();
-
     }
 
     private void initUi() {
+        findViewById(R.id.layoutBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         recycler_feed = (RecyclerView) this.findViewById(R.id.recycler_feed);
-        mGroupListAdapter = new GroupListAdapter(mContext, new ArrayList<GroupList>());
+        mGroupAddfreindListAdapter = new GroupAddfreindListAdapter(mContext, new ArrayList<FriendList>());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
-        recycler_feed.setAdapter(mGroupListAdapter);
-        add_new_group=(LinearLayout)this.findViewById(R.id.add_new_group);
-        add_new_group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialogForVideo();
-            }
-        });
+        recycler_feed.setAdapter(mGroupAddfreindListAdapter);
+        moreInformation = (ImageView) this.findViewById(R.id.moreInformation);
+        moreInformation.setVisibility(View.GONE);
+        textHeader = (TextView) this.findViewById(R.id.textHeader);
+        textHeader.setText(mGroupList.getGroup_name());
 
-        mGroupListAdapter.addFilterItemCallback(lFilterItemCallback);
-        groupList();
+
+        mGroupAddfreindListAdapter.addFilterItemCallback(lFilterItemCallback);
+        serverRequest();
 
     }
-    public FilterItemCallback lFilterItemCallback =new FilterItemCallback() {
+
+    public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
+            Usersdata mUsersdata = mGroupAddfreindListAdapter.getModelAt(position).getmUsersdata();
+            if (type == 0) {
+                Intent mIntent = new Intent(mContext, UserprofileActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mUsersdata);
+                mIntent.putExtra("extra", extra);
+                startActivity(mIntent);
 
-            GroupList mUsersdata= mGroupListAdapter.getModelAt(position);
-            Intent mIntent = new Intent(GroupActivity.this, GroupdetailsActivity.class);
-            Bundle extra = new Bundle();
-            extra.putSerializable("objects", mUsersdata);
-            mIntent.putExtra("extra", extra);
-            startActivityForResult(mIntent,1010);
+            } else {
+                HashMap<String, String> allHashMap = new HashMap<>();
+                allHashMap.put("user_id", mUsersdata.getId());
+                allHashMap.put("group_id", mGroupList.getGroup_id());
+                addFriendserverRequest(allHashMap, position);
+            }
         }
     };
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        groupList();
-    }
-
-    AlertDialog alertDialog;
-    public void showDialogForVideo() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View mView = inflater.inflate(R.layout.dialog_group_name, null);
-        builder.setView(mView);
-        builder.setCancelable(true);
-        alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        alertDialog.show();
-        final EditText edittextphone = (EditText) mView.findViewById(R.id.edittextgeoupname);
-        final TextView Submit_btn = (TextView) mView.findViewById(R.id.Submit_btn);
-
-        Submit_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-
-                String phone = edittextphone.getText().toString();
-
-                if (phone.equalsIgnoreCase("")) {
-                    ToastHelper.showToast(mContext, "Please enter group name");
-                    return;
-                } else {
-                    HashMap<String, String> allHashMap = new HashMap<>();
-                    allHashMap.put("group_name", phone);
-                    forgorpasswordServerRequest(allHashMap);
-                }
-
-            }
-        });
-    }
-    private void forgorpasswordServerRequest(HashMap<String, String> allHashMap) {
+    private void addFriendserverRequest(HashMap<String, String> allHashMap, final int position) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        Logger.debugLog("allHashMap",allHashMap.toString());
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
         mBusyDialog = new BusyDialog(mContext);
         mBusyDialog.show();
-        final String url = AllUrls.BASEURL + "groupAdd";
+        final String url = AllUrls.BASEURL + "groupmemebradd";
         ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
@@ -151,7 +128,10 @@ public class GroupActivity extends BaseActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
-                        groupList();
+                        ToastHelper.showToast(mContext, "Add  group successfully");
+                        mGroupAddfreindListAdapter.deletePostion(position);
+                        mGroupAddfreindListAdapter.notifyDataSetChanged();
+
                     } else {
                         String message = mJsonObject.getString("message");
                         ToastHelper.showToast(mContext, message);
@@ -175,23 +155,23 @@ public class GroupActivity extends BaseActivity {
             }
         });
     }
-    private void groupList() {
+
+    private void serverRequest() {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        mGroupAddfreindListAdapter.removeAllData();
         HashMap<String, String> allHashMap = new HashMap<>();
+        allHashMap.put("group_id", mGroupList.getGroup_id());
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
-        mBusyDialog = new BusyDialog(mContext);
-        mBusyDialog.show();
-        final String url = AllUrls.BASEURL + "groupList";
+        final String url = AllUrls.BASEURL + "groupFriend";
         ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
-                mBusyDialog.dismis();
                 try {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
@@ -199,17 +179,14 @@ public class GroupActivity extends BaseActivity {
                         JSONArray jsonArray = mJsonObject.getJSONArray("data");
                         GsonBuilder builder = new GsonBuilder();
                         Gson mGson = builder.create();
-                        List<GroupList> posts = new ArrayList<GroupList>();
-                        posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), GroupList[].class));
-                        ArrayList<GroupList> allLists = new ArrayList<GroupList>(posts);
-                        mGroupListAdapter.addallList(allLists);
+                        List<FriendList> posts = new ArrayList<FriendList>();
+                        posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), FriendList[].class));
+                        ArrayList<FriendList> allLists = new ArrayList<FriendList>(posts);
+                        mGroupAddfreindListAdapter.addAllList(allLists);
 
-
-                    } else {
-                        String message = mJsonObject.getString("message");
-                        ToastHelper.showToast(mContext, message);
 
                     }
+
                 } catch (Exception e) {
 
                 }
@@ -217,7 +194,6 @@ public class GroupActivity extends BaseActivity {
 
             @Override
             public void onFailed(String statusCode, String serverResponse) {
-                mBusyDialog.dismis();
                 if (statusCode.equalsIgnoreCase("404")) {
                     PersistentUser.resetAllData(mContext);
                     Intent intent = new Intent(mContext, LoginActivity.class);
@@ -225,6 +201,7 @@ public class GroupActivity extends BaseActivity {
                     startActivity(intent);
                     finish();
                 }
+                Logger.debugLog("onFailed serverResponse", serverResponse);
             }
         });
     }

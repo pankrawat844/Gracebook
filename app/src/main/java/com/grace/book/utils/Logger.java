@@ -31,4 +31,13 @@ public class Logger {
  //       Log.w(logTag, logTag + " ->" + s);
 //        }
     }
+    public static String EmptyString(String txet) {
+        if (txet != null && !txet.isEmpty() && !txet.equals("null"))
+            return txet;
+        else
+            return "";
+
+
+    }
+
 }

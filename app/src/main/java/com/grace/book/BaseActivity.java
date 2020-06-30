@@ -73,7 +73,7 @@ public class BaseActivity extends AppCompatActivity {
         slidingMenu.setFadeDegree(0.8f);
         slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         slidingMenu.setMenu(R.layout.home_side_menu);
-        slidingMenu.setSlidingEnabled(true);
+        slidingMenu.setSlidingEnabled(false);
 
         frameLayout = (FrameLayout) this.findViewById(R.id.content_frame);
         layout_home = (LinearLayout) this.findViewById(R.id.layout_home);
@@ -325,7 +325,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     AlertDialog alertDialog = null;
-
     public void alertfornewuser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -357,14 +356,14 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Changes 'back' button action
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            alertfornewuser();
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        //Changes 'back' button action
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            alertfornewuser();
+//        }
+//        return true;
+//    }
 
     public void userDataList() {
         try {
