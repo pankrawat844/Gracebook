@@ -8,89 +8,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import static com.grace.book.utils.DateUtility.parseDate;
-
 public class GetTimeCovertAgo {
 
-    public static String getNewsFeeTimeAgo(long milisecond, Date currentDate) {
-
-        Logger.debugLog("milisecond", "are" + milisecond);
-
-        String inputString = "";
-        Date date = null;
-        long totalday = 0;
-        int millisec = 0, sec = 0, min = 0, hour = 0, day = 0, week = 0, month = 0, year = 0;
-        int miniute = 60;// 60 second
-        int houre = 60 * 60; //
-        int dayTime = 60 * 60 * 24;
-        int WeakIme = 60 * 60 * 24 * 7;
-        int monthTime = 60 * 60 * 24 * 30;
-        int yearTime = 60 * 60 * 24 * 30 * 12;
-
-
-        long currentDuration = currentDate.getTime();
-        long mainday = currentDuration - milisecond;
-
-        if (mainday > 1000) {
-
-            sec = (int) (mainday / 1000);
-
-            if (sec < 60) {
-                if (sec > 1)
-                    inputString = Integer.toString(sec) + " Seconds ago";
-                else
-                    inputString = Integer.toString(sec) + " secound ago";
-            } else if (sec >= 60 && sec < houre) {
-                min = sec / 60;
-                if (min > 1)
-                    inputString = Integer.toString(min) + " minutes ago";
-                else
-                    inputString = Integer.toString(min) + " minute ago";
-            } else if (sec >= houre && sec < dayTime) {
-                hour = sec / houre;
-                if (hour > 1)
-                    inputString = Integer.toString(hour) + " hours ago";
-                else
-                    inputString = Integer.toString(hour) + " hour ago";
-
-            } else if (sec >= dayTime && sec < WeakIme) {
-                day = sec / dayTime;
-                if (day > 1)
-                    inputString = Integer.toString(day) + " days ago";
-                else
-                    inputString = Integer.toString(day) + " day ago";
-
-            } else if (sec >= WeakIme && sec < monthTime) {
-                week = sec / WeakIme;
-                if (week > 1)
-                    inputString = Integer.toString(week) + " weeks ago";
-                else
-                    inputString = Integer.toString(week) + " week ago";
-
-            } else if (sec >= monthTime && sec < yearTime) {
-                month = sec / monthTime;
-                if (month > 1)
-                    inputString = Integer.toString(month) + " months ago";
-                else
-                    inputString = Integer.toString(month) + " month ago";
-
-            } else if (sec >= yearTime) {
-                year = sec / yearTime;
-                if (year > 1)
-                    inputString = Integer.toString(month) + " years ago";
-                else
-                    inputString = Integer.toString(month) + " year ago";
-            }
-
-        } else {
-            inputString = "5 Seconds ago";
+    public static Date parseDate(String dateString, String dateFormat) {
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        try {
+            Date parsedDate = sdf.parse(dateString);
+            return parsedDate;
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-
-        return inputString;
-
+        return null;
     }
+
     public static String getNewsFeeTimeAgo(long milisecond) {
 
+        Logger.debugLog("milisecond", "are" + milisecond);
 
         String inputString = "";
         long totalday = 0;
@@ -110,157 +44,66 @@ public class GetTimeCovertAgo {
         Date currentDate = parseDate(date, dateFormat);
         long currentDuration = currentDate.getTime();
         long mainday = currentDuration - milisecond;
-        if (mainday > 1000) {
-
-            sec = (int) (mainday / 1000);
-
-            if (sec < 60) {
-                if (sec > 1)
-                    inputString = Integer.toString(sec) + " Seconds ago";
-                else
-                    inputString = Integer.toString(sec) + " Second ago";
-            } else if (sec >= 60 && sec < houre) {
-                min = sec / 60;
-                if (min > 1)
-                    inputString = Integer.toString(min) + " minutes ago";
-                else
-                    inputString = Integer.toString(min) + " minute ago";
-            } else if (sec >= houre && sec < dayTime) {
-                hour = sec / houre;
-                if (hour > 1)
-                    inputString = Integer.toString(hour) + " hours ago";
-                else
-                    inputString = Integer.toString(hour) + " hour ago";
-
-            } else if (sec >= dayTime && sec < WeakIme) {
-                day = sec / dayTime;
-                if (day > 1)
-                    inputString = Integer.toString(day) + " days ago";
-                else
-                    inputString = Integer.toString(day) + " day ago";
-
-            } else if (sec >= WeakIme && sec < monthTime) {
-                week = sec / WeakIme;
-                if (week > 1)
-                    inputString = Integer.toString(week) + " weeks ago";
-                else
-                    inputString = Integer.toString(week) + " week ago";
-
-            } else if (sec >= monthTime && sec < yearTime) {
-                month = sec / monthTime;
-                if (month > 1)
-                    inputString = Integer.toString(month) + " months ago";
-                else
-                    inputString = Integer.toString(month) + " month ago";
-
-            } else if (sec >= yearTime) {
-                year = sec / yearTime;
-                if (year > 1)
-                    inputString = Integer.toString(month) + " years ago";
-                else
-                    inputString = Integer.toString(month) + " year ago";
-            }
-
-        } else {
-            inputString = " 1 Second";
-        }
-
-        return inputString;
-
-    }
-
-
-
-
-    public static String getNewsFeeTimeAgoFromNotification(long milisecond) {
-
-        String inputString = "";
-        Date date = null;
-        long totalday = 0;
-        int millisec = 0, sec = 0, min = 0, hour = 0, day = 0, week = 0, month = 0, year = 0;
-        int miniute = 60;// 60 second
-        int houre = 60 * 60; //
-        int dayTime = 60 * 60 * 24;
-        int WeakIme = 60 * 60 * 24 * 7;
-        int monthTime = 60 * 60 * 24 * 30;
-        int yearTime = 60 * 60 * 24 * 30 * 12;
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date dateformateCurrent = new Date();
-        try {
-            dateformateCurrent = sdf.parse(getTime("UTC"));
-            Log.w("dateformateCurrent", "d" + dateformateCurrent);
-
-        } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        long lDateTime = dateformateCurrent.getTime();
-
-        long mainday = lDateTime - milisecond;
 
         if (mainday > 1000) {
 
             sec = (int) (mainday / 1000);
 
             if (sec < 60) {
-
                 if (sec > 1)
-                    inputString = Integer.toString(sec) + " Seconds ago";
+                    inputString =  Integer.toString(sec) + " second  ago";
                 else
-                    inputString = Integer.toString(sec) + " Second ago";
-
+                    inputString =  Integer.toString(sec) + " seconds  ago";
             } else if (sec >= 60 && sec < houre) {
                 min = sec / 60;
                 if (min > 1)
-                    inputString = Integer.toString(min) + " minutes ago";
+                    inputString =  Integer.toString(min) + " minute ago";
                 else
-                    inputString = Integer.toString(min) + " minute ago";
+                    inputString =  Integer.toString(min) + " minutes ago ";
             } else if (sec >= houre && sec < dayTime) {
                 hour = sec / houre;
                 if (hour > 1)
-                    inputString = Integer.toString(hour) + " hours ago";
+                    inputString =  Integer.toString(hour) + " hour ago";
                 else
-                    inputString = Integer.toString(hour) + " hour ago";
+                    inputString =  Integer.toString(hour) + " hours ago";
 
             } else if (sec >= dayTime && sec < WeakIme) {
                 day = sec / dayTime;
                 if (day > 1)
-                    inputString = Integer.toString(day) + " days ago";
+                    inputString =  Integer.toString(day) + " day ago";
                 else
-                    inputString = Integer.toString(day) + " day ago";
+                    inputString =  Integer.toString(day) + " days ago";
 
             } else if (sec >= WeakIme && sec < monthTime) {
                 week = sec / WeakIme;
                 if (week > 1)
-                    inputString = Integer.toString(week) + " weeks ago";
+                    inputString =  Integer.toString(week) + " week ago";
                 else
-                    inputString = Integer.toString(week) + " week ago";
+                    inputString =  Integer.toString(week) + " weeks ago";
 
             } else if (sec >= monthTime && sec < yearTime) {
                 month = sec / monthTime;
                 if (month > 1)
-                    inputString = Integer.toString(month) + " months ago";
+                    inputString =  Integer.toString(month) + " month ago";
                 else
-                    inputString = Integer.toString(month) + " month ago";
+                    inputString =  Integer.toString(month) + " months ago";
 
             } else if (sec >= yearTime) {
                 year = sec / yearTime;
                 if (year > 1)
-                    inputString = Integer.toString(month) + " years ago";
+                    inputString =  Integer.toString(month) + " year ago";
                 else
-                    inputString = Integer.toString(month) + " year ago";
+                    inputString =  Integer.toString(month) + " years ago";
             }
 
         } else {
-            inputString = "5 Seconds ago";
+            inputString =  " 1 second";
         }
 
         return inputString;
 
     }
+
 
     public static String getTime(String timezone) {
         Calendar c = Calendar.getInstance();

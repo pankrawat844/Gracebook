@@ -1,21 +1,27 @@
 package com.grace.book.chatmodel;
 
-public class MessageList {
-    public String message;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class MessageList implements Serializable {
+    @SerializedName("sender_id")
     public String sender_id;
+    @SerializedName("receiver_id")
     public String receiver_id;
-    public String imagePath;
+    @SerializedName("duration")
     public String duration;
-    public String messageType;
-    public String videoPath;
+    @SerializedName("type")
+    public String type;
+    @SerializedName("message")
+    public String message;
+    @SerializedName("imagepath")
+    public String imagepath;
+    @SerializedName("id")
+    public String id;
+    @SerializedName("notificaiton_type")
+    public String notificaiton_type;
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getSender_id() {
         return sender_id;
@@ -33,14 +39,6 @@ public class MessageList {
         this.receiver_id = receiver_id;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
     public String getDuration() {
         return duration;
     }
@@ -49,19 +47,35 @@ public class MessageList {
         this.duration = duration;
     }
 
-    public String getMessageType() {
-        return messageType;
+    public String getType() {
+        return type;
     }
 
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getVideoPath() {
-        return videoPath;
+    public String getMessage() {
+        return message;
     }
 
-    public void setVideoPath(String videoPath) {
-        this.videoPath = videoPath;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

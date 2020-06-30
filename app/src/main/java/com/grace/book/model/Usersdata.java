@@ -1,6 +1,7 @@
 package com.grace.book.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.grace.book.chatmodel.MessageList;
 
 import java.io.Serializable;
 
@@ -43,6 +44,17 @@ public class Usersdata implements Serializable {
 
     @SerializedName("friend_type")
     private String friend_type="";
+
+    @SerializedName("message")
+    private MessageList mMessageList=null;
+
+    public MessageList getmMessageList() {
+        return mMessageList;
+    }
+
+    public void setmMessageList(MessageList mMessageList) {
+        this.mMessageList = mMessageList;
+    }
 
     public String getIs_friend() {
         return is_friend;

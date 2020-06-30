@@ -179,7 +179,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onFailed(String statusCode, String serverResponse) {
                 headeAdvertisemnetLayout.setVisibility(View.GONE);
-
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

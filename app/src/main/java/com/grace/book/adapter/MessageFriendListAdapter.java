@@ -5,13 +5,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
-import com.grace.book.model.MesageUserList;
+import com.grace.book.model.Usersdata;
+import com.grace.book.utils.ConstantFunctions;
+import com.grace.book.utils.DateUtility;
+import com.grace.book.utils.GetTimeCovertAgo;
 
 import java.util.ArrayList;
 
@@ -23,24 +28,31 @@ public class MessageFriendListAdapter extends RecyclerView.Adapter<RecyclerView.
     private static final String TAG = MessageFriendListAdapter.class.getSimpleName();
     private Context mContext;
     private FilterItemCallback nFilterItemCallback;
-    private ArrayList<MesageUserList> mSpeciallistModel;
+    private ArrayList<Usersdata> mSpeciallistModel;
 
-    public MessageFriendListAdapter(Context context, ArrayList<MesageUserList> myDataset) {
+    public MessageFriendListAdapter(Context context, ArrayList<Usersdata> myDataset) {
         mContext = context;
-        this.mSpeciallistModel = new ArrayList<MesageUserList>();
+        this.mSpeciallistModel = new ArrayList<Usersdata>();
         this.mSpeciallistModel.addAll(myDataset);
 
     }
 
-    public MesageUserList getModelAt(int index) {
+    public Usersdata getModelAt(int index) {
         return mSpeciallistModel.get(index);
     }
+
+    public void addModelAt(ArrayList<Usersdata> myDataset) {
+        mSpeciallistModel.clear();
+        mSpeciallistModel.addAll(myDataset);
+        notifyDataSetChanged();
+    }
+
 
     public void addFilterItemCallback(FilterItemCallback nFilterItemCallback) {
         this.nFilterItemCallback = nFilterItemCallback;
     }
 
-    public ArrayList<MesageUserList> getAllStudents() {
+    public ArrayList<Usersdata> getAllStudents() {
         return mSpeciallistModel;
     }
 
@@ -53,7 +65,7 @@ public class MessageFriendListAdapter extends RecyclerView.Adapter<RecyclerView.
         notifyDataSetChanged();
     }
 
-    public void addnewItem(MesageUserList dataObj) {
+    public void addnewItem(Usersdata dataObj) {
         mSpeciallistModel.add(dataObj);
         notifyDataSetChanged();
     }
@@ -71,8 +83,24 @@ public class MessageFriendListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
-            MesageUserList mJobList = mSpeciallistModel.get(position);
+            Usersdata mJobList = mSpeciallistModel.get(position);
             try {
+
+                ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+
+                holder.nameofitme.setText("");
+                holder.textMessage.setText("");
+                if (mJobList.getmMessageList() != null) {
+                    long time = DateUtility.dateToMillisecond(mJobList.getmMessageList().getDuration());
+                    String text = GetTimeCovertAgo.getNewsFeeTimeAgo(time);
+                    holder.nameofitme.setText(text);
+                    if (mJobList.getmMessageList().getType().equalsIgnoreCase("0"))
+                        holder.textMessage.setText(mJobList.getmMessageList().getMessage());
+                    else
+                        holder.textMessage.setText("Media");
+
+                }
 
 
             } catch (Exception ex) {
@@ -90,12 +118,23 @@ public class MessageFriendListAdapter extends RecyclerView.Adapter<RecyclerView.
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private ImageView userImage;
+        private TextView username;
+        private TextView nameofitme;
+        private TextView textMessage;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            userImage = (ImageView) itemView.findViewById(R.id.userImage);
+            username = (TextView) itemView.findViewById(R.id.username);
+            nameofitme = (TextView) itemView.findViewById(R.id.nameofitme);
+            textMessage = (TextView) itemView.findViewById(R.id.textMessage);
+
+
             itemView.setTag(getPosition());
             itemView.setOnClickListener(this); // bind the listener
         }
+
         @Override
         public void onClick(View v) {
             nFilterItemCallback.ClickFilterItemCallback(0, getPosition());
