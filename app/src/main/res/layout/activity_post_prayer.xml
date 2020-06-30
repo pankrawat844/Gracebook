@@ -40,12 +40,12 @@
             android:id="@+id/postView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="POST"
-            android:gravity="center_vertical"
-            android:layout_marginRight="10dp"
             android:layout_alignParentRight="true"
-            android:textColor="@color/white"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:text="POST"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="normal"></TextView>
     </RelativeLayout>
@@ -54,21 +54,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
         android:layout_marginTop="20sp"
+        android:layout_marginRight="20sp"
         android:orientation="vertical">
 
         <EditText
             android:id="@+id/edittextChat"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:gravity="left|top"
-            android:padding="5dp"
-            android:hint="Type your text here.."
             android:background="@drawable/rounded_inputbox_chat"
+            android:gravity="left|top"
+            android:hint="Type your text here.."
+            android:padding="5dp"
             android:paddingLeft="10dp"
-            android:textSize="14sp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,9 +77,10 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:gravity="center_vertical"
+                android:id="@+id/addPostImage"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -89,8 +90,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Image"
                     android:layout_marginLeft="3dp"
+                    android:text="Image"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
@@ -99,10 +100,10 @@
 
 
             <LinearLayout
-                android:gravity="center_vertical"
-                android:layout_marginLeft="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -112,8 +113,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Video"
                     android:layout_marginLeft="3dp"
+                    android:text="Video"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
@@ -122,9 +123,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:gravity="center_vertical"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
-                android:layout_height="wrap_content">
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -134,8 +135,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Audio"
                     android:layout_marginLeft="3dp"
+                    android:text="Audio"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
@@ -144,12 +145,25 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:layout_marginTop="20sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/imageImages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
 
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:id="@+id/deletefile"
+                android:src="@drawable/delete_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"></ImageView>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

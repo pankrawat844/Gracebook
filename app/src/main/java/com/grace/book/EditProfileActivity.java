@@ -149,7 +149,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     List<String> permissions = new ArrayList<String>();
-
     public void checkFileUploadPermissions() {
         permissions.clear();
         if (Build.VERSION.SDK_INT > 22) {

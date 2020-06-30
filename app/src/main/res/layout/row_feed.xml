@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/userView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -12,14 +12,16 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/profileUser"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/profile_dmmy"></ImageView>
+            android:src="@drawable/user_icon"></ImageView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20sp"
+            android:layout_toRightOf="@+id/profileUser"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -27,7 +29,6 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sandra Augustine"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold">
@@ -38,42 +39,76 @@
                 android:id="@+id/timeduration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="26 min ago"
+                android:text=""
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="normal">
 
             </TextView>
         </LinearLayout>
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/deletePost"
+            android:src="@drawable/delete_icon"
+            android:layout_width="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_height="35dp">
+
+        </ImageView>
+
+    </RelativeLayout>
 
     <TextView
+        android:id="@+id/textMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor #incididunt ero labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco poriti laboris nisi ut aliquip ex ea commodo consequat."
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="normal"></TextView>
 
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/layoutForImage_video"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/postImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ImageView>
+
+        <ImageView
+            android:id="@+id/videoposticon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/video_icon"></ImageView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutForImage_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/dummy_row">
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/audio_icon"></ImageView>
 
-        </ImageView>
+    </RelativeLayout>
 
-
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:id="@+id/likeView"
@@ -83,15 +118,17 @@
 
 
             <ImageView
+                android:id="@+id/IsLikemage"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/like"></ImageView>
 
             <TextView
+                android:id="@+id/totalLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="20"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold">
@@ -114,10 +151,11 @@
                 android:src="@drawable/chat"></ImageView>
 
             <TextView
+                android:id="@+id/totalComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="20"
+                android:text="0"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold">

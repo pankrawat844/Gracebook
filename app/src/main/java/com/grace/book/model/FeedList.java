@@ -23,11 +23,22 @@ public class FeedList implements Serializable {
     private String post_time = "";
     @SerializedName("post_path")
     private String post_path = "";
+    @SerializedName("is_like")
+    private boolean is_like = false;
+
     @SerializedName("users")
     private Usersdata mUsersdata=null;
 
     public String getId() {
         return id;
+    }
+
+    public boolean isIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(boolean is_like) {
+        this.is_like = is_like;
     }
 
     public void setId(String id) {

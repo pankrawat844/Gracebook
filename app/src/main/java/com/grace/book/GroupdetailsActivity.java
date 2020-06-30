@@ -217,7 +217,6 @@ public class GroupdetailsActivity extends BaseActivity {
     }
 
     AlertDialog alertDialog = null;
-
     public void alertfornewuser(final int postion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GroupdetailsActivity.this);
         LayoutInflater inflater = getLayoutInflater();

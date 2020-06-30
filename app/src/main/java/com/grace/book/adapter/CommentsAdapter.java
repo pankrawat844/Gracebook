@@ -5,12 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.model.CommentsList;
+import com.grace.book.utils.ConstantFunctions;
+import com.grace.book.utils.DateUtility;
+import com.grace.book.utils.GetTimeCovertAgo;
+import com.grace.book.utils.PersistentUser;
 
 import java.util.ArrayList;
 
@@ -27,9 +32,15 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.allSearchList.addAll(myDataset);
     }
 
-    public void addClickListiner(FilterItemCallback lFilterItemCallback){
-        this.lFilterItemCallback=lFilterItemCallback;
+    public void addClickListiner(FilterItemCallback lFilterItemCallback) {
+        this.lFilterItemCallback = lFilterItemCallback;
     }
+
+    public void deleteItem(int index) {
+         allSearchList.remove(index);
+         notifyDataSetChanged();
+    }
+
     public CommentsList getModelAt(int index) {
         return allSearchList.get(index);
     }
@@ -66,9 +77,22 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
             CommentsList mJobList = allSearchList.get(position);
             try {
-
-                // ConstantFunctions.loadImage(mJobList, holder.imageCon);
-
+                holder.userProfileNmae.setText(mJobList.getmUsersdata().getFname()+" "+mJobList.getmUsersdata().getLname());
+                ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.userProfileImage);
+                long time = DateUtility.dateToMillisecond(mJobList.getComment_time());
+                String text = GetTimeCovertAgo.getNewsFeeTimeAgo(time);
+                holder.nameofitme.setText(text);
+                holder.textComment.setText(mJobList.getMessage());
+                holder.deleteMessage.setVisibility(View.GONE);
+                if(mJobList.getUser_id().equalsIgnoreCase(PersistentUser.getUserID(mContext))){
+                    holder.deleteMessage.setVisibility(View.VISIBLE);
+                }
+                holder.deleteMessage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(0,position);
+                    }
+                });
 
             } catch (Exception ex) {
 
@@ -88,10 +112,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView imageCon;
+        private ImageView deleteMessage;
+        private ImageView userProfileImage;
+        private TextView nameofitme;
+        private TextView textComment;
+        private TextView userProfileNmae;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            deleteMessage = (ImageView) itemView.findViewById(R.id.deleteMessage);
+            userProfileImage = (ImageView) itemView.findViewById(R.id.userProfileImage);
+            nameofitme=(TextView)itemView.findViewById(R.id.nameofitme);
+            textComment=(TextView)itemView.findViewById(R.id.textComment);
+            userProfileNmae=(TextView)itemView.findViewById(R.id.userProfileNmae);
+
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }
