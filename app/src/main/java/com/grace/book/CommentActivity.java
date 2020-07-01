@@ -25,6 +25,7 @@ import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.CommentsList;
 import com.grace.book.model.FeedList;
 import com.grace.book.model.GroupList;
+import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
@@ -78,6 +79,8 @@ public class CommentActivity extends AppCompatActivity {
         findViewById(R.id.layoutBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent mIntent = getIntent();
+                setResult(RESULT_OK, mIntent);
                 finish();
             }
         });
@@ -104,6 +107,7 @@ public class CommentActivity extends AppCompatActivity {
 
         ServerRequest();
     }
+
     public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
@@ -117,21 +121,23 @@ public class CommentActivity extends AppCompatActivity {
             return;
         }
         HashMap<String, String> allHashMap = new HashMap<>();
-        String url = AllUrls.BASEURL + "postcommnetlist";
+        String url = "";
         if (screen == 1) {
             url = AllUrls.BASEURL + "postcommnetlist";
             allHashMap.put("post_id", mFeedList.getId());
         } else if (screen == 2) {
-            url = AllUrls.BASEURL + "groupmemebrremove";
-        } else if (screen == 2) {
-            url = AllUrls.BASEURL + "groupmemebrremove";
+            url = AllUrls.BASEURL + "prayercommentList";
+            allHashMap.put("prayer_id", mFeedList.getId());
+        } else if (screen == 3) {
+            url = AllUrls.BASEURL + "grouppostcommentList";
+            allHashMap.put("group_post_id", mFeedList.getId());
+
         }
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
         mBusyDialog = new BusyDialog(mContext);
         mBusyDialog.show();
-
         ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
@@ -140,6 +146,7 @@ public class CommentActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
+                        mFeedListAdapter.removeAllData();
 
                         JSONArray jsonArray = mJsonObject.getJSONArray("data");
                         GsonBuilder builder = new GsonBuilder();
@@ -148,7 +155,7 @@ public class CommentActivity extends AppCompatActivity {
                         posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), CommentsList[].class));
                         ArrayList<CommentsList> allLists = new ArrayList<CommentsList>(posts);
                         mFeedListAdapter.addAllList(allLists);
-
+                        Myapplication.selectionComment = allLists.size();
 
                     } else {
                         String message = mJsonObject.getString("message");
@@ -185,9 +192,12 @@ public class CommentActivity extends AppCompatActivity {
             url = AllUrls.BASEURL + "postcommnet";
             allHashMap.put("post_id", mFeedList.getId());
         } else if (screen == 2) {
-            url = AllUrls.BASEURL + "groupmemebrremove";
-        } else if (screen == 2) {
-            url = AllUrls.BASEURL + "groupmemebrremove";
+            url = AllUrls.BASEURL + "prayerComment";
+            allHashMap.put("prayer_id", mFeedList.getId());
+        } else if (screen == 3) {
+            url = AllUrls.BASEURL + "groupppostaddComment";
+            allHashMap.put("group_post_id", mFeedList.getId());
+
         }
         allHashMap.put("message", message);
         allHashMap.put("comment_time", DateUtility.getCurrentTimeForsend());
@@ -233,7 +243,9 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+
     AlertDialog alertDialog = null;
+
     public void alertfornewuser(final int postion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(CommentActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -266,19 +278,27 @@ public class CommentActivity extends AppCompatActivity {
             }
         });
     }
+
     private void leaverServerRequest(final int position) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        CommentsList mCommentsList = mFeedListAdapter.getModelAt(position);
         HashMap<String, String> allHashMap = new HashMap<>();
         String url = AllUrls.BASEURL + "postCommentDelete";
         if (screen == 1) {
             url = AllUrls.BASEURL + "postCommentDelete";
-            allHashMap.put("comment_id", mFeedList.getId());
-        } else if (screen == 1) {
-            url = AllUrls.BASEURL + "groupmemebrremove";
+            allHashMap.put("comment_id", mCommentsList.getId());
+        } else if (screen == 2) {
+            url = AllUrls.BASEURL + "prayercommentDelete";
+            allHashMap.put("comment_id", mCommentsList.getId());
+        } else if (screen == 3) {
+            url = AllUrls.BASEURL + "grouppostCommentDelete";
+            allHashMap.put("comment_id", mCommentsList.getId());
+
         }
+
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
@@ -295,6 +315,7 @@ public class CommentActivity extends AppCompatActivity {
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
                         mFeedListAdapter.deleteItem(position);
+                        Myapplication.selectionComment = mFeedListAdapter.getItemCount();
 
                     } else {
                         String message = mJsonObject.getString("message");

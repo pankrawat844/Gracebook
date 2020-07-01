@@ -13,8 +13,10 @@ public class Myapplication extends Application {
     private static Myapplication mInstance;
     private RequestQueue requestQueue;
     private static Context mContext;
-    public static  int selection =0;
-    public static String  NEW_MESSAGE_ACTION ="NEW_MESSAGE_ACTION";
+    public static int selection = 0;
+    public static String NEW_MESSAGE_ACTION = "NEW_MESSAGE_ACTION";
+    public static int selectionOrder = 0;
+    public static int selectionComment = 0;
 
     @Override
     public void onCreate() {
@@ -54,7 +56,6 @@ public class Myapplication extends Application {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
-
 
 
 }

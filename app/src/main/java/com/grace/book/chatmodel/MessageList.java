@@ -19,7 +19,7 @@ public class MessageList implements Serializable {
     public String imagepath;
     @SerializedName("id")
     public String id;
-    @SerializedName("notificaiton_type")
+    @SerializedName("notification_type")
     public String notificaiton_type;
 
 

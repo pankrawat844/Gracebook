@@ -1,6 +1,7 @@
 package com.grace.book.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,24 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.grace.book.LoginActivity;
 import com.grace.book.R;
+import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.model.FeedList;
 import com.grace.book.model.NotificationList;
+import com.grace.book.networkcalls.ServerCallsProvider;
+import com.grace.book.utils.AllUrls;
+import com.grace.book.utils.BusyDialog;
+import com.grace.book.utils.Helpers;
+import com.grace.book.utils.Logger;
+import com.grace.book.utils.PersistentUser;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = NotificaitonListAdapter.class.getSimpleName();
@@ -71,7 +84,13 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
             NotificationList mJobList = allMessageList.get(position);
             try {
-
+                holder.notifcationText.setText(mJobList.getDetails());
+                holder.delete_notification.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ServerRequest(position);
+                    }
+                });
 
             } catch (Exception ex) {
 
@@ -90,15 +109,13 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView ShowPlayIcon;
-        private TextView rowplaylistname;
-        private TextView rowplaylistduatiron;
+        private TextView notifcationText;
+        private ImageView delete_notification;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ShowPlayIcon = (ImageView) itemView.findViewById(R.id.ShowPlayIcon);
-            rowplaylistname = (TextView) itemView.findViewById(R.id.rowplaylistname);
-            rowplaylistduatiron = (TextView) itemView.findViewById(R.id.rowplaylistduatiron);
+            notifcationText = (TextView) itemView.findViewById(R.id.notifcationText);
+            delete_notification = (ImageView) itemView.findViewById(R.id.delete_notification);
 
 
             itemView.setTag(getAdapterPosition());
@@ -112,22 +129,54 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    public String getDate(String duratraion) {
-        if (duratraion == null || duratraion.equalsIgnoreCase(""))
-            return "";
-        else {
+    BusyDialog mBusyDialog;
 
-            String dateFormat = "dd MMMM yyyy";
-            long milliSeconds = Long.parseLong(duratraion);
-            milliSeconds = milliSeconds * 1000;
-            SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(milliSeconds);
-            return formatter.format(calendar.getTime());
+    private void ServerRequest(final int position) {
+        if (!Helpers.isNetworkAvailable(mContext)) {
+            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
+            return;
         }
+        String post_id = getModelAt(position).getId();
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
 
+        HashMap<String, String> allHashMap = new HashMap<>();
+        allHashMap.put("notification_id", post_id);
+        HashMap<String, String> allHashMapHeader = new HashMap<>();
+        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
+        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
+        final String url = AllUrls.BASEURL + "removenotification";
+        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
+            @Override
+            public void onSuccess(String statusCode, String responseServer) {
+                try {
+                    mBusyDialog.dismis();
+
+                    Logger.debugLog("responseServer", responseServer);
+                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    if (mJsonObject.getBoolean("success")) {
+                        allMessageList.remove(position);
+                        notifyDataSetChanged();
+
+                    }
+                } catch (Exception e) {
+                    Logger.debugLog("Exception", e.getMessage());
+
+                }
+            }
+
+            @Override
+            public void onFailed(String statusCode, String serverResponse) {
+                mBusyDialog.dismis();
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
+                }
+            }
+        });
     }
-
 
 }
 

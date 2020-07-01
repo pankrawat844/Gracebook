@@ -1,9 +1,7 @@
 package com.grace.book.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +12,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.grace.book.GroupdetailsActivity;
-import com.grace.book.HomeActivity;
 import com.grace.book.LoginActivity;
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
-import com.grace.book.model.BannerList;
 import com.grace.book.model.FeedList;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
@@ -34,13 +26,10 @@ import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -62,9 +51,11 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public FeedList getModelAt(int index) {
         return allSearchList.get(index);
     }
+
     public void remvoeList(int index) {
-         allSearchList.remove(index);
-         notifyDataSetChanged();;
+        allSearchList.remove(index);
+        notifyDataSetChanged();
+
     }
 
     public int getDataSize() {
@@ -132,6 +123,18 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         lFilterItemCallback.ClickFilterItemCallback(4, position);
                     }
                 });
+                holder.videoposticon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(5, position);
+                    }
+                });
+                holder.layoutForImage_audio.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(5, position);
+                    }
+                });
 
 
                 holder.textMessage.setText(mJobList.getDetails());
@@ -159,11 +162,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("1")) {
                     holder.layoutForImage_video.setVisibility(View.VISIBLE);
-                    ConstantFunctions.loadImage(mJobList.getPost_path(), holder.postImage);
+                    ConstantFunctions.loadImageNomal(mJobList.getPost_path(), holder.postImage);
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("2")) {
                     holder.layoutForImage_video.setVisibility(View.VISIBLE);
-                    ConstantFunctions.loadImage(mJobList.getPost_path(), holder.postImage);
+                    holder.videoposticon.setVisibility(View.VISIBLE);
+                    ConstantFunctions.loadImageNomal(mJobList.getPost_path(), holder.postImage);
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("3")) {
                     holder.layoutForImage_audio.setVisibility(View.VISIBLE);

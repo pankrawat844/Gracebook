@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -49,12 +51,12 @@
 
         <ImageView
             android:id="@+id/deletePost"
-            android:src="@drawable/delete_icon"
-            android:layout_width="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:layout_height="35dp">
+            android:src="@drawable/delete_icon">
 
         </ImageView>
 
@@ -72,12 +74,13 @@
     <RelativeLayout
         android:id="@+id/layoutForImage_video"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_marginTop="10dp"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/postImage"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ImageView>
 

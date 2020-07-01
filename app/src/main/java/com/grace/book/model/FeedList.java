@@ -25,9 +25,19 @@ public class FeedList implements Serializable {
     private String post_path = "";
     @SerializedName("is_like")
     private boolean is_like = false;
-
     @SerializedName("users")
-    private Usersdata mUsersdata=null;
+    private Usersdata mUsersdata = null;
+
+    @SerializedName("group_id")
+    private String group_id = "";
+
+    public String getGroup_id() {
+        return group_id;
+    }
+
+    public void setGroup_id(String group_id) {
+        this.group_id = group_id;
+    }
 
     public String getId() {
         return id;

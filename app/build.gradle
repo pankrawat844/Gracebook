@@ -25,6 +25,9 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -51,6 +54,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.1'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.bogdwellers:pinchtozoom:0.1'
+    implementation 'com.github.HamidrezaAmz:MagicalExoPlayer:1.0.15'
+    implementation 'com.google.android.exoplayer:exoplayer:2.11.4'
 
 
 }

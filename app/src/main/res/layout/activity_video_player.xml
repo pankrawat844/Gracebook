@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PrayerActivity"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -29,48 +27,21 @@
             </ImageView>
 
             <TextView
-                android:id="@+id/textHeader"
+                android:id="@+id/prayerTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Post"
+                android:text="Video"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
-
-        <ImageView
-            android:id="@+id/moreInformation"
-            android:layout_width="wrap_content"
-            android:tint="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_more_black">
-
-        </ImageView>
     </RelativeLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/swipe_refresh_layout"
+    <com.potyvideo.library.AndExoPlayerView
+        android:id="@+id/andExoPlayerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_feed"
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

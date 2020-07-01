@@ -41,25 +41,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             Map<String, String> params = remoteMessage.getData();
             JSONObject object = new JSONObject(params);
-            GsonBuilder builder = new GsonBuilder();
-            Gson mGson = builder.create();
-            MessageList mServermessage = (MessageList) mGson.fromJson(object.toString(), MessageList.class);
-            ActivityManager am = (ActivityManager) getApplicationContext()
-                    .getSystemService(Activity.ACTIVITY_SERVICE);
-            String packageName = am.getRunningTasks(1).get(0).topActivity
-                    .getPackageName();
-            List<ActivityManager.RunningTaskInfo> taskInfo = am
-                    .getRunningTasks(1);
-            String topActivity = taskInfo.get(0).topActivity
-                    .getClassName();
+            int notificaiton_type = Integer.parseInt(object.getString("notification_type"));
 
-            Intent intent = new Intent(Myapplication.NEW_MESSAGE_ACTION);
-            Bundle extra = new Bundle();
-            extra.putSerializable("objects", mServermessage);
-            intent.putExtra("extra", extra);
-            sendBroadcast(intent);
+            if (notificaiton_type == 0) {
+                GsonBuilder builder = new GsonBuilder();
+                Gson mGson = builder.create();
+                MessageList mServermessage = (MessageList) mGson.fromJson(object.toString(), MessageList.class);
+                ActivityManager am = (ActivityManager) getApplicationContext()
+                        .getSystemService(Activity.ACTIVITY_SERVICE);
+                String packageName = am.getRunningTasks(1).get(0).topActivity
+                        .getPackageName();
+                List<ActivityManager.RunningTaskInfo> taskInfo = am
+                        .getRunningTasks(1);
+                String topActivity = taskInfo.get(0).topActivity
+                        .getClassName();
 
-            if (mServermessage.notificaiton_type.equalsIgnoreCase("0")) {
+                Intent intent = new Intent(Myapplication.NEW_MESSAGE_ACTION);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mServermessage);
+                intent.putExtra("extra", extra);
+                sendBroadcast(intent);
+
                 if (topActivity.equalsIgnoreCase("com.grace.book.ChatActivity")) {
                     Logger.debugLog("ChatActivity", "OPEN");
 
@@ -76,9 +78,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 }
             } else {
-                Logger.debugLog("ChatActivity", "ChatActivity");
+
                 String text = "New message";
-                sendNotificationForcard(text, mServermessage.getMessage());
+                String Message = object.getString("details");
+                sendNotificationForcard(Message, text);
 
             }
 

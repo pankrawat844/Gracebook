@@ -1,7 +1,9 @@
 package com.grace.book;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
@@ -60,6 +62,7 @@ public class HomeActivity extends BaseActivity {
     private HomeadvertismentAdapter mSliderAdapter;
     private RelativeLayout headeAdvertisemnetLayout;
     private BusyDialog mBusyDialog;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void initUI() {
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         recycler_feed = (RecyclerView) this.findViewById(R.id.recycler_feed);
         mFeedListAdapter = new FeedListAdapter(mContext, new ArrayList<FeedList>());
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, RecyclerView.VERTICAL, false);
@@ -111,11 +115,32 @@ public class HomeActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent mIntent = new Intent(HomeActivity.this, PostallActivity.class);
                 mIntent.putExtra("screenType", 0);
-                startActivity(mIntent);
+                startActivityForResult(mIntent, 101);
             }
         });
         mFeedListAdapter.addClickListiner(lFilterItemCallback);
+        mFeedListAdapter.removeAllData();
         ServerRequest("0");
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mFeedListAdapter.removeAllData();
+                ServerRequest("0");
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            mFeedListAdapter.removeAllData();
+            ServerRequest("0");
+        } else if (requestCode == 102) {
+            mFeedListAdapter.notifyDataSetChanged();
+        }
     }
 
     public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
@@ -138,13 +163,17 @@ public class HomeActivity extends BaseActivity {
                 extra.putSerializable("objects", mFeedList);
                 extra.putInt("screen", 1);
                 mIntent.putExtra("extra", extra);
-                startActivity(mIntent);
+                startActivityForResult(mIntent, 102);
 
             } else if (type == 3) {
                 ConstantFunctions.openIntentForShare(mContext, mFeedList.getDetails());
 
             } else if (type == 4) {
                 alertfornewuser(position);
+            } else if (type == 5) {
+                Intent mIntent = new Intent(HomeActivity.this, VideoPlayertActivity.class);
+                mIntent.putExtra("url", mFeedList.getPost_path());
+                startActivity(mIntent);
             }
         }
     };
@@ -154,6 +183,9 @@ public class HomeActivity extends BaseActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
+
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("limit", limit);
         HashMap<String, String> allHashMapHeader = new HashMap<>();
@@ -164,6 +196,7 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
                 try {
+                    mBusyDialog.dismis();
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
@@ -202,6 +235,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onFailed(String statusCode, String serverResponse) {
+                mBusyDialog.dismis();
                 headeAdvertisemnetLayout.setVisibility(View.GONE);
                 if (statusCode.equalsIgnoreCase("404")) {
                     PersistentUser.resetAllData(mContext);
@@ -215,7 +249,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     AlertDialog alertDialog = null;
-
     public void alertfornewuser(final int postion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         LayoutInflater inflater = getLayoutInflater();
@@ -257,7 +290,8 @@ public class HomeActivity extends BaseActivity {
 
         String url = AllUrls.BASEURL + "postDelete";
         HashMap<String, String> allHashMap = new HashMap<>();
-        allHashMap.put("post_id", mFeedList.getComment_count());
+        allHashMap.put("post_id", mFeedList.getId());
+
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
