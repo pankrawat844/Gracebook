@@ -1,7 +1,9 @@
 package com.grace.book;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -169,16 +171,36 @@ public class UserprofileActivity extends AppCompatActivity {
     public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
-            if (position == 0) {
-                Intent mm = new Intent(UserprofileActivity.this, UserprofileActivity.class);
-                startActivity(mm);
-            } else if (position == 1) {
-                Intent mm = new Intent(UserprofileActivity.this, CommentActivity.class);
-                startActivity(mm);
+            FeedList mFeedList = mMyPostListAdapter.getModelAt(position);
+
+            if (type == 0) {
+                Intent mIntent = new Intent(mContext, UserprofileActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mFeedList.getmUsersdata());
+                mIntent.putExtra("extra", extra);
+                startActivity(mIntent);
+
+            } else if (type == 1) {
+
+            } else if (type == 2) {
+                Intent mIntent = new Intent(UserprofileActivity.this, CommentActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mFeedList);
+                extra.putInt("screen", 1);
+                mIntent.putExtra("extra", extra);
+                startActivityForResult(mIntent, 102);
+
+            } else if (type == 3) {
+                ConstantFunctions.openIntentForShare(mContext, mFeedList.getDetails());
+
+            } else if (type == 4) {
+                alertfornewuser(position);
+            } else if (type == 5) {
+                Intent mIntent = new Intent(UserprofileActivity.this, VideoPlayertActivity.class);
+                mIntent.putExtra("url", mFeedList.getPost_path());
+                startActivity(mIntent);
             }
-
         }
-
     };
 
     private void serverRequest(final String limit) {
@@ -212,6 +234,14 @@ public class UserprofileActivity extends AppCompatActivity {
                             mUsersdata = mGson.fromJson(users.toString(), Usersdata.class);
                             userInformationShow();
                         }
+                        JSONArray jsonArray = mJsonObject.getJSONArray("data");
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson mGson = builder.create();
+                        List<FeedList> posts = new ArrayList<FeedList>();
+                        posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), FeedList[].class));
+                        ArrayList<FeedList> allLists = new ArrayList<FeedList>(posts);
+                        mMyPostListAdapter.addAllList(allLists);
+
 
                     }
 
@@ -324,5 +354,86 @@ public class UserprofileActivity extends AppCompatActivity {
             }
         });
     }
+    AlertDialog alertDialog = null;
+    public void alertfornewuser(final int postion) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UserprofileActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View mView = inflater.inflate(R.layout.dialog_app_logout, null);
+        builder.setView(mView);
+        builder.setCancelable(false);
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alertDialog.show();
 
+        TextView no_botton = (TextView) mView.findViewById(R.id.no_botton);
+        TextView yes_btn = (TextView) mView.findViewById(R.id.yes_btn);
+        TextView version_text = (TextView) mView.findViewById(R.id.version_text);
+        TextView version_text2 = (TextView) mView.findViewById(R.id.version_text2);
+        version_text.setText("Remove  Post");
+        version_text2.setText("Are you sure you want remove this post");
+        no_botton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+            }
+        });
+        yes_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                leaverServerRequest(postion);
+            }
+        });
+    }
+
+    private void leaverServerRequest(final int position) {
+        if (!Helpers.isNetworkAvailable(mContext)) {
+            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
+            return;
+        }
+        FeedList mFeedList = mMyPostListAdapter.getModelAt(position);
+
+        String url = AllUrls.BASEURL + "postDelete";
+        HashMap<String, String> allHashMap = new HashMap<>();
+        allHashMap.put("post_id", mFeedList.getId());
+
+        HashMap<String, String> allHashMapHeader = new HashMap<>();
+        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
+        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
+
+        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
+            @Override
+            public void onSuccess(String statusCode, String responseServer) {
+                mBusyDialog.dismis();
+                try {
+                    Logger.debugLog("responseServer", responseServer);
+                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    if (mJsonObject.getBoolean("success")) {
+                        mMyPostListAdapter.remvoeList(position);
+
+                    } else {
+                        String message = mJsonObject.getString("message");
+                        ToastHelper.showToast(mContext, message);
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailed(String statusCode, String serverResponse) {
+                mBusyDialog.dismis();
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+    }
 }

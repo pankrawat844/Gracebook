@@ -16,7 +16,7 @@
             android:id="@+id/userprofole_pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/profile_dmmy"></ImageView>
+            android:src="@drawable/user_icon"></ImageView>
 
         <TextView
             android:id="@+id/userprofole_name"
@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textColor="@color/black"
+        android:gravity="center_horizontal"
         android:textSize="16dp"
         android:textStyle="normal"></TextView>
 
@@ -43,17 +44,19 @@
         android:id="@+id/userprofole_member"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+
         android:layout_marginTop="5dp"
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="normal"></TextView>
 
     <TextView
+        android:gravity="center_horizontal"
         android:id="@+id/userprofole_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="Lives in York"
         android:textColor="@color/black"
         android:textSize="16dp"
         android:textStyle="normal"></TextView>
