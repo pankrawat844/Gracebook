@@ -37,6 +37,8 @@ import com.grace.book.utils.ImageFilePath;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
@@ -73,17 +75,20 @@ public class PostallActivity extends AppCompatActivity {
     private ImageView deletefile;
     private String post_type = "0";
     private int post_for = 0;
-    private String group_id ="";
+    private String group_id = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_prayer);
         screenType = getIntent().getIntExtra("screenType", 0);
-        if(getIntent().hasExtra("group_id")){
-            group_id=getIntent().getStringExtra("group_id");
+        if (getIntent().hasExtra("group_id")) {
+            group_id = getIntent().getStringExtra("group_id");
         }
         mContext = this;
+//        CropImage.activity()
+//                .setGuidelines(CropImageView.Guidelines.ON)
+//                .start(this);
         initUi();
     }
 
@@ -209,8 +214,8 @@ public class PostallActivity extends AppCompatActivity {
                         else if (screenType == 3)
                             ToastHelper.showToast(mContext, "Post add successfully");
 
-                        Intent mIntent =getIntent();
-                        setResult(RESULT_OK,mIntent);
+                        Intent mIntent = getIntent();
+                        setResult(RESULT_OK, mIntent);
                         finish();
 
                     }
@@ -374,59 +379,28 @@ public class PostallActivity extends AppCompatActivity {
                 if (null == data)
                     return;
                 Uri selectedImageUri = data.getData();
-                selectedImagePath = ImageFilePath.getPath(mContext, selectedImageUri);
-                Glide.with(mContext)
-                        .load(new File(selectedImagePath))
-                        .apply(requestOptionsForRadious)
-                        .into(imageImages);
-                post_type = "1";
+                String selectedImagePath = ImageFilePath.getPath(mContext, selectedImageUri);
                 File file = new File(selectedImagePath);
-
-                try {
-                    File compressedImage = new Compressor(this)
-                            .setMaxWidth(640)
-                            .setMaxHeight(480)
-                            .setQuality(75)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                            .compressToFile(file);
-
-                    selectedImagePath = compressedImage.getAbsolutePath();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                deletefile.setVisibility(View.VISIBLE);
-
+                final Uri selectedImageUriCrop = Uri.fromFile(file);
+                CropImage.activity(selectedImageUriCrop)
+                        .start(PostallActivity.this);
 
             } else if (requestCode == CAMERA_TAKE_PHOTO) {
                 File file = new File(PersistentUser.getImagePath(mContext));
                 final Uri selectedImageUri = Uri.fromFile(file);
-                selectedImagePath = ImageFilePath.getPath(mContext, selectedImageUri);
+                CropImage.activity(selectedImageUri)
+                        .start(this);
+
+            } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri resultUri = result.getUri();
+                selectedImagePath = ImageFilePath.getPath(mContext, resultUri);
                 Glide.with(mContext)
                         .load(new File(selectedImagePath))
                         .apply(requestOptionsForRadious)
                         .into(imageImages);
-                try {
-                    File compressedImage = new Compressor(this)
-                            .setMaxWidth(640)
-                            .setMaxHeight(480)
-                            .setQuality(75)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                            .compressToFile(file);
-                    selectedImagePath = compressedImage.getAbsolutePath();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                deletefile.setVisibility(View.VISIBLE);
                 post_type = "1";
+                deletefile.setVisibility(View.VISIBLE);
 
             } else if (requestCode == GALLERY_SELECT_VIDEO) {
                 if (null == data)
