@@ -20,17 +20,20 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/back_btn">
+                android:src="@drawable/ic_arrow_back_24px">
 
             </ImageView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search believer"
+                android:fontFamily="@font/font_medium"
+                android:text="Search Believer"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
@@ -71,7 +74,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/search"
-                android:tint="#910891">
+                android:tint="@color/gray">
 
             </ImageView>
         </RelativeLayout>
@@ -79,10 +82,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:background="#910891"
+            android:background="@color/gray"
             android:visibility="visible">
 
         </View>

@@ -24,18 +24,21 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/back_btn">
+                android:src="@drawable/ic_arrow_back_24px">
 
             </ImageView>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
                 android:text="Comment"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
@@ -50,14 +53,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_feed"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_width="match_parent"
-            android:layout_above="@+id/layoutinput"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layoutinput">
 
         </androidx.recyclerview.widget.RecyclerView>
-
 
 
         <RelativeLayout

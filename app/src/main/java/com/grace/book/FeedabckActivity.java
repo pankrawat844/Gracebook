@@ -18,6 +18,7 @@ import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.FeedList;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
+import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.ConstantFunctions;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
@@ -37,7 +38,7 @@ public class FeedabckActivity extends AppCompatActivity {
     private EditText edittexEmail;
     private EditText edittexSubject;
     private EditText edittextMessage;
-
+    private BusyDialog mBusyDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,8 @@ public class FeedabckActivity extends AppCompatActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
@@ -114,6 +117,7 @@ public class FeedabckActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
                 try {
+                    mBusyDialog.dismis();
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
@@ -130,7 +134,7 @@ public class FeedabckActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(String statusCode, String serverResponse) {
-
+                mBusyDialog.dismis();
             }
         });
     }

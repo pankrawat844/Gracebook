@@ -76,12 +76,10 @@ public class PrayerActivity extends BaseActivity {
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
 
-        SmartRecyclerAdapter smartRecyclerAdapter = new SmartRecyclerAdapter(mPrayRequestAdapter);
 
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.header_prayer_screen, null);
-        smartRecyclerAdapter.setHeaderView(view);
 
         EditText edittextChat = (EditText) view.findViewById(R.id.edittextChat);
         edittextChat.setFocusable(false);
@@ -94,8 +92,10 @@ public class PrayerActivity extends BaseActivity {
             }
         });
 
-        recycler_feed.setAdapter(smartRecyclerAdapter);
+        SmartRecyclerAdapter smartRecyclerAdapter = new SmartRecyclerAdapter(mPrayRequestAdapter);
         smartRecyclerAdapter.setHeaderView(view);
+        recycler_feed.setAdapter(smartRecyclerAdapter);
+        
         mPrayRequestAdapter.addClickListiner(lFilterItemCallback);
         mPrayRequestAdapter.removeAllData();
         ServerRequest("0");
@@ -155,6 +155,14 @@ public class PrayerActivity extends BaseActivity {
                 Intent mIntent = new Intent(PrayerActivity.this, VideoPlayertActivity.class);
                 mIntent.putExtra("url", mFeedList.getPost_path());
                 startActivity(mIntent);
+            } else if (type == 6) {
+                Intent mIntent = new Intent(PrayerActivity.this, LikedListActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mFeedList);
+                extra.putInt("screen", 2);
+                mIntent.putExtra("extra", extra);
+                startActivityForResult(mIntent, 102);
+
             }
         }
     };

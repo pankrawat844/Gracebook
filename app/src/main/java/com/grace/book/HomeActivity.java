@@ -175,6 +175,15 @@ public class HomeActivity extends BaseActivity {
                 mIntent.putExtra("url", mFeedList.getPost_path());
                 startActivity(mIntent);
             }
+            else if (type == 6) {
+                Intent mIntent = new Intent(HomeActivity.this, LikedListActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mFeedList);
+                extra.putInt("screen", 1);
+                mIntent.putExtra("extra", extra);
+                startActivityForResult(mIntent, 102);
+
+            }
         }
     };
 

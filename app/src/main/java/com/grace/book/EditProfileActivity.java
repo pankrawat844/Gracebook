@@ -131,7 +131,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 edittextEmail.setText(email);
                 edittextphone.setText(phone);
                 edittextchurch.setText(church);
-                edittextnio.setText(bio);
+                edittextnio.setText(Logger.EmptyString(bio));
                 if(country_code!=null || !country_code.equalsIgnoreCase("")){
                     ccp.setCountryForPhoneCode(Integer.parseInt(country_code));
                 }

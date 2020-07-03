@@ -17,21 +17,25 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/back_btn">
+                android:src="@drawable/ic_arrow_back_24px">
 
             </ImageView>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="daily verse"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_medium"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 

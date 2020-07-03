@@ -107,7 +107,13 @@ public class PrayRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         //lFilterItemCallback.ClickFilterItemCallback(1, position);
                     }
                 });
+                holder.totalLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        lFilterItemCallback.ClickFilterItemCallback(6, position);
 
+                    }
+                });
                 holder.layoutchat.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

@@ -86,9 +86,6 @@ public class PostallActivity extends AppCompatActivity {
             group_id = getIntent().getStringExtra("group_id");
         }
         mContext = this;
-//        CropImage.activity()
-//                .setGuidelines(CropImageView.Guidelines.ON)
-//                .start(this);
         initUi();
     }
 
@@ -152,8 +149,8 @@ public class PostallActivity extends AppCompatActivity {
 
     public void validation() {
         String message = edittextChat.getText().toString();
-        if (message.equalsIgnoreCase("")) {
-            ToastHelper.showToast(mContext, "Write your comment");
+        if (message.equalsIgnoreCase("") && selectedImagePath.equalsIgnoreCase("")) {
+            ToastHelper.showToast(mContext, "Don't find any things for post");
         } else {
             HashMap<String, String> allHashMap = new HashMap<>();
             allHashMap.put("details", message);

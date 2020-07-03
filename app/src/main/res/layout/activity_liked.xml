@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="#9798D1">
@@ -29,13 +33,12 @@
 
 
             <TextView
-                android:id="@+id/textHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My Post"
+                android:fontFamily="@font/font_medium"
+                android:text="Liked"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:fontFamily="@font/font_medium"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
@@ -44,29 +47,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topView"
+        android:background="#11000000">
 
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/swipe_refresh_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_feed"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layoutinput">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_feed"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10sp"
-                android:layout_marginRight="10sp">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </RelativeLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
