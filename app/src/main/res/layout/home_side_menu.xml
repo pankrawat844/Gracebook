@@ -15,7 +15,7 @@
             android:id="@+id/userImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/user_icon"></ImageView>
+            android:src="@drawable/ic_account_circle_24px"></ImageView>
 
         <TextView
             android:id="@+id/username"
@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            android:fontFamily="@font/font_medium"
             android:textStyle="normal"></TextView>
 
     </LinearLayout>
@@ -51,7 +52,7 @@
                 <LinearLayout
                     android:id="@+id/layoutdailyverse"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -61,13 +62,14 @@
                         android:text="daily verse"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="20sp"
                     android:background="@color/white">
 
@@ -76,7 +78,7 @@
                 <LinearLayout
                     android:id="@+id/layoutmyposts"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -86,13 +88,14 @@
                         android:text="my posts"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="20sp"
                     android:background="@color/white">
 
@@ -101,7 +104,7 @@
                 <LinearLayout
                     android:id="@+id/searchbeliever"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -111,13 +114,14 @@
                         android:text="search believer"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="20sp"
                     android:background="@color/white">
 
@@ -127,7 +131,7 @@
                     android:id="@+id/layoutfeedback"
                     android:visibility="visible"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -137,7 +141,8 @@
                         android:text="feedback"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
@@ -153,7 +158,7 @@
                 <LinearLayout
                     android:id="@+id/layoutsettings"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -163,13 +168,14 @@
                         android:text="settings"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="20sp"
                     android:background="@color/white">
 
@@ -178,7 +184,7 @@
                 <LinearLayout
                     android:id="@+id/layoutLogout"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="45dp"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -188,13 +194,14 @@
                         android:text="Logout"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/font_medium"
                         android:textStyle="normal"></TextView>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     android:layout_marginLeft="20sp"
                     android:background="@color/white">
 

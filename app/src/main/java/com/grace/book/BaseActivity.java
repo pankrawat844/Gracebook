@@ -117,6 +117,13 @@ public class BaseActivity extends AppCompatActivity {
         layoutsettings.setOnClickListener(listener);
         layoutLogout.setOnClickListener(listener);
 
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mIntent = new Intent(BaseActivity.this, EditProfileActivity.class);
+                startActivity(mIntent);
+            }
+        });
 
         userDataList();
     }
@@ -325,6 +332,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     AlertDialog alertDialog = null;
+
     public void alertfornewuser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
         LayoutInflater inflater = getLayoutInflater();

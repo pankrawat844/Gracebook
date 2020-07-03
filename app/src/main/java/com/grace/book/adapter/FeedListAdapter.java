@@ -138,7 +138,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
                 holder.textMessage.setText(mJobList.getDetails());
-                holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getFname());
+                holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
                 long time = DateUtility.dateToMillisecond(mJobList.getPost_time());
                 String text = GetTimeCovertAgo.getNewsFeeTimeAgo(time);
                 holder.timeduration.setText(text);
@@ -147,9 +147,9 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.profileUser);
 
                 if (mJobList.isIs_like()) {
-                    holder.IsLikemage.setImageResource(R.drawable.like_is);
+                    holder.IsLikemage.setImageResource(R.drawable.ic_favorite_24px);
                 } else {
-                    holder.IsLikemage.setImageResource(R.drawable.like);
+                    holder.IsLikemage.setImageResource(R.drawable.ic_un_favorite_24px);
                 }
 
                 holder.videoposticon.setVisibility(View.GONE);

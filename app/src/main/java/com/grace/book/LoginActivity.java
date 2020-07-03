@@ -2,14 +2,18 @@ package com.grace.book;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -50,6 +54,8 @@ import com.hbb20.CountryCodePicker;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +63,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     final private int REQUEST_CODE_ASK_PERMISSIONS_AGENT = 100;
+    final private int REQUEST_SET_ASK_PERMISSIONS_AGENT = 101;
     private List<String> permissions = new ArrayList<String>();
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest mLocationRequest;
@@ -77,10 +84,9 @@ public class LoginActivity extends AppCompatActivity {
         mContext = this;
         initUi();
     }
-
     private void initUi() {
-        edittextEMail=(EditText)this.findViewById(R.id.edittextEMail);
-        editpassword=(EditText)this.findViewById(R.id.editpassword);
+        edittextEMail = (EditText) this.findViewById(R.id.edittextEMail);
+        editpassword = (EditText) this.findViewById(R.id.editpassword);
         findViewById(R.id.tvSignup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
                             PersistentUser.setUserID(mContext, userId);
                             PersistentUser.setUserToken(mContext, auth_token);
                             PersistentUser.setLogin(mContext);
-                            PersistentUser.setUserDetails(mContext,responseServer);
+                            PersistentUser.setUserDetails(mContext, responseServer);
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
@@ -190,6 +196,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     AlertDialog alertDialog;
+
     public void showDialogForVideo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -247,7 +254,7 @@ public class LoginActivity extends AppCompatActivity {
                         String otp_code = data.getString("otp_code");
                         String phone = data.getString("phone");
                         String country_code = data.getString("country_code");
-                        PersistentUser.setUserDetails(mContext,responseServer);
+                        PersistentUser.setUserDetails(mContext, responseServer);
                         Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
                         intent.putExtra("screen", 1);
                         intent.putExtra("otp_code", otp_code);
@@ -273,6 +280,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void checkLocationPermissionsInitial() {
         permissions.clear();
@@ -340,7 +348,7 @@ public class LoginActivity extends AppCompatActivity {
                                     case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
                                         try {
                                             ResolvableApiException rae = (ResolvableApiException) e;
-                                            rae.startResolutionForResult(LoginActivity.this, REQUEST_CODE_ASK_PERMISSIONS_AGENT);
+                                            rae.startResolutionForResult(LoginActivity.this, REQUEST_SET_ASK_PERMISSIONS_AGENT);
                                         } catch (IntentSender.SendIntentException e1) {
                                             e1.printStackTrace();
                                         }
@@ -394,11 +402,8 @@ public class LoginActivity extends AppCompatActivity {
                         mGoogleApiClient.disconnect();
                     }
 
-                    Intent mm = new Intent(LoginActivity.this, SignupActivity.class);
-                    startActivity(mm);
-
-
-                    //verification();
+                    Intent mIntent = new Intent(LoginActivity.this, SignupActivity.class);
+                    startActivity(mIntent);
 
                 }
             }
@@ -410,15 +415,16 @@ public class LoginActivity extends AppCompatActivity {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        removeUpdateLocation();
-    }
-
-    public void removeUpdateLocation() {
-        if (mFusedLocationClient != null) {
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SET_ASK_PERMISSIONS_AGENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                requestLocationUpdate();
+            } else {
+                finish();
+            }
         }
     }
+
+
 }

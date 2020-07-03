@@ -45,17 +45,20 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         this.allSearchList.addAll(myDataset);
     }
 
-    public void addClickListiner(FilterItemCallback lFilterItemCallback){
-        this.lFilterItemCallback=lFilterItemCallback;
+    public void addClickListiner(FilterItemCallback lFilterItemCallback) {
+        this.lFilterItemCallback = lFilterItemCallback;
     }
+
     public FeedList getModelAt(int index) {
         return allSearchList.get(index);
     }
+
     public void remvoeList(int index) {
         allSearchList.remove(index);
         notifyDataSetChanged();
 
     }
+
     public int getDataSize() {
         return allSearchList.size();
     }
@@ -136,7 +139,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
                 holder.textMessage.setText(mJobList.getDetails());
-                holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getFname());
+                holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
                 long time = DateUtility.dateToMillisecond(mJobList.getPost_time());
                 String text = GetTimeCovertAgo.getNewsFeeTimeAgo(time);
                 holder.timeduration.setText(text);
@@ -145,9 +148,9 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.profileUser);
 
                 if (mJobList.isIs_like()) {
-                    holder.IsLikemage.setImageResource(R.drawable.like_is);
+                    holder.IsLikemage.setImageResource(R.drawable.ic_favorite_24px);
                 } else {
-                    holder.IsLikemage.setImageResource(R.drawable.like);
+                    holder.IsLikemage.setImageResource(R.drawable.ic_un_favorite_24px);
                 }
 
                 holder.videoposticon.setVisibility(View.GONE);
@@ -174,7 +177,6 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 if (PersistentUser.getUserID(mContext).equalsIgnoreCase(mJobList.getUser_id())) {
                     holder.delete_icon.setVisibility(View.VISIBLE);
                 }
-
 
 
             } catch (Exception ex) {
@@ -242,6 +244,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
     }
+
     private void ServerRequest(final int position) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);

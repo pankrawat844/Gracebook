@@ -378,8 +378,6 @@ public class PostallActivity extends AppCompatActivity {
                 Glide.with(mContext)
                         .load(new File(selectedImagePath))
                         .apply(requestOptionsForRadious)
-                        .error(R.drawable.user_icon)
-                        .placeholder(R.drawable.user_icon)
                         .into(imageImages);
                 post_type = "1";
                 File file = new File(selectedImagePath);
@@ -410,8 +408,6 @@ public class PostallActivity extends AppCompatActivity {
                 Glide.with(mContext)
                         .load(new File(selectedImagePath))
                         .apply(requestOptionsForRadious)
-                        .error(R.drawable.user_icon)
-                        .placeholder(R.drawable.user_icon)
                         .into(imageImages);
                 try {
                     File compressedImage = new Compressor(this)
@@ -440,8 +436,6 @@ public class PostallActivity extends AppCompatActivity {
                 Glide.with(mContext)
                         .load(new File(selectedImagePath))
                         .apply(requestOptionsForRadious)
-                        .error(R.drawable.user_icon)
-                        .placeholder(R.drawable.user_icon)
                         .into(imageImages);
                 post_type = "2";
                 deletefile.setVisibility(View.VISIBLE);
@@ -455,8 +449,6 @@ public class PostallActivity extends AppCompatActivity {
                 Glide.with(mContext)
                         .load(new File(selectedImagePath))
                         .apply(requestOptionsForRadious)
-                        .error(R.drawable.user_icon)
-                        .placeholder(R.drawable.user_icon)
                         .into(imageImages);
                 post_type = "2";
                 deletefile.setVisibility(View.VISIBLE);

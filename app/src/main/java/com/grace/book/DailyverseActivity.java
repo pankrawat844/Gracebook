@@ -21,6 +21,7 @@ import com.grace.book.model.BannerList;
 import com.grace.book.model.FeedList;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
+import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.ConstantFunctions;
 import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
@@ -41,7 +42,7 @@ public class DailyverseActivity extends AppCompatActivity {
     private Context mContext;
     private LinearLayout layoutBack;
     private ImageView imagedummyverse;
-
+    private BusyDialog mBusyDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,9 @@ public class DailyverseActivity extends AppCompatActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
+
         HashMap<String, String> allHashMap = new HashMap<>();
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
@@ -86,6 +90,7 @@ public class DailyverseActivity extends AppCompatActivity {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
                 try {
+                    mBusyDialog.dismis();
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
@@ -103,6 +108,7 @@ public class DailyverseActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(String statusCode, String serverResponse) {
+                mBusyDialog.dismis();
 
             }
         });

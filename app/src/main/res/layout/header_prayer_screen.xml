@@ -9,22 +9,17 @@
     <EditText
         android:id="@+id/edittextChat"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/rounded_inputbox_chat"
         android:maxLines="2"
-        android:text="Type prayer request here..."
         android:paddingLeft="10dp"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"
+        android:text="Type prayer request here..."
+        android:textSize="14sp"
+        android:textStyle="italic" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/ash_ash">
-
-    </View>
 
 </LinearLayout>

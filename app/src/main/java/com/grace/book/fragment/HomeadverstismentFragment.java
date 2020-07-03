@@ -41,10 +41,8 @@ public final class HomeadverstismentFragment extends Fragment {
         View layout = inflater.inflate(R.layout.row_slidingimage,
                 container, false);
         ImageView sliding_image_farv = (ImageView) layout.findViewById(R.id.sliding_image_farv);
-        TextView title_on_advertisemnt = (TextView) layout.findViewById(R.id.title_on_advertisemnt);
         String path = HomeadvertismentAdapter.advertisementListArrayList.get(mContent).getImage();
         ConstantFunctions.loadImageHeaderFirst(path, sliding_image_farv);
-        title_on_advertisemnt.setText(HomeadvertismentAdapter.advertisementListArrayList.get(mContent).getTitle());
         sliding_image_farv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

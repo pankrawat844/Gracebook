@@ -14,29 +14,10 @@
         android:layout_centerInParent="true"
         android:visibility="invisible" />
 
-    <RelativeLayout
-        android:id="@+id/valueLauout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp">
-
-        <TextView
-            android:id="@+id/title_on_advertisemnt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:gravity="center_horizontal"
-            android:maxLines="2"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
     <ImageView
         android:id="@+id/sliding_image_farv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/valueLauout"
         android:scaleType="centerCrop" />
 
 

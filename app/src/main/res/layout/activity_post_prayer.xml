@@ -20,9 +20,10 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/back_btn">
+                android:src="@drawable/ic_arrow_back_24px">
 
             </ImageView>
 
@@ -30,9 +31,10 @@
                 android:id="@+id/prayerTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/font_regular"
                 android:text="Feedback"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16dp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
@@ -42,11 +44,12 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:fontFamily="@font/font_regular"
             android:gravity="center_vertical"
+            android:paddingRight="10dp"
             android:text="POST"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="normal"></TextView>
     </RelativeLayout>
 
@@ -63,12 +66,14 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/rounded_inputbox_chat"
+            android:fontFamily="@font/font_medium"
             android:gravity="left|top"
             android:hint="Type your text here.."
             android:padding="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="italic|normal" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,9 +88,9 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/for_photo"></ImageView>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_photo_camera_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,6 +98,7 @@
                     android:layout_marginLeft="3dp"
                     android:text="Image"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/font_light"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -107,9 +113,9 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/for_video"></ImageView>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_videocam_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -117,6 +123,7 @@
                     android:layout_marginLeft="3dp"
                     android:text="Video"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/font_light"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -130,9 +137,9 @@
                 android:gravity="center_vertical">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/for_audio"></ImageView>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_mic_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -140,6 +147,7 @@
                     android:layout_marginLeft="3dp"
                     android:text="Audio"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/font_light"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -148,22 +156,24 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="20sp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="20sp">
 
             <ImageView
                 android:id="@+id/imageImages"
-                android:layout_width="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"></ImageView>
 
             <ImageView
-                android:layout_marginRight="10dp"
-                android:layout_alignParentRight="true"
                 android:id="@+id/deletefile"
-                android:src="@drawable/delete_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"></ImageView>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_delete_24px"></ImageView>
 
         </RelativeLayout>
 
