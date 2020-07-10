@@ -10,10 +10,10 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/topView"
+        android:id="@+id/layouttopView"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -27,22 +27,40 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_arrow_back_24px">
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
 
             </ImageView>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_medium"
-                android:text="Liked"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layouttopView"
+        android:background="#9976B1"
+        android:fontFamily="@font/font_medium"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Liked"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"></TextView>
 
 
     <RelativeLayout
@@ -53,16 +71,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_feed"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/layoutinput">
+            android:layout_above="@+id/layoutinput"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
 
 
     </RelativeLayout>

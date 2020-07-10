@@ -78,7 +78,6 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
             Usersdata mJobList = allSearchList.get(position).getmUsersdata();
             try {
 
-
                 holder.layoutaccepted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -94,6 +93,10 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
 
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImageFriendrequet);
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
+
 
             } catch (Exception ex) {
                 Log.e("Exception", ex.getMessage());
@@ -117,14 +120,21 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
         private ImageView userImageFriendrequet;
         private LinearLayout layoutaccepted;
         private LinearLayout layoutDelete;
+        private ImageView userImage;
+        private ImageView charUser;
         private TextView username;
+        private TextView userNumber;
+        private TextView userLocation;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             layoutaccepted = (LinearLayout) itemView.findViewById(R.id.layoutaccepted);
             layoutDelete = (LinearLayout) itemView.findViewById(R.id.layoutDelete);
-            userImageFriendrequet = (ImageView) itemView.findViewById(R.id.userImageFriendrequet);
+            charUser = (ImageView) itemView.findViewById(R.id.charUser);
+            userImage = (ImageView) itemView.findViewById(R.id.userImage);
             username = (TextView) itemView.findViewById(R.id.username);
+            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
+            userLocation = (TextView) itemView.findViewById(R.id.userLocation);
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

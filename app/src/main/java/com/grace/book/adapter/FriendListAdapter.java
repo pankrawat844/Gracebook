@@ -73,21 +73,17 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             try {
 
-                holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
+                holder.charUser.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                          lFilterItemCallback.ClickFilterItemCallback(0,position);
-                    }
-                });
-                holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(1,position);
+                        lFilterItemCallback.ClickFilterItemCallback(1, position);
 
                     }
                 });
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
 
 
             } catch (Exception ex) {
@@ -109,26 +105,26 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView userImage;
-        private LinearLayout layoutProfile;
-        private LinearLayout AddBeliever;
+        private ImageView charUser;
         private TextView username;
+        private TextView userNumber;
+        private TextView userLocation;
 
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
-            AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
+            charUser = (ImageView) itemView.findViewById(R.id.charUser);
             userImage = (ImageView) itemView.findViewById(R.id.userImage);
             username = (TextView) itemView.findViewById(R.id.username);
-
-
+            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
+            userLocation = (TextView) itemView.findViewById(R.id.userLocation);
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
         }
 
         @Override
         public void onClick(View v) {
-
+            lFilterItemCallback.ClickFilterItemCallback(0, getAdapterPosition());
         }
 
     }

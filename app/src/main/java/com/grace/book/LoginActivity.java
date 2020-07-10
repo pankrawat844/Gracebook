@@ -87,12 +87,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initUi() {
         edittextEMail = (EditText) this.findViewById(R.id.edittextEMail);
         editpassword = (EditText) this.findViewById(R.id.editpassword);
-        findViewById(R.id.tvSignup).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkLocationPermissionsInitial();
-            }
-        });
+
         findViewById(R.id.tvForgotpassword).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,10 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                 vaidation();
             }
         });
-
+        edittextEMail.setText("prosanto.mbstu@gmail.com");
+        editpassword.setText("123");
     }
 
     public void vaidation() {
+
+
         String email = edittextEMail.getText().toString().trim();
         String password = editpassword.getText().toString().trim();
 

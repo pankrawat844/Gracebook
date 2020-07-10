@@ -11,20 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        app:cardCornerRadius="4dp">
+        app:cardCornerRadius="25dp">
 
         <LinearLayout
+            android:layout_margin="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/userView"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
                 android:gravity="center_vertical"
+                android:layout_height="70dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -74,7 +73,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_delete_24px">
+                    android:tint="#78849E"
+                    android:src="@drawable/ic_expand_more_24px">
 
                 </ImageView>
 
@@ -84,8 +84,8 @@
                 android:id="@+id/textMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_medium"
-                android:textColor="@color/black"
+                android:fontFamily="@font/font_light"
+                android:textColor="#707070"
                 android:textSize="14sp"
                 android:textStyle="normal"></TextView>
 
@@ -142,8 +142,8 @@
 
                     <ImageView
                         android:id="@+id/IsLikemage"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/ic_favorite_24px"></ImageView>
 
                     <TextView
@@ -151,9 +151,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:fontFamily="@font/font_medium"
+                        android:fontFamily="@font/font_light"
                         android:text="0"
-                        android:textColor="@color/black"
+                        android:textColor="#707070"
                         android:textSize="14sp"
                         android:textStyle="bold">
 
@@ -171,8 +171,8 @@
                     android:gravity="center_vertical">
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/ic_chat_bubble_24px"></ImageView>
 
                     <TextView
@@ -180,9 +180,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:fontFamily="@font/font_medium"
+                        android:fontFamily="@font/font_light"
                         android:text="0"
-                        android:textColor="@color/black"
+                        android:textColor="#707070"
                         android:textSize="14sp"
                         android:textStyle="bold">
 
@@ -199,8 +199,8 @@
                     android:layout_marginRight="20sp">
 
                     <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:src="@drawable/ic_share_24px"></ImageView>
 
                 </LinearLayout>

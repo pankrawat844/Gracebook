@@ -65,7 +65,6 @@ public class UserprofileActivity extends AppCompatActivity {
     private LinearLayout layoutMessage;
     private LinearLayout layout_unfriend;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,7 +151,7 @@ public class UserprofileActivity extends AppCompatActivity {
         userprofole_name.setText(mUsersdata.getFname() + " " + mUsersdata.getLname());
         userprofole_bio.setText(Logger.EmptyString(mUsersdata.getBio()));
         userprofole_member.setText("Member of " + mUsersdata.getChurch());
-        userprofole_location.setText("Lives in " + mUsersdata.getCity() + ", " + mUsersdata.getCountry());
+        userprofole_location.setText(mUsersdata.getCity() + ", " + mUsersdata.getCountry());
     }
 
     public void userInformationShow() {

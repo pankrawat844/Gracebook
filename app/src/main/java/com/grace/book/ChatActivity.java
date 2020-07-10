@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -72,6 +73,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -185,10 +187,11 @@ public class ChatActivity extends AppCompatActivity {
                         edittextChat.setText("");
                         HashMap<String, String> mJsonObject = new HashMap<>();
                         mJsonObject.put("type", "0");
+                        //mJsonObject.put("message", URLEncoder.encode(text, "UTF-8"));
                         mJsonObject.put("message", text);
                         mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
                         mJsonObject.put("receiver_id", mUsersdata.getId());
-                        sendServerRequest(mJsonObject);
+                        serverdRequestForMessage(mJsonObject);
 
                     } catch (Exception x) {
                     }
@@ -296,6 +299,60 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void serverdRequestForMessage(HashMap<String, String> allHashMap) {
+        if (!Helpers.isNetworkAvailable(mContext)) {
+            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
+            return;
+        }
+
+        HashMap<String, String> allHashMapHeader = new HashMap<>();
+        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
+        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
+
+        final String url = AllUrls.BASEURL + "sendMessage";
+        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
+            @Override
+            public void onSuccess(String statusCode, String responseServer) {
+                try {
+                    Logger.debugLog("responseServer", responseServer);
+                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    if (mJsonObject.getBoolean("success")) {
+                        JSONObject result = mJsonObject.getJSONObject("data");
+                        GsonBuilder builder = new GsonBuilder();
+                        Gson mGson = builder.create();
+                        MessageList mServermessage = (MessageList) mGson.fromJson(result.toString(), MessageList.class);
+                        long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
+                        String senderid = mServermessage.getSender_id();
+                        if (mServermessage.getType().equalsIgnoreCase("0")) {
+                            mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
+
+                        } else {
+                            mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+
+                        }
+
+                    }
+
+
+                } catch (Exception e) {
+
+                }
+            }
+
+            @Override
+            public void onFailed(String statusCode, String serverResponse) {
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });
+    }
+
     public void sendServerRequest(HashMap<String, String> allHashMap) {
 
         if (!Helpers.isNetworkAvailable(mContext)) {
@@ -303,6 +360,7 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
 
+        Log.e("allHashMap", allHashMap.toString());
         HashMap<String, String> headerParams = new HashMap<>();
         headerParams.put("appKey", AllUrls.APP_KEY);
         headerParams.put("authToken", PersistentUser.getUserToken(mContext));

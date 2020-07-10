@@ -79,6 +79,9 @@ public class LikedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             try {
                 holder.userProfileNmae.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
                 ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.userProfileImage);
+                holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
+                holder.userNumber.setText("Member of " + mJobList.getmUsersdata().getChurch());
+                holder.userLocation.setText(mJobList.getmUsersdata().getCity() + ", " + mJobList.getmUsersdata().getCountry());
 
 
             } catch (Exception ex) {
@@ -101,11 +104,16 @@ public class LikedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView userProfileImage;
         private TextView userProfileNmae;
-
+        private TextView username;
+        private TextView userNumber;
+        private TextView userLocation;
         public ItemViewHolder(View itemView) {
             super(itemView);
             userProfileImage = (ImageView) itemView.findViewById(R.id.userProfileImage);
             userProfileNmae = (TextView) itemView.findViewById(R.id.userProfileNmae);
+            username = (TextView) itemView.findViewById(R.id.username);
+            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
+            userLocation = (TextView) itemView.findViewById(R.id.userLocation);
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

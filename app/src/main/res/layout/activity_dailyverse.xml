@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -17,29 +17,51 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_arrow_back_24px">
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
 
             </ImageView>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="daily verse"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:fontFamily="@font/font_medium"
-                android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:fontFamily="@font/font_medium"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="daily verse"
+        android:textAllCaps="true"
+        android:textColor="#270E3B"
+        android:textSize="16sp"
+        android:textStyle="normal"></TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#8A56AC">
+
+    </View>
 
 
     <RelativeLayout

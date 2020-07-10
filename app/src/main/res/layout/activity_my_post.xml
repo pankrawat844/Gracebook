@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#F1F0F2"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -23,23 +23,38 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_arrow_back_24px">
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
 
             </ImageView>
 
-
-            <TextView
-                android:id="@+id/textHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="My Post"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:fontFamily="@font/font_medium"
-                android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9976B1"
+        android:fontFamily="@font/font_medium"
+        android:gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="My Post"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="normal"></TextView>
 
 
     <RelativeLayout
@@ -47,7 +62,8 @@
         android:layout_height="match_parent">
 
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
@@ -59,6 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10sp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="10sp">
 
             </androidx.recyclerview.widget.RecyclerView>

@@ -75,12 +75,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
             Usersdata mJobList = allSearchList.get(position);
             try {
-                holder.layoutProfile.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(0, position);
-                    }
-                });
+
                 holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -88,8 +83,11 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
                     }
                 });
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
-
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
+
+
 
             } catch (Exception ex) {
                 Log.e("Exception",ex.getMessage());
@@ -113,14 +111,16 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
         private ImageView userImage;
         private LinearLayout layoutProfile;
         private LinearLayout AddBeliever;
-        private TextView username;
+        private TextView username,userNumber,userLocation;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
             AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
             userImage = (ImageView) itemView.findViewById(R.id.userImage);
-            username = (TextView) itemView.findViewById(R.id.usernameSearc);
+
+            username = (TextView) itemView.findViewById(R.id.username);
+            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
+            userLocation = (TextView) itemView.findViewById(R.id.userLocation);
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());
@@ -128,6 +128,7 @@ public class SearchbelieverListAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
+            lFilterItemCallback.ClickFilterItemCallback(0, getAdapterPosition());
 
         }
 

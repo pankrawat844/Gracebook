@@ -4,26 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".FriendsActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?actionBarSize"
+        android:layout_height="?actionBarSize"
+        android:elevation="0dp"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/colorPrimary"
-        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorColor="#092657"
+        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorHeight="4dp"
         app:tabMode="fixed">
 
     </com.google.android.material.tabs.TabLayout>
 
+    <View
+        android:id="@+id/view_offset_helper"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="?actionBarSize"
+        android:background="@color/black"
+        android:visibility="visible">
+
+    </View>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_below="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view_offset_helper">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -35,8 +47,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20sp"
         android:layout_marginBottom="20sp"
-        android:gravity="center"
-        android:background="@drawable/circel_shape">
+        android:background="@drawable/circel_shape"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"

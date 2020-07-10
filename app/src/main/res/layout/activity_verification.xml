@@ -100,9 +100,9 @@
                         android:background="@drawable/rounded_button"
                         android:gravity="center"
                         android:text="Submit"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-                        android:textStyle="normal">
+                        android:textSize="16dp"
+                        android:fontFamily="@font/font_medium"
+                        android:textColor="@color/white">
 
                     </TextView>
 
@@ -115,8 +115,9 @@
                         android:text="Resend"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:textStyle="bold">
+                        android:textSize="16dp"
+                        android:fontFamily="@font/font_medium"
+                        >
 
                     </TextView>
 

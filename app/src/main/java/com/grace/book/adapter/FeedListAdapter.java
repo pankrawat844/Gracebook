@@ -169,12 +169,12 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("1")) {
                     holder.layoutForImage_video.setVisibility(View.VISIBLE);
-                    ConstantFunctions.loadImageNomal(mJobList.getPost_path(), holder.postImage);
+                    ConstantFunctions.loadImageMatch(mJobList.getPost_path(), holder.postImage);
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("2")) {
                     holder.layoutForImage_video.setVisibility(View.VISIBLE);
                     holder.videoposticon.setVisibility(View.VISIBLE);
-                    ConstantFunctions.loadImageNomal(mJobList.getPost_path(), holder.postImage);
+                    ConstantFunctions.loadImageMatch(mJobList.getPost_path(), holder.postImage);
 
                 } else if (mJobList.getPost_type().equalsIgnoreCase("3")) {
                     holder.layoutForImage_audio.setVisibility(View.VISIBLE);

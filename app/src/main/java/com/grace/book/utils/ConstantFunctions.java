@@ -37,7 +37,7 @@ public class ConstantFunctions {
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
     public static RequestOptions requestOptionsRadioMatch = new RequestOptions()
-            .bitmapTransform(new RoundedCornersTransformation(10, 1, RoundedCornersTransformation.CornerType.ALL))
+            .bitmapTransform(new RoundedCornersTransformation(25, 1, RoundedCornersTransformation.CornerType.ALL))
             .diskCacheStrategy(DiskCacheStrategy.ALL);
 
 
@@ -130,7 +130,7 @@ public class ConstantFunctions {
     }
 
     public static void loadImageForCircel(String url, final ImageView iv) {
-        if (url ==null || url.toString().equalsIgnoreCase("")) {
+        if (url == null || url.toString().equalsIgnoreCase("")) {
 
         } else {
             Glide.with(Myapplication.getContext()).asBitmap()
@@ -169,7 +169,6 @@ public class ConstantFunctions {
         Glide.with(Myapplication.getContext())
                 .asBitmap()
                 .load(url)
-                .fitCenter()
                 .apply(requestOptionsRadioMatch)
                 .into(iv);
     }
@@ -254,8 +253,8 @@ public class ConstantFunctions {
                 //  Logger.debugLog("state", state);
                 address[0] = city;
                 address[1] = country;
-                Log.e("city",city);
-                Log.e("country",country);
+                Log.e("city", city);
+                Log.e("country", country);
 
                 //address[1] = state;
                 // address[2] = zip;
@@ -264,7 +263,7 @@ public class ConstantFunctions {
 
 
         } catch (IOException e) {
-            Log.e("IOException",e.getMessage());
+            Log.e("IOException", e.getMessage());
             e.printStackTrace();
         }
         return address;

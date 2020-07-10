@@ -14,8 +14,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
@@ -44,7 +48,6 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout layout_notificaion;
     private LinearLayout layout_chat;
     private LinearLayout layout_group;
-    private SlidingMenu slidingMenu;
     private int selection = 0;
     private LinearLayout layoutdailyverse;
     private LinearLayout layoutmyposts;
@@ -54,6 +57,8 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout layoutLogout;
     private ImageView userImage;
     private TextView username;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +69,8 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void bottomView() {
-        slidingMenu = new SlidingMenu(this);
-        slidingMenu.setMode(SlidingMenu.LEFT);
 
-        slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        slidingMenu.setShadowDrawable(R.drawable.shadow);
-        slidingMenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        slidingMenu.setFadeDegree(0.8f);
-        slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
-        slidingMenu.setMenu(R.layout.home_side_menu);
-        slidingMenu.setSlidingEnabled(false);
-
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         frameLayout = (FrameLayout) this.findViewById(R.id.content_frame);
         layout_home = (LinearLayout) this.findViewById(R.id.layout_home);
         layout_prayer = (LinearLayout) this.findViewById(R.id.layout_prayer);
@@ -98,15 +94,22 @@ public class BaseActivity extends AppCompatActivity {
         layoutfeedback = (LinearLayout) this.findViewById(R.id.layoutfeedback);
         layoutsettings = (LinearLayout) this.findViewById(R.id.layoutsettings);
         layoutLogout = (LinearLayout) this.findViewById(R.id.layoutLogout);
-
+//
         userImage = (ImageView) this.findViewById(R.id.userImage);
         username = (TextView) this.findViewById(R.id.username);
-
+//
         LinearLayout btnmenu = (LinearLayout) this.findViewById(R.id.btnmenu);
         btnmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                slidingMenu.toggle();
+                //slidingMenu.toggle();
+                if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    mDrawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+
+                }
+
             }
         });
 
@@ -116,7 +119,6 @@ public class BaseActivity extends AppCompatActivity {
         layoutfeedback.setOnClickListener(listener);
         layoutsettings.setOnClickListener(listener);
         layoutLogout.setOnClickListener(listener);
-
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,12 +128,18 @@ public class BaseActivity extends AppCompatActivity {
         });
 
         userDataList();
+        // setupDrawerToggle();
+    }
+
+    void setupDrawerToggle() {
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
+        actionBarDrawerToggle.syncState();
     }
 
     public View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            slidingMenu.toggle();
+            mDrawerLayout.closeDrawer(GravityCompat.START);
             switch (v.getId()) {
                 case R.id.layoutdailyverse:
                     intent = new Intent(mContext, DailyverseActivity.class);

@@ -18,7 +18,9 @@
         android:id="@+id/sliding_image_farv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitXY" />
 
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -108,8 +109,7 @@ public class HomeActivity extends BaseActivity {
         recycler_feed.setAdapter(smartRecyclerAdapter);
         smartRecyclerAdapter.setHeaderView(view);
 
-        EditText edittextHomePost = (EditText) view.findViewById(R.id.edittextHomePost);
-        edittextHomePost.setFocusable(false);
+        LinearLayout edittextHomePost = (LinearLayout) this.findViewById(R.id.edittextHomePost);
         edittextHomePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,8 +174,7 @@ public class HomeActivity extends BaseActivity {
                 Intent mIntent = new Intent(HomeActivity.this, VideoPlayertActivity.class);
                 mIntent.putExtra("url", mFeedList.getPost_path());
                 startActivity(mIntent);
-            }
-            else if (type == 6) {
+            } else if (type == 6) {
                 Intent mIntent = new Intent(HomeActivity.this, LikedListActivity.class);
                 Bundle extra = new Bundle();
                 extra.putSerializable("objects", mFeedList);
@@ -258,6 +257,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     AlertDialog alertDialog = null;
+
     public void alertfornewuser(final int postion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
         LayoutInflater inflater = getLayoutInflater();

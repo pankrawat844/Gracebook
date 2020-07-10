@@ -6,107 +6,128 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/userImageFriendrequet"
+            android:id="@+id/userImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@drawable/user_icon"></ImageView>
-
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_toRightOf="@+id/userImageFriendrequet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="normal">
-
-        </TextView>
-
+            android:src="@drawable/ic_account_circle_24px"></ImageView>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_alignParentRight="true"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@+id/layoutaccepted"
+            android:layout_toRightOf="@+id/userImage"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layoutaccepted"
+            <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:fontFamily="@font/font_medium"
+                android:text="Maria Snow"
+                android:textColor="#241332"
+                android:textSize="16sp"
+                android:textStyle="normal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/accepted">
+            </TextView>
 
-                </ImageView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Accepted"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="normal">
-
-                </TextView>
-
-            </LinearLayout>
-
-            <View
-                android:background="@color/ash_ash"
-                android:layout_width="1dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_height="match_parent">
-
-            </View>
-
-            <LinearLayout
-                android:id="@+id/layoutDelete"
+            <TextView
+                android:id="@+id/userNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:fontFamily="@font/font_light"
+                android:maxLines="1"
+                android:text="Member of Emmanuel Church"
+                android:textColor="#241332"
+                android:textSize="14sp"
+                android:textStyle="normal">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/unfriend">
+            </TextView>
 
-                </ImageView>
+            <TextView
+                android:id="@+id/userLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_light"
+                android:maxLines="1"
+                android:text="San Francisco, CA"
+                android:textColor="#241332"
+                android:textSize="14sp"
+                android:textStyle="normal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Delete"
-                    android:textColor="@color/black"
-                    android:textSize="12sp"
-                    android:textStyle="normal">
-
-                </TextView>
-
-            </LinearLayout>
+            </TextView>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutaccepted"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/layoutDelete"
+            android:background="@drawable/add_freind_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
+                android:gravity="center_horizontal"
+                android:text="Confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutDelete"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/not_now_bg"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
+                android:gravity="center_horizontal"
+                android:text="Not Now"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 
     <View
-        android:layout_marginTop="2dp"
-        android:background="@color/ash_ash"
         android:layout_width="match_parent"
-        android:layout_height="1dp">
+        android:layout_height="1dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/ash_ash">
 
     </View>
 
 </LinearLayout>
+

@@ -49,7 +49,7 @@ public class FriendRequestFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_notification, container, false);
+        View view = inflater.inflate(R.layout.fragment_freind, container, false);
         viewScreen(view);
         return view;
     }
@@ -73,8 +73,7 @@ public class FriendRequestFragment extends BaseFragment {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
                 acceptFriendserverRequest(allHashMap, position);
-            }
-            if (type == 2) {
+            } else if (type == 2) {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
                 rejectFriendserverRequest(allHashMap, position);

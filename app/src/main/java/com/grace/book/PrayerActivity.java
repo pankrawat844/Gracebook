@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -80,9 +81,7 @@ public class PrayerActivity extends BaseActivity {
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.header_prayer_screen, null);
-
-        EditText edittextChat = (EditText) view.findViewById(R.id.edittextChat);
-        edittextChat.setFocusable(false);
+        LinearLayout edittextChat = (LinearLayout) this.findViewById(R.id.edittextHomePost);
         edittextChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

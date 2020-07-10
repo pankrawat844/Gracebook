@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroun">
+    android:background="@color/white">
 
 
     <LinearLayout
@@ -20,16 +20,37 @@
             android:src="@drawable/logo">
 
         </ImageView>
-
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The complete Christian believer prayer app"
-            android:textColor="#EFE449"
-            android:textSize="18sp"
-            android:textStyle="bold|italic">
+            android:src="@drawable/anexclusive">
 
-        </TextView>
+        </ImageView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/greebook">
+
+        </ImageView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/angroup">
+
+        </ImageView>
 
     </LinearLayout>
 

@@ -42,7 +42,9 @@ public final class HomeadverstismentFragment extends Fragment {
                 container, false);
         ImageView sliding_image_farv = (ImageView) layout.findViewById(R.id.sliding_image_farv);
         String path = HomeadvertismentAdapter.advertisementListArrayList.get(mContent).getImage();
-        ConstantFunctions.loadImageHeaderFirst(path, sliding_image_farv);
+        ConstantFunctions.loadImageMatch(path, sliding_image_farv);
+
+
         sliding_image_farv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

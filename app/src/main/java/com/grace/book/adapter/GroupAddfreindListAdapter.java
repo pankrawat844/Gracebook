@@ -121,12 +121,12 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
-            AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
-            userImage = (ImageView) itemView.findViewById(R.id.userImage);
-            username = (TextView) itemView.findViewById(R.id.usernameSearc);
-            addText = (TextView) itemView.findViewById(R.id.addText);
-
+//            layoutProfile = (LinearLayout) itemView.findViewById(R.id.layoutProfile);
+//            AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
+//            userImage = (ImageView) itemView.findViewById(R.id.userImage);
+//            username = (TextView) itemView.findViewById(R.id.usernameSearc);
+//            addText = (TextView) itemView.findViewById(R.id.addText);
+//
 
             itemView.setOnClickListener(this);
             itemView.setTag(getAdapterPosition());

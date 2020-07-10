@@ -49,7 +49,7 @@ public class FriendsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_notification, container, false);
+        View view = inflater.inflate(R.layout.fragment_freind, container, false);
         viewScreen(view);
         return view;
     }

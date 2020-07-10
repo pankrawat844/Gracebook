@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -23,21 +23,40 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_arrow_back_24px">
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
 
             </ImageView>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_medium"
-                android:text="Edit Profile"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#9976B1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="Edit Profile"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
 
         <TextView
             android:id="@+id/btinSave"
@@ -51,8 +70,8 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="normal"></TextView>
-
     </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"

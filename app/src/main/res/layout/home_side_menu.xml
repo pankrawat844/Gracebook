@@ -2,217 +2,189 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/transparent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:background="@drawable/header_menu"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@drawable/roundcorner_header">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="180dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"></View>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layoutdailyverse"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Daily Verse"
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/layoutmyposts"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="My posts"
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/searchbeliever"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Search Believer"
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/layoutfeedback"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Feedback"
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutsettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Settings"
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/layoutLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="40dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Logout"
+
+                            android:textColor="#241332"
+                            android:textSize="14sp"
+                            android:textStyle="normal"></TextView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_account_circle_24px"></ImageView>
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:fontFamily="@font/font_medium"
-            android:textStyle="normal"></TextView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/slider_botom"
-        android:orientation="vertical">
-
-        <View
             android:layout_width="match_parent"
-            android:layout_height="60dp"></View>
+            android:layout_height="240dp"
+            android:background="@drawable/top">
 
-        <ScrollView
+        </ImageView>
+
+        <LinearLayout
+            android:id="@+id/layut"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layoutdailyverse"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="daily verse"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20sp"
-                    android:background="@color/white">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/layoutmyposts"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="my posts"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20sp"
-                    android:background="@color/white">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/searchbeliever"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="search believer"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20sp"
-                    android:background="@color/white">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/layoutfeedback"
-                    android:visibility="visible"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="feedback"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginLeft="20sp"
-                    android:visibility="visible"
-                    android:background="@color/white">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/layoutsettings"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="settings"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20sp"
-                    android:background="@color/white">
-
-                </View>
-
-                <LinearLayout
-                    android:id="@+id/layoutLogout"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:text="Logout"
-                        android:textAllCaps="true"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/font_medium"
-                        android:textStyle="normal"></TextView>
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="20sp"
-                    android:background="@color/white">
-
-                </View>
+            android:layout_height="180dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
-            </LinearLayout>
-        </ScrollView>
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_account_circle_24px"
+                android:tint="@color/white">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_medium"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="normal"></TextView>
+
+        </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>
