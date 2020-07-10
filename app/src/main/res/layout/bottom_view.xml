@@ -6,8 +6,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/white"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal">
 
 
@@ -16,13 +18,18 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte"></View>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/btn_tab_home" />
 
 
@@ -34,15 +41,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+
                 android:src="@drawable/btn_tab_prayer" />
+
 
         </LinearLayout>
 
@@ -51,14 +66,24 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+
                 android:src="@drawable/btn_tab_chat" />
+
 
         </LinearLayout>
 
@@ -68,15 +93,24 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
+
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/tab_profile" />
+
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_tab_friend" />
+
 
         </LinearLayout>
 
@@ -85,15 +119,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+
                 android:background="@drawable/btn_tab_group" />
+
 
         </LinearLayout>
 
@@ -102,15 +144,23 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/tab_selected_deselecte"
             android:gravity="center"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/tab_notificaion" />
+                android:layout_marginTop="10dp"
+
+                android:background="@drawable/btn_tab_notification" />
+
 
         </LinearLayout>
 
