@@ -47,19 +47,20 @@ import java.util.List;
 
 public class GroupActivity extends BaseActivity {
     private static final String TAG = GroupActivity.class.getSimpleName();
-    private final int VERTICAL_ITEM_SPACE = 20;
+    private final int VERTICAL_ITEM_SPACE = 0;
     private GroupListAdapter mGroupListAdapter;
-    private  RecyclerView recycler_feed;
+    private RecyclerView recycler_feed;
     private Context mContext;
     private LinearLayout add_new_group;
     private BusyDialog mBusyDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_group, frameLayout);
         Myapplication.selection = 5;
         selectedDeselectedLayut();
-        mContext=this;
+        mContext = this;
         initUi();
 
     }
@@ -71,11 +72,14 @@ public class GroupActivity extends BaseActivity {
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         recycler_feed.setAdapter(mGroupListAdapter);
-        add_new_group=(LinearLayout)this.findViewById(R.id.add_new_group);
+        add_new_group = (LinearLayout) this.findViewById(R.id.add_new_group);
         add_new_group.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogForVideo();
+                Intent mIntent = new Intent(GroupActivity.this, GroupcreateActivity.class);
+                Bundle extra = new Bundle();
+                mIntent.putExtra("extra", extra);
+                startActivityForResult(mIntent, 1011);
             }
         });
 
@@ -83,16 +87,17 @@ public class GroupActivity extends BaseActivity {
         groupList();
 
     }
-    public FilterItemCallback lFilterItemCallback =new FilterItemCallback() {
+
+    public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
 
-            GroupList mUsersdata= mGroupListAdapter.getModelAt(position);
+            GroupList mUsersdata = mGroupListAdapter.getModelAt(position);
             Intent mIntent = new Intent(GroupActivity.this, GroupdetailsActivity.class);
             Bundle extra = new Bundle();
             extra.putSerializable("objects", mUsersdata);
             mIntent.putExtra("extra", extra);
-            startActivityForResult(mIntent,1010);
+            startActivityForResult(mIntent, 1010);
         }
     };
 
@@ -102,81 +107,6 @@ public class GroupActivity extends BaseActivity {
         groupList();
     }
 
-    AlertDialog alertDialog;
-    public void showDialogForVideo() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        View mView = inflater.inflate(R.layout.dialog_group_name, null);
-        builder.setView(mView);
-        builder.setCancelable(true);
-        alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        alertDialog.show();
-        final EditText edittextphone = (EditText) mView.findViewById(R.id.edittextgeoupname);
-        final TextView Submit_btn = (TextView) mView.findViewById(R.id.Submit_btn);
-
-        Submit_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-
-                String phone = edittextphone.getText().toString();
-
-                if (phone.equalsIgnoreCase("")) {
-                    ToastHelper.showToast(mContext, "Please enter group name");
-                    return;
-                } else {
-                    HashMap<String, String> allHashMap = new HashMap<>();
-                    allHashMap.put("group_name", phone);
-                    forgorpasswordServerRequest(allHashMap);
-                }
-
-            }
-        });
-    }
-    private void forgorpasswordServerRequest(HashMap<String, String> allHashMap) {
-        if (!Helpers.isNetworkAvailable(mContext)) {
-            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
-            return;
-        }
-        HashMap<String, String> allHashMapHeader = new HashMap<>();
-        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
-        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
-        mBusyDialog = new BusyDialog(mContext);
-        mBusyDialog.show();
-        final String url = AllUrls.BASEURL + "groupAdd";
-        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
-            @Override
-            public void onSuccess(String statusCode, String responseServer) {
-                mBusyDialog.dismis();
-                try {
-                    Logger.debugLog("responseServer", responseServer);
-                    JSONObject mJsonObject = new JSONObject(responseServer);
-                    if (mJsonObject.getBoolean("success")) {
-                        groupList();
-                    } else {
-                        String message = mJsonObject.getString("message");
-                        ToastHelper.showToast(mContext, message);
-
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-
-            @Override
-            public void onFailed(String statusCode, String serverResponse) {
-                mBusyDialog.dismis();
-                if (statusCode.equalsIgnoreCase("404")) {
-                    PersistentUser.resetAllData(mContext);
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        });
-    }
     private void groupList() {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);

@@ -13,8 +13,20 @@ public class GroupList implements Serializable {
     private String user_id="";
     @SerializedName("group_name")
     private String group_name="";
+
+    @SerializedName("group_details")
+    private String group_details="";
+
     @SerializedName("group_owner")
     private String group_owner="";
+
+    public String getGroup_details() {
+        return group_details;
+    }
+
+    public void setGroup_details(String group_details) {
+        this.group_details = group_details;
+    }
 
     public String getId() {
         return id;

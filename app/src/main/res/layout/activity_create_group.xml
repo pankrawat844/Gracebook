@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#241332"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+
+            <ImageView
+                android:id="@+id/layoutBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/font_medium"
+                android:text="gracebook"
+                android:textAllCaps="true"
+                android:textColor="#270E3B"
+                android:textSize="16sp"
+                android:textStyle="normal"></TextView>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
+                android:text="Start a new group "
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="normal"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_light"
+                android:text="Find your people and do your thing - together"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="12sp"
+                android:textStyle="normal"></TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="20sp"
+            android:layout_marginRight="10sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_light"
+                android:text="Give your group a name. Describe who should join and what you’ll do."
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:textStyle="normal"></TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/font_light"
+                android:text="Group name"
+                android:textAllCaps="true"
+
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:textStyle="normal"></TextView>
+
+            <EditText
+                android:id="@+id/editGroupNmae"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_medium"
+                android:gravity="left|top"
+                android:hint=""
+                android:background="@color/transparent"
+                android:paddingLeft="20dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#8A56AC">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/font_light"
+                android:text="Description"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:textStyle="normal"></TextView>
+
+            <EditText
+                android:id="@+id/editGroupDetails"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/rounded_inputbox_post"
+                android:fontFamily="@font/font_medium"
+                android:gravity="left|top"
+                android:hint="Type here.."
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="5dp"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:id="@+id/layoutAddGroup"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner_prayer"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_medium"
+                    android:text="CREATE GROUP"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

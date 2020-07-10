@@ -114,6 +114,18 @@
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity"></activity>
 
+        <activity
+            android:name=".GroupcreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+        <activity
+            android:name=".GroupFriendListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
+
 
         <activity
             android:name=".DailyverseActivity"

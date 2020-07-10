@@ -58,7 +58,6 @@ public class GroupdetailsActivity extends BaseActivity {
     private Context mContext;
     private ImageView moreInformation;
     private GroupList mGroupList;
-    private TextView textHeader;
     private BusyDialog mBusyDialog;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -80,8 +79,6 @@ public class GroupdetailsActivity extends BaseActivity {
             }
         });
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-
-        textHeader = (TextView) this.findViewById(R.id.textHeader);
         moreInformation = (ImageView) this.findViewById(R.id.moreInformation);
         recycler_feed = (RecyclerView) this.findViewById(R.id.recycler_feed);
         mGroupListAdapter = new GroupPostAdapter(mContext, new ArrayList<FeedList>());
@@ -89,17 +86,10 @@ public class GroupdetailsActivity extends BaseActivity {
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
 
-        SmartRecyclerAdapter smartRecyclerAdapter = new SmartRecyclerAdapter(mGroupListAdapter);
-
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.header_prayer_screen, null);
-
-        recycler_feed.setAdapter(smartRecyclerAdapter);
+        recycler_feed.setAdapter(mGroupListAdapter);
 
 
-        EditText edittextChat = (EditText) view.findViewById(R.id.edittextChat);
-        edittextChat.setFocusable(false);
-        edittextChat.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.edittextHomePost).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(GroupdetailsActivity.this, PostallActivity.class);
@@ -114,10 +104,7 @@ public class GroupdetailsActivity extends BaseActivity {
                 popupMenu();
             }
         });
-        textHeader.setText(mGroupList.getGroup_name());
 
-        recycler_feed.setAdapter(smartRecyclerAdapter);
-        smartRecyclerAdapter.setHeaderView(view);
         mGroupListAdapter.addClickListiner(lFilterItemCallback);
         mGroupListAdapter.removeAllData();
         ServerRequest("0");
@@ -163,8 +150,7 @@ public class GroupdetailsActivity extends BaseActivity {
                 Intent mIntent = new Intent(GroupdetailsActivity.this, VideoPlayertActivity.class);
                 mIntent.putExtra("url", mFeedList.getPost_path());
                 startActivity(mIntent);
-            }
-            else if (type == 6) {
+            } else if (type == 6) {
                 Intent mIntent = new Intent(GroupdetailsActivity.this, LikedListActivity.class);
                 Bundle extra = new Bundle();
                 extra.putSerializable("objects", mFeedList);
@@ -196,6 +182,13 @@ public class GroupdetailsActivity extends BaseActivity {
                     mIntent.putExtra("extra", extra);
                     startActivityForResult(mIntent, 1010);
                     return true;
+                } else if (id == R.id.action_members) {
+                    Intent mIntent = new Intent(GroupdetailsActivity.this, GroupFriendListActivity.class);
+                    Bundle extra = new Bundle();
+                    extra.putSerializable("objects", mGroupList);
+                    mIntent.putExtra("extra", extra);
+                    startActivityForResult(mIntent, 1010);
+                    return true;
                 }
 
                 return true;
@@ -203,7 +196,7 @@ public class GroupdetailsActivity extends BaseActivity {
         });
         Menu popupMenu = popup.getMenu();
         if (!mGroupList.getGroup_owner().equalsIgnoreCase(PersistentUser.getUserID(mContext)))
-            popupMenu.findItem(R.id.action_booknow).setEnabled(false);
+            popupMenu.findItem(R.id.action_booknow).setVisible(false);
 
 
         popup.show();
@@ -364,6 +357,7 @@ public class GroupdetailsActivity extends BaseActivity {
             }
         });
     }
+
     public void deleteGrouProst(final int postion) {
         AlertDialog.Builder builder = new AlertDialog.Builder(GroupdetailsActivity.this);
         LayoutInflater inflater = getLayoutInflater();

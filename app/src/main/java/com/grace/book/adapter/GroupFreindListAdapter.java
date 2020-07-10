@@ -14,21 +14,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.grace.book.R;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.model.FriendList;
+import com.grace.book.model.GroupFriendList;
+import com.grace.book.model.GroupList;
 import com.grace.book.model.Usersdata;
 import com.grace.book.utils.ConstantFunctions;
 
 import java.util.ArrayList;
 
 
-public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = GroupAddfreindListAdapter.class.getSimpleName();
+public class GroupFreindListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = GroupFreindListAdapter.class.getSimpleName();
     private Context mContext;
-    private ArrayList<FriendList> allSearchList;
+    private ArrayList<GroupFriendList> allSearchList;
     private FilterItemCallback lFilterItemCallback;
+    private GroupList mGroupList;
 
-    public GroupAddfreindListAdapter(Context context, ArrayList<FriendList> myDataset) {
+    public GroupFreindListAdapter(Context context, ArrayList<GroupFriendList> myDataset) {
         mContext = context;
-        this.allSearchList = new ArrayList<FriendList>();
+        this.allSearchList = new ArrayList<GroupFriendList>();
         this.allSearchList.addAll(myDataset);
     }
 
@@ -36,7 +39,7 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
         lFilterItemCallback = _lFilterItemCallback;
     }
 
-    public FriendList getModelAt(int index) {
+    public GroupFriendList getModelAt(int index) {
         return allSearchList.get(index);
     }
 
@@ -49,8 +52,12 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
         return allSearchList.size();
     }
 
-    public void addAllList(ArrayList<FriendList> clientList) {
+    public void addAllList(ArrayList<GroupFriendList> clientList) {
         allSearchList.addAll(clientList);
+        notifyDataSetChanged();
+    }
+    public void addGroupList(GroupList mGroupList) {
+        this.mGroupList=mGroupList;
         notifyDataSetChanged();
     }
 
@@ -59,14 +66,14 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
         notifyDataSetChanged();
     }
 
-    public void addnewItem(FriendList dataObj) {
+    public void addnewItem(GroupFriendList dataObj) {
         allSearchList.add(dataObj);
         notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_search_believer, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_group_friend, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -78,18 +85,16 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
             Usersdata mJobList = allSearchList.get(position).getmUsersdata();
             try {
 
-                holder.AddBeliever.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        lFilterItemCallback.ClickFilterItemCallback(1, position);
-                    }
-                });
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
+                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
                 holder.userNumber.setText("Member of " + mJobList.getChurch());
                 holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
+                holder.group_admin.setVisibility(View.GONE);
+                if(mGroupList.getGroup_owner().equalsIgnoreCase(mJobList.getId())){
+                    holder.group_admin.setVisibility(View.VISIBLE);
 
-
+                }
 
             } catch (Exception ex) {
                 Log.e("Exception", ex.getMessage());
@@ -111,17 +116,15 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView userImage;
-        private LinearLayout AddBeliever;
-        private TextView username;
-        private TextView userLocation,userNumber;
+        private TextView username,group_admin,userNumber,userLocation;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
-            AddBeliever = (LinearLayout) itemView.findViewById(R.id.AddBeliever);
             userImage = (ImageView) itemView.findViewById(R.id.userImage);
-
             username = (TextView) itemView.findViewById(R.id.username);
-            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
             userLocation = (TextView) itemView.findViewById(R.id.userLocation);
+            group_admin = (TextView) itemView.findViewById(R.id.group_admin);
+            userNumber = (TextView) itemView.findViewById(R.id.userNumber);
 
 
             itemView.setOnClickListener(this);
@@ -130,8 +133,7 @@ public class GroupAddfreindListAdapter extends RecyclerView.Adapter<RecyclerView
 
         @Override
         public void onClick(View v) {
-            lFilterItemCallback.ClickFilterItemCallback(0, getAdapterPosition());
-
+            lFilterItemCallback.ClickFilterItemCallback(0,getAdapterPosition());
         }
 
     }
