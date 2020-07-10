@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +37,7 @@ import java.util.List;
 
 public class NotificaionActivity extends BaseActivity {
     private static final String TAG = NotificaionActivity.class.getSimpleName();
-    private final int VERTICAL_ITEM_SPACE = 10;
+    private final int VERTICAL_ITEM_SPACE = 0;
     private Context mContext;
     private RecyclerView recycler_feed;
     private NotificaitonListAdapter mNotificaitonListAdapter;
@@ -47,7 +48,7 @@ public class NotificaionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_notification, frameLayout);
         Myapplication.selection = 3;
-        mContext=this;
+        mContext = this;
         selectedDeselectedLayut();
         initUi();
     }
@@ -62,6 +63,21 @@ public class NotificaionActivity extends BaseActivity {
         ServerRequest("0");
 
     }
+
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            int position = viewHolder.getAdapterPosition();
+            //arrayList.remove(position);
+            //adapter.notifyDataSetChanged();
+        }
+    };
 
     private void ServerRequest(final String limit) {
         if (!Helpers.isNetworkAvailable(mContext)) {
@@ -109,6 +125,52 @@ public class NotificaionActivity extends BaseActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
+                }
+            }
+        });
+    }
+
+    private void removeServerRequest(String post_id) {
+        if (!Helpers.isNetworkAvailable(mContext)) {
+            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
+            return;
+        }
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
+
+        HashMap<String, String> allHashMap = new HashMap<>();
+        allHashMap.put("notification_id", post_id);
+
+        HashMap<String, String> allHashMapHeader = new HashMap<>();
+        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
+        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
+        final String url = AllUrls.BASEURL + "removenotification";
+        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
+            @Override
+            public void onSuccess(String statusCode, String responseServer) {
+                try {
+                    mBusyDialog.dismis();
+
+                    Logger.debugLog("responseServer", responseServer);
+                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    if (mJsonObject.getBoolean("success")) {
+
+
+                    }
+                } catch (Exception e) {
+                    Logger.debugLog("Exception", e.getMessage());
+
+                }
+            }
+
+            @Override
+            public void onFailed(String statusCode, String serverResponse) {
+                mBusyDialog.dismis();
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
                 }
             }
         });

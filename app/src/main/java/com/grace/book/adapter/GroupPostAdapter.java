@@ -253,6 +253,7 @@ public class GroupPostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         String post_id = getModelAt(position).getId();
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("group_post_id", post_id);
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
         Log.e("allHashMap", allHashMap.toString());
 

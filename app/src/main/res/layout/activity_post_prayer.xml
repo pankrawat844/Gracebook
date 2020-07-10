@@ -4,12 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1F0F2"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:layout_height="?actionBarSize">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#8A56AC">
+
+    </View>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -18,12 +41,12 @@
             android:gravity="center_vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/ic_arrow_back_24px">
+                android:src="@drawable/path_post">
 
             </ImageView>
 
@@ -31,24 +54,27 @@
                 android:id="@+id/prayerTitel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_regular"
-                android:text="Feedback"
-                android:textColor="@color/white"
-                android:textSize="16dp"
+                android:fontFamily="@font/font_medium"
+                android:text="Create your post"
+                android:textAllCaps="true"
+                android:textColor="#270E3B"
+                android:textSize="14sp"
                 android:textStyle="normal"></TextView>
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/postView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:background="@drawable/rounded_inputbox_post50"
             android:fontFamily="@font/font_regular"
-            android:gravity="center_vertical"
-            android:paddingRight="10dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
             android:text="POST"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="normal"></TextView>
     </RelativeLayout>
@@ -65,13 +91,14 @@
             android:id="@+id/edittextChat"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@drawable/rounded_inputbox_chat"
+            android:background="@drawable/rounded_inputbox_post"
             android:fontFamily="@font/font_medium"
             android:gravity="left|top"
             android:hint="Type your text here.."
-            android:padding="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="20dp"
             android:textSize="14sp"
             android:textStyle="italic|normal" />
 
@@ -90,15 +117,16 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:tint="#52A875"
                     android:src="@drawable/ic_photo_camera_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="Image"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/font_light"
+                    android:text="Image"
+                    android:textColor="#D8A42B"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -115,15 +143,16 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:tint="#52A875"
                     android:src="@drawable/ic_videocam_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="Video"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/font_light"
+                    android:text="Video"
+                    android:textColor="#D8A42B"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -139,15 +168,16 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:tint="#52A875"
                     android:src="@drawable/ic_mic_24px"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:text="Audio"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/font_light"
+                    android:text="Audio"
+                    android:textColor="#D8A42B"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
 
@@ -162,16 +192,17 @@
 
             <ImageView
                 android:id="@+id/imageImages"
-                android:adjustViewBounds="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ImageView>
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"></ImageView>
 
             <ImageView
                 android:id="@+id/deletefile"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginTop="20dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:tint="#52A875"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic_delete_24px"></ImageView>
 

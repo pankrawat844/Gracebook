@@ -30,6 +30,7 @@ import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
+import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
@@ -103,6 +104,8 @@ public class AddGroupFriendActivity extends BaseActivity {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
                 allHashMap.put("group_id", mGroupList.getGroup_id());
+                allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+
                 addFriendserverRequest(allHashMap, position);
             }
         }
@@ -164,6 +167,7 @@ public class AddGroupFriendActivity extends BaseActivity {
         mGroupAddfreindListAdapter.removeAllData();
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("group_id", mGroupList.getGroup_id());
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);

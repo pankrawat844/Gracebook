@@ -29,6 +29,7 @@ import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.ConstantFunctions;
+import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
@@ -222,6 +223,7 @@ public class MyPostActivity extends AppCompatActivity {
         String url = AllUrls.BASEURL + "postDelete";
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("post_id", mFeedList.getId());
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);

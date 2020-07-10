@@ -133,6 +133,8 @@ public class CommentActivity extends AppCompatActivity {
             allHashMap.put("group_post_id", mFeedList.getId());
 
         }
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
@@ -201,6 +203,7 @@ public class CommentActivity extends AppCompatActivity {
         }
         allHashMap.put("message", message);
         allHashMap.put("comment_time", DateUtility.getCurrentTimeForsend());
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
@@ -298,6 +301,7 @@ public class CommentActivity extends AppCompatActivity {
             allHashMap.put("comment_id", mCommentsList.getId());
 
         }
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();

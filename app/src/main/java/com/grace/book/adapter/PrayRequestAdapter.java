@@ -261,6 +261,7 @@ public class PrayRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         String post_id = getModelAt(position).getId();
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("prayer_id", post_id);
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
 
         Log.e("allHashMap", allHashMap.toString());
 

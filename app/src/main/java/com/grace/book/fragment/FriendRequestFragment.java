@@ -27,6 +27,7 @@ import com.grace.book.model.FriendList;
 import com.grace.book.model.Usersdata;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
+import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
@@ -72,10 +73,14 @@ public class FriendRequestFragment extends BaseFragment {
             if (type == 1) {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
+                allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+
                 acceptFriendserverRequest(allHashMap, position);
             } else if (type == 2) {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
+                allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+
                 rejectFriendserverRequest(allHashMap, position);
             } else {
                 Intent mIntent = new Intent(getActivity(), UserprofileActivity.class);

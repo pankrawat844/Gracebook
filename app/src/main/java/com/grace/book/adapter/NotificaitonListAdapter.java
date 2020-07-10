@@ -19,6 +19,9 @@ import com.grace.book.model.NotificationList;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
+import com.grace.book.utils.ConstantFunctions;
+import com.grace.book.utils.DateUtility;
+import com.grace.book.utils.GetTimeCovertAgo;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
@@ -85,12 +88,12 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
             NotificationList mJobList = allMessageList.get(position);
             try {
                 holder.notifcationText.setText(mJobList.getDetails());
-                holder.delete_notification.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        ServerRequest(position);
-                    }
-                });
+                long time = DateUtility.dateToMillisecond(mJobList.getDuration());
+                String text = GetTimeCovertAgo.getNewsFeeTimeAgo(time);
+                holder.rowplaylistduatiron.setText(text);
+                if(mJobList.getmUsersdata()!=null){
+                    ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.ShowPlayIcon);
+                }
 
             } catch (Exception ex) {
 
@@ -110,12 +113,14 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView notifcationText;
-        private ImageView delete_notification;
+        private TextView rowplaylistduatiron;
+        private ImageView ShowPlayIcon;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             notifcationText = (TextView) itemView.findViewById(R.id.notifcationText);
-            delete_notification = (ImageView) itemView.findViewById(R.id.delete_notification);
+            rowplaylistduatiron = (TextView) itemView.findViewById(R.id.rowplaylistduatiron);
+            ShowPlayIcon = (ImageView) itemView.findViewById(R.id.ShowPlayIcon);
 
 
             itemView.setTag(getAdapterPosition());
@@ -129,54 +134,6 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    BusyDialog mBusyDialog;
-
-    private void ServerRequest(final int position) {
-        if (!Helpers.isNetworkAvailable(mContext)) {
-            Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
-            return;
-        }
-        String post_id = getModelAt(position).getId();
-        mBusyDialog = new BusyDialog(mContext);
-        mBusyDialog.show();
-
-        HashMap<String, String> allHashMap = new HashMap<>();
-        allHashMap.put("notification_id", post_id);
-        HashMap<String, String> allHashMapHeader = new HashMap<>();
-        allHashMapHeader.put("appKey", AllUrls.APP_KEY);
-        allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
-        final String url = AllUrls.BASEURL + "removenotification";
-        ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
-            @Override
-            public void onSuccess(String statusCode, String responseServer) {
-                try {
-                    mBusyDialog.dismis();
-
-                    Logger.debugLog("responseServer", responseServer);
-                    JSONObject mJsonObject = new JSONObject(responseServer);
-                    if (mJsonObject.getBoolean("success")) {
-                        allMessageList.remove(position);
-                        notifyDataSetChanged();
-
-                    }
-                } catch (Exception e) {
-                    Logger.debugLog("Exception", e.getMessage());
-
-                }
-            }
-
-            @Override
-            public void onFailed(String statusCode, String serverResponse) {
-                mBusyDialog.dismis();
-                if (statusCode.equalsIgnoreCase("404")) {
-                    PersistentUser.resetAllData(mContext);
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    mContext.startActivity(intent);
-                }
-            }
-        });
-    }
 
 }
 

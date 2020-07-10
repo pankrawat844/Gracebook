@@ -262,6 +262,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         HashMap<String, String> allHashMap = new HashMap<>();
         allHashMap.put("post_id", post_id);
+        allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));

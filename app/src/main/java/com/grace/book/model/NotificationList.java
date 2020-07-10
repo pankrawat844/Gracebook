@@ -13,6 +13,27 @@ public class NotificationList {
     private String details="";
     @SerializedName("type_id")
     private String type_id="";
+    @SerializedName("duration")
+    private String duration="";
+    @SerializedName("users")
+    private Usersdata mUsersdata;
+
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public Usersdata getmUsersdata() {
+        return mUsersdata;
+    }
+
+    public void setmUsersdata(Usersdata mUsersdata) {
+        this.mUsersdata = mUsersdata;
+    }
 
     public String getId() {
         return id;

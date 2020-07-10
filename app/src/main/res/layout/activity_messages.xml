@@ -13,7 +13,7 @@
         android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="#9798D1">
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/layoutBack"
@@ -24,43 +24,65 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:src="@drawable/back_btn">
+                android:src="@drawable/ic_arrow_back_24px"
+                android:tint="#270E3B">
 
             </ImageView>
 
-            <TextView
-                android:id="@+id/chatuser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="normal"></TextView>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/font_medium"
+            android:text="gracebook"
+            android:textAllCaps="true"
+            android:textColor="#270E3B"
+            android:textSize="16sp"
+            android:textStyle="normal"></TextView>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layouttopView"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/topView"
+        android:background="@drawable/chat_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/chatuser"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/font_medium"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topView"
-        android:background="#11000000">
+        android:layout_below="@+id/layouttopView">
 
         <com.stfalcon.chatkit.messages.MessagesList
             android:id="@+id/messagesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/layoutinput"
-            android:background="@drawable/chat_backgroun"
             app:incomingBubblePaddingBottom="15dp"
             app:incomingBubblePaddingLeft="15dp"
             app:incomingBubblePaddingRight="15dp"
             app:incomingBubblePaddingTop="15dp"
-            app:incomingDefaultBubbleColor="#deb7da"
-            app:incomingDefaultBubblePressedColor="#deb7da"
-            app:incomingDefaultBubbleSelectedColor="#deb7da"
+           app:incomingBubbleDrawable="@drawable/roundcorner_in_message"
             app:incomingImageTimeTextColor="@color/gray"
             app:incomingTextColor="@color/black"
             app:incomingTimeTextColor="@color/black"
@@ -68,9 +90,7 @@
             app:outcomingBubblePaddingLeft="15dp"
             app:outcomingBubblePaddingRight="15dp"
             app:outcomingBubblePaddingTop="15dp"
-            app:outcomingDefaultBubbleColor="@color/white"
-            app:outcomingDefaultBubblePressedColor="@color/white"
-            app:outcomingDefaultBubbleSelectedColor="@color/white"
+            app:outcomingBubbleDrawable="@drawable/roundcorner_out_message"
             app:outcomingImageTimeTextColor="@color/gray"
             app:outcomingTextColor="@color/black"
             app:outcomingTimeTextColor="@color/gray"
@@ -82,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
-            android:background="@color/white">
+            android:background="#9599B3">
 
 
             <LinearLayout
@@ -91,13 +111,14 @@
                 android:layout_height="40dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/round_button_view"
+                android:background="@drawable/circel_shape"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/plush_icon" />
+                    android:src="@drawable/plush_icon"
+                    android:tint="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -127,13 +148,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/round_button_view"
+                android:background="@drawable/circel_shape_chat"
                 android:gravity="center">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_send_icon" />
+                    android:src="@drawable/ic_send_icon"
+                    android:tint="@color/white" />
             </LinearLayout>
 
         </RelativeLayout>

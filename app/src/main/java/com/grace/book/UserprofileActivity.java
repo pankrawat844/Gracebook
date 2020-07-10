@@ -30,6 +30,7 @@ import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.ConstantFunctions;
+import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
@@ -120,6 +121,7 @@ public class UserprofileActivity extends AppCompatActivity {
 
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
+                allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
                 addFriendserverRequest(allHashMap);
             }
         });
@@ -143,6 +145,7 @@ public class UserprofileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 allHashMap.put("user_id", mUsersdata.getId());
+                allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
                 removeFriendserverRequest(allHashMap);
             }
         });
