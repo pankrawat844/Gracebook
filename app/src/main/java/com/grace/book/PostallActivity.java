@@ -102,8 +102,10 @@ public class PostallActivity extends AppCompatActivity {
         prayerTitel = (TextView) this.findViewById(R.id.prayerTitel);
         if (screenType == 0) {
             prayerTitel.setText("Create your post");
-        } else {
+        } else if (screenType == 1) {
             prayerTitel.setText("Create prayer request");
+        } else if (screenType == 3) {
+            prayerTitel.setText("Create your pos");
         }
         findViewById(R.id.postView).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +113,7 @@ public class PostallActivity extends AppCompatActivity {
                 validation();
             }
         });
+
         findViewById(R.id.addPostImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

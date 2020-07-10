@@ -64,6 +64,10 @@ public class NotificaitonListAdapter extends RecyclerView.Adapter<RecyclerView.V
         allMessageList.add(clientList);
         notifyDataSetChanged();
     }
+    public void removeaddList(int clientList) {
+        allMessageList.remove(clientList);
+        notifyDataSetChanged();
+    }
 
     public int getPlayIcon() {
         return showPlayIcon;

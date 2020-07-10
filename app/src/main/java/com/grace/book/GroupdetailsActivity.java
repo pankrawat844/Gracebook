@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -86,7 +87,16 @@ public class GroupdetailsActivity extends BaseActivity {
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
 
-        recycler_feed.setAdapter(mGroupListAdapter);
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.header_group_screen, null);
+
+        TextView groupTextname = (TextView) view.findViewById(R.id.groupTextname);
+        groupTextname.setText(mGroupList.getGroup_name());
+
+        SmartRecyclerAdapter smartRecyclerAdapter = new SmartRecyclerAdapter(mGroupListAdapter);
+        recycler_feed.setAdapter(smartRecyclerAdapter);
+        smartRecyclerAdapter.setHeaderView(view);
 
 
         findViewById(R.id.edittextHomePost).setOnClickListener(new View.OnClickListener() {
@@ -117,6 +127,15 @@ public class GroupdetailsActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101) {
+            mGroupListAdapter.removeAllData();
+            ServerRequest("0");
+        }
     }
 
     public FilterItemCallback lFilterItemCallback = new FilterItemCallback() {

@@ -134,8 +134,8 @@ public class LoginContentActivity extends AppCompatActivity {
                     @Override
                     public void onConnected(@Nullable Bundle bundle) {
                         mLocationRequest = new LocationRequest();
-                        mLocationRequest.setInterval(1000);
-                        mLocationRequest.setFastestInterval(5 * 100);
+                       // mLocationRequest.setInterval(1000);
+                       // mLocationRequest.setFastestInterval(5 * 100);
                         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
                         mLocationRequest.setSmallestDisplacement(0);
                         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();

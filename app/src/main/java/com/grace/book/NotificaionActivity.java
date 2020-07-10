@@ -60,6 +60,8 @@ public class NotificaionActivity extends BaseActivity {
         recycler_feed.setLayoutManager(mLinearLayoutManager);
         recycler_feed.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
         recycler_feed.setAdapter(mNotificaitonListAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recycler_feed);
         ServerRequest("0");
 
     }
@@ -74,6 +76,7 @@ public class NotificaionActivity extends BaseActivity {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             int position = viewHolder.getAdapterPosition();
+            removeServerRequest(position);
             //arrayList.remove(position);
             //adapter.notifyDataSetChanged();
         }
@@ -130,7 +133,7 @@ public class NotificaionActivity extends BaseActivity {
         });
     }
 
-    private void removeServerRequest(String post_id) {
+    private void removeServerRequest(final int post_id) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
@@ -138,8 +141,10 @@ public class NotificaionActivity extends BaseActivity {
         mBusyDialog = new BusyDialog(mContext);
         mBusyDialog.show();
 
+        NotificationList mNotificationList = mNotificaitonListAdapter.getModelAt(post_id);
+
         HashMap<String, String> allHashMap = new HashMap<>();
-        allHashMap.put("notification_id", post_id);
+        allHashMap.put("notification_id", mNotificationList.getId());
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
@@ -154,7 +159,7 @@ public class NotificaionActivity extends BaseActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
-
+                        mNotificaitonListAdapter.removeaddList(post_id);
 
                     }
                 } catch (Exception e) {
