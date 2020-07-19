@@ -121,9 +121,9 @@ public class FeedabckActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
+                        ToastHelper.showToast(mContext, "Message sent successfully! We will contact you in short while");
                         edittexSubject.setText("");
                         edittextMessage.setText("");
-                        ToastHelper.showToast(mContext, "Feedback send successfully");
 
                     }
                 } catch (Exception e) {

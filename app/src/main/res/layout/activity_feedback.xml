@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/font_medium"
-            android:text="Feedback"
+            android:text="My prayer partner"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="16sp"
