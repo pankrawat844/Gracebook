@@ -80,6 +80,7 @@ public class GroupListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             GroupList mJobList = mSpeciallistModel.get(position);
             try {
                 holder.rowplaylistname.setText(mJobList.getGroup_name());
+                holder.group_details.setText(mJobList.getGroup_details());
 
             } catch (Exception ex) {
 
@@ -95,11 +96,13 @@ public class GroupListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView rowplaylistname;
+        private TextView rowplaylistname,group_details;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             rowplaylistname = (TextView) itemView.findViewById(R.id.rowplaylistname);
+            group_details = (TextView) itemView.findViewById(R.id.group_details);
+
             itemView.setTag(getPosition());
             itemView.setOnClickListener(this); // bind the listener
         }

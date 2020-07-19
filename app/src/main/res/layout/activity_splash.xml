@@ -20,12 +20,15 @@
             android:src="@drawable/logo">
 
         </ImageView>
-        <ImageView
+        <TextView
+            android:textSize="16sp"
+            android:textColor="#9272A7"
+            android:fontFamily="@font/monotype_corsiva"
+            android:text="An exclusive Christian believer prayer app"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/anexclusive">
+            android:layout_height="wrap_content">
 
-        </ImageView>
+        </TextView>
 
     </LinearLayout>
 
@@ -44,13 +47,15 @@
             android:src="@drawable/greebook">
 
         </ImageView>
-
-        <ImageView
+        <TextView
+            android:textSize="24sp"
+            android:textColor="#9272A7"
+            android:fontFamily="@font/gabriola"
+            android:text="An Ushuss Group product"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/angroup">
+            android:layout_height="wrap_content">
 
-        </ImageView>
+        </TextView>
 
     </LinearLayout>
 

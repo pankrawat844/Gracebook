@@ -21,9 +21,7 @@ public class Logger {
     }
 
     public static void errorLog(String logTag, String s) {
-//        if (BuildConfig.Debug) {
-//        Log.e(logTag, logTag + " ->" + s);
-//        }
+        Log.e(logTag, logTag + " ->" + s);
     }
 
     public static void warnLog(String logTag, String s) {

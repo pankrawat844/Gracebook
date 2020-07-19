@@ -68,9 +68,10 @@ public class SettingsActivity extends AppCompatActivity {
         });
         myswitch = (SwitchCompat) this.findViewById(R.id.myswitch);
         userDataList();
-        myswitch.setOnTouchListener(new View.OnTouchListener() {
+
+        myswitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View v) {
                 HashMap<String, String> allHashMap = new HashMap<>();
                 if (myswitch.isChecked()) {
                     allHashMap.put("isnotification", "1");
@@ -78,7 +79,6 @@ public class SettingsActivity extends AppCompatActivity {
                     allHashMap.put("isnotification", "0");
                 }
                 ServerRequest(allHashMap);
-                return false;
             }
         });
         findViewById(R.id.layoutRateUs).setOnClickListener(new View.OnClickListener() {
@@ -132,6 +132,8 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void ServerRequest(HashMap<String, String> allHashMap) {
+        Logger.debugLog("allHashMap", allHashMap.toString());
+
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
@@ -147,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
-
+                        PersistentUser.setUserDetails(mContext, responseServer);
 
                     }
                 } catch (Exception e) {

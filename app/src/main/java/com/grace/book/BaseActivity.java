@@ -390,11 +390,10 @@ public class BaseActivity extends AppCompatActivity {
                 String fname = data.getString("fname");
                 String lname = data.getString("lname");
                 String profile_pic = data.getString("profile_pic");
+                Log.e("profile_pic",profile_pic);
                 username.setText((fname + " " + lname));
-                if (profile_pic != null || !profile_pic.equalsIgnoreCase("")) {
-                    ConstantFunctions.loadImageForCircel(profile_pic, userImage);
+                ConstantFunctions.loadImageForCircel(profile_pic, userImage);
 
-                }
 
             }
         } catch (Exception ex) {

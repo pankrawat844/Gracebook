@@ -146,7 +146,15 @@ public class PrayerActivity extends BaseActivity {
                 startActivityForResult(mIntent, 102);
 
             } else if (type == 3) {
-                ConstantFunctions.openIntentForShare(mContext, mFeedList.getDetails());
+                String text = Logger.EmptyString(mFeedList.getDetails());
+                if (mFeedList.getPost_type().equalsIgnoreCase("0")) {
+                    ConstantFunctions.openIntentForShare(mContext, text);
+                } else {
+                    text = text + " \n\n" + mFeedList.getPost_path();
+                    ConstantFunctions.openIntentForShare(mContext, text);
+
+                }
+
 
             } else if (type == 4) {
                 alertfornewuser(position);

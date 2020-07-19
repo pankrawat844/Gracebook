@@ -108,8 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                 vaidation();
             }
         });
-        edittextEMail.setText("prosanto.mbstu@gmail.com");
-        editpassword.setText("123");
+//        edittextEMail.setText("prosanto.mbstu@gmail.com");
+//        editpassword.setText("123");
     }
 
     public void vaidation() {
@@ -169,6 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            finish();
                         } else {
                             String message = "Your account not varification.";
                             ToastHelper.showToast(mContext, message);

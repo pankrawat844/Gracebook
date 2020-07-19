@@ -95,15 +95,16 @@ public class VerificationActivity extends AppCompatActivity {
                     if (mJsonObject.getBoolean("success")) {
 
                         if (screen == 0) {
-                            ToastHelper.showToast(mContext,"Account varification successfully");
+                            ToastHelper.showToast(mContext, "Account varification successfully");
                             Intent mIntent = new Intent(VerificationActivity.this, LoginActivity.class);
                             mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(mIntent);
+                            finish();
                         } else {
-                            JSONObject data=mJsonObject.getJSONObject("data");
-                            String auth_token= data.getString("auth_token");
+                            JSONObject data = mJsonObject.getJSONObject("data");
+                            String auth_token = data.getString("auth_token");
                             Intent mIntent = new Intent(VerificationActivity.this, PasswordresetActivity.class);
-                            mIntent.putExtra("auth_token",auth_token);
+                            mIntent.putExtra("auth_token", auth_token);
                             startActivity(mIntent);
                         }
 
@@ -121,6 +122,7 @@ public class VerificationActivity extends AppCompatActivity {
             }
         });
     }
+
     private void resendServerRequest(HashMap<String, String> allHashMap) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
@@ -139,15 +141,14 @@ public class VerificationActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
-                        ToastHelper.showToast(mContext,"Otp code send successfully");
+                        ToastHelper.showToast(mContext, "Otp code send successfully");
                         JSONObject data = mJsonObject.getJSONObject("data");
-                        String otp_code =data.getString("otp_code");
+                        String otp_code = data.getString("otp_code");
                         lineField.setText(otp_code);
 
-                    }
-                    else {
-                        String message= mJsonObject.getString("message");
-                        ToastHelper.showToast(mContext,message);
+                    } else {
+                        String message = mJsonObject.getString("message");
+                        ToastHelper.showToast(mContext, message);
 
                     }
                 } catch (Exception e) {

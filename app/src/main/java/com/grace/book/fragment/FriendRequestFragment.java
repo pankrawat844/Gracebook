@@ -122,13 +122,13 @@ public class FriendRequestFragment extends BaseFragment {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
+                        mFriendRequestListAdapter.removeAllData();
                         JSONArray jsonArray = mJsonObject.getJSONArray("data");
                         GsonBuilder builder = new GsonBuilder();
                         Gson mGson = builder.create();
                         List<FriendList> posts = new ArrayList<FriendList>();
                         posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), FriendList[].class));
                         ArrayList<FriendList> allLists = new ArrayList<FriendList>(posts);
-                        //mSearchbelieverListAdapter.addAllList(allLists);
                         mFriendRequestListAdapter.addAllList(allLists);
 
 

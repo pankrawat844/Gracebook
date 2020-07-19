@@ -46,7 +46,6 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/font_light"
                 android:gravity="left"
-                android:text="Noise Reduction Software"
                 android:textColor="@android:color/black"
                 android:textSize="16dp"></TextView>
         </LinearLayout>
