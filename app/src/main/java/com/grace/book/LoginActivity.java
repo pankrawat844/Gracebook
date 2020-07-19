@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initUi();
     }
+
     private void initUi() {
         edittextEMail = (EditText) this.findViewById(R.id.edittextEMail);
         editpassword = (EditText) this.findViewById(R.id.editpassword);
@@ -113,7 +114,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void vaidation() {
-
 
 
         String email = edittextEMail.getText().toString().trim();
@@ -214,7 +214,6 @@ public class LoginActivity extends AppCompatActivity {
         alertDialog = builder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         alertDialog.show();
-        final CountryCodePicker mCountryCodePicker = (CountryCodePicker) mView.findViewById(R.id.ccp);
         final EditText edittextphone = (EditText) mView.findViewById(R.id.edittextphone);
         final TextView Submit_btn = (TextView) mView.findViewById(R.id.Submit_btn);
 
@@ -223,16 +222,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 alertDialog.dismiss();
 
-                String country_code = mCountryCodePicker.getSelectedCountryCode();
-                String phone = edittextphone.getText().toString();
+                String email_address = edittextphone.getText().toString();
 
-                if (phone.equalsIgnoreCase("")) {
-                    ToastHelper.showToast(mContext, "Please enter phone");
+                if (email_address.equalsIgnoreCase("")) {
+                    ToastHelper.showToast(mContext, "Please enter email address");
+                    return;
+                } else if (!ValidateEmail.validateEmail(email_address)) {
+                    ToastHelper.showToast(mContext, "Please enter valid email address");
                     return;
                 } else {
                     HashMap<String, String> allHashMap = new HashMap<>();
-                    allHashMap.put("country_code", country_code);
-                    allHashMap.put("phone", phone);
+                    allHashMap.put("email_address", email_address);
                     forgorpasswordServerRequest(allHashMap);
                 }
 
@@ -258,17 +258,20 @@ public class LoginActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
-                        JSONObject data = mJsonObject.getJSONObject("data");
-                        String otp_code = data.getString("otp_code");
-                        String phone = data.getString("phone");
-                        String country_code = data.getString("country_code");
-                        PersistentUser.setUserDetails(mContext, responseServer);
-                        Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
-                        intent.putExtra("screen", 1);
-                        intent.putExtra("otp_code", otp_code);
-                        intent.putExtra("phone", phone);
-                        intent.putExtra("country_code", country_code);
-                        startActivity(intent);
+
+                        ToastHelper.showToast(mContext,"Please check your email.we send a link for reset password");
+
+//                        JSONObject data = mJsonObject.getJSONObject("data");
+//                        String otp_code = data.getString("otp_code");
+//                        String phone = data.getString("phone");
+//                        String country_code = data.getString("country_code");
+//                        PersistentUser.setUserDetails(mContext, responseServer);
+//                        Intent intent = new Intent(LoginActivity.this, VerificationActivity.class);
+//                        intent.putExtra("screen", 1);
+//                        intent.putExtra("otp_code", otp_code);
+//                        intent.putExtra("phone", phone);
+//                        intent.putExtra("country_code", country_code);
+//                        startActivity(intent);
 
                     } else {
                         String message = mJsonObject.getString("message");
@@ -288,7 +291,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 }

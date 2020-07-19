@@ -175,21 +175,25 @@ public class SignupActivity extends AppCompatActivity {
                     Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
+                        Intent mIntent = new Intent(SignupActivity.this, LoginActivity.class);
+                        mIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(mIntent);
+                        finish();
 
-                        JSONObject data = mJsonObject.getJSONObject("data");
-                        String otp_code = data.getString("otp_code");
-                        Intent intent = new Intent(SignupActivity.this, VerificationActivity.class);
-                        intent.putExtra("screen", 0);
-                        intent.putExtra("otp_code", otp_code);
-                        intent.putExtra("phone", phone);
-                        intent.putExtra("country_code", country_code);
 
-                        startActivity(intent);
+//                        JSONObject data = mJsonObject.getJSONObject("data");
+//                        String otp_code = data.getString("otp_code");
+//                        Intent intent = new Intent(SignupActivity.this, VerificationActivity.class);
+//                        intent.putExtra("screen", 0);
+//                        intent.putExtra("otp_code", otp_code);
+//                        intent.putExtra("phone", phone);
+//                        intent.putExtra("country_code", country_code);
+//
+//                        startActivity(intent);
 
-                    }
-                    else {
-                        String message= mJsonObject.getString("message");
-                        ToastHelper.showToast(mContext,message);
+                    } else {
+                        String message = mJsonObject.getString("message");
+                        ToastHelper.showToast(mContext, message);
 
                     }
 
