@@ -80,7 +80,7 @@ public class LikedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 holder.userProfileNmae.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
                 ConstantFunctions.loadImageForCircel(mJobList.getmUsersdata().getProfile_pic(), holder.userProfileImage);
                 holder.username.setText(mJobList.getmUsersdata().getFname() + " " + mJobList.getmUsersdata().getLname());
-                holder.userNumber.setText("Member of " + mJobList.getmUsersdata().getChurch());
+                holder.userNumber.setText("Member of " + mJobList.getmUsersdata().getChurch()+" church");
                 holder.userLocation.setText(mJobList.getmUsersdata().getCity() + ", " + mJobList.getmUsersdata().getCountry());
 
 

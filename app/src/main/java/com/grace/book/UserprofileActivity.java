@@ -153,7 +153,7 @@ public class UserprofileActivity extends AppCompatActivity {
         ConstantFunctions.loadImageForCircel(mUsersdata.getProfile_pic(), userprofole_pic);
         userprofole_name.setText(mUsersdata.getFname() + " " + mUsersdata.getLname());
         userprofole_bio.setText(Logger.EmptyString(mUsersdata.getBio()));
-        userprofole_member.setText("Member of " + mUsersdata.getChurch());
+        userprofole_member.setText("Member of " + mUsersdata.getChurch()+" church");
         userprofole_location.setText(mUsersdata.getCity() + ", " + mUsersdata.getCountry());
     }
 

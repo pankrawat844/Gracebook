@@ -17,8 +17,7 @@
             android:id="@+id/ShowPlayIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/group"
-            android:tint="@color/colorPrimary">
+            android:src="@drawable/group_icon_new">
 
         </ImageView>
 

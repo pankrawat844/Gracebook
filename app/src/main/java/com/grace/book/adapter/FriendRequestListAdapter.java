@@ -94,7 +94,7 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImageFriendrequet);
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
-                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userNumber.setText("Member of " + mJobList.getChurch()+" church");
                 holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
 
 

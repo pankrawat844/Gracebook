@@ -88,7 +88,7 @@ public class GroupFreindListAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
-                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userNumber.setText("Member of " + mJobList.getChurch()+" church");
                 holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
                 holder.group_admin.setVisibility(View.GONE);
                 if(mGroupList.getGroup_owner().equalsIgnoreCase(mJobList.getId())){

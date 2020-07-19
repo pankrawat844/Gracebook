@@ -45,11 +45,22 @@ public class Usersdata implements Serializable {
     @SerializedName("friend_type")
     private String friend_type="";
 
+    @SerializedName("isfriend")
+    private boolean isfriend=false;
+
     @SerializedName("message")
     private MessageList mMessageList=null;
 
     public MessageList getmMessageList() {
         return mMessageList;
+    }
+
+    public boolean isIsfriend() {
+        return isfriend;
+    }
+
+    public void setIsfriend(boolean isfriend) {
+        this.isfriend = isfriend;
     }
 
     public void setmMessageList(MessageList mMessageList) {

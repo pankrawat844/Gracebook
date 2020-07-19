@@ -82,7 +82,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 });
                 ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
                 holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
-                holder.userNumber.setText("Member of " + mJobList.getChurch());
+                holder.userNumber.setText("Member of " + mJobList.getChurch()+" church");
                 holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
 
 

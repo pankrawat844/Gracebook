@@ -23,6 +23,7 @@ import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
+import com.grace.book.utils.ToastHelper;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -78,11 +79,17 @@ public class MessageUserListActivity extends BaseActivity {
         @Override
         public void ClickFilterItemCallback(int type, int position) {
             Usersdata mUsersdata = mMessageFriendListAdapter.getModelAt(position);
-            Intent mIntent = new Intent(mContext, ChatActivity.class);
-            Bundle extra = new Bundle();
-            extra.putSerializable("objects", mUsersdata);
-            mIntent.putExtra("extra", extra);
-            startActivity(mIntent);
+            if (mUsersdata.isIsfriend()) {
+                Intent mIntent = new Intent(mContext, ChatActivity.class);
+                Bundle extra = new Bundle();
+                extra.putSerializable("objects", mUsersdata);
+                mIntent.putExtra("extra", extra);
+                startActivity(mIntent);
+            } else {
+                ToastHelper.showToast(mContext, "Sorry you are not allow for send message");
+                return;
+
+            }
 
         }
     };
