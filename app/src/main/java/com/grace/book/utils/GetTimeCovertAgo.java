@@ -51,49 +51,49 @@ public class GetTimeCovertAgo {
 
             if (sec < 60) {
                 if (sec > 1)
-                    inputString =  Integer.toString(sec) + " second  ago";
-                else
                     inputString =  Integer.toString(sec) + " seconds  ago";
+                else
+                    inputString =  Integer.toString(sec) + " second  ago";
             } else if (sec >= 60 && sec < houre) {
                 min = sec / 60;
                 if (min > 1)
-                    inputString =  Integer.toString(min) + " minute ago";
+                    inputString =  Integer.toString(min) + " minutes ago";
                 else
-                    inputString =  Integer.toString(min) + " minutes ago ";
+                    inputString =  Integer.toString(min) + " minute ago ";
             } else if (sec >= houre && sec < dayTime) {
                 hour = sec / houre;
                 if (hour > 1)
-                    inputString =  Integer.toString(hour) + " hour ago";
-                else
                     inputString =  Integer.toString(hour) + " hours ago";
+                else
+                    inputString =  Integer.toString(hour) + " hour ago";
 
             } else if (sec >= dayTime && sec < WeakIme) {
                 day = sec / dayTime;
                 if (day > 1)
-                    inputString =  Integer.toString(day) + " day ago";
-                else
                     inputString =  Integer.toString(day) + " days ago";
+                else
+                    inputString =  Integer.toString(day) + " day ago";
 
             } else if (sec >= WeakIme && sec < monthTime) {
                 week = sec / WeakIme;
                 if (week > 1)
-                    inputString =  Integer.toString(week) + " week ago";
-                else
                     inputString =  Integer.toString(week) + " weeks ago";
+                else
+                    inputString =  Integer.toString(week) + " week ago";
 
             } else if (sec >= monthTime && sec < yearTime) {
                 month = sec / monthTime;
                 if (month > 1)
-                    inputString =  Integer.toString(month) + " month ago";
-                else
                     inputString =  Integer.toString(month) + " months ago";
+                else
+                    inputString =  Integer.toString(month) + " month ago";
 
             } else if (sec >= yearTime) {
                 year = sec / yearTime;
                 if (year > 1)
-                    inputString =  Integer.toString(month) + " year ago";
-                else
                     inputString =  Integer.toString(month) + " years ago";
+                else
+                    inputString =  Integer.toString(month) + " year ago";
             }
 
         } else {

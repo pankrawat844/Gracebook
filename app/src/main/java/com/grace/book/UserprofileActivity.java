@@ -114,6 +114,7 @@ public class UserprofileActivity extends AppCompatActivity {
         layoutAddFRIEND.setVisibility(View.GONE);
         layout_allreadFriend.setVisibility(View.GONE);
 
+        mMyPostListAdapter.addClickListiner(lFilterItemCallback);
 
         layoutAddFRIEND.setOnClickListener(new View.OnClickListener() {
             @Override
