@@ -125,6 +125,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 String church = data.getString("church");
                 String profile_pic = data.getString("profile_pic");
                 String bio = data.getString("bio");
+                String country_code_name = data.getString("country_code_name");
+
 
                 edittextFname.setText(fname);
                 edittextLname.setText(lname);
@@ -132,8 +134,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 edittextphone.setText(phone);
                 edittextchurch.setText(church);
                 edittextnio.setText(Logger.EmptyString(bio));
-                if(country_code!=null || !country_code.equalsIgnoreCase("")){
-                    ccp.setCountryForPhoneCode(Integer.parseInt(country_code));
+
+                if (country_code_name != null || !country_code_name.equalsIgnoreCase("")) {
+                    Log.e("country_code_name", country_code_name);
+                    ccp.setCountryForNameCode(country_code_name);
                 }
 
                 if (profile_pic != null || !profile_pic.equalsIgnoreCase("")) {
@@ -149,6 +153,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     List<String> permissions = new ArrayList<String>();
+
     public void checkFileUploadPermissions() {
         permissions.clear();
         if (Build.VERSION.SDK_INT > 22) {
@@ -198,7 +203,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void showDialogForVideo() {
-        ToastHelper.showToast(mContext, "aasd");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View mView = inflater.inflate(R.layout.dialog_photoselction, null);
@@ -292,7 +296,10 @@ public class EditProfileActivity extends AppCompatActivity {
         String phone = edittextphone.getText().toString().trim();
         String church = edittextchurch.getText().toString().trim();
         String country_code = ccp.getSelectedCountryCode().toString().trim();
+        String country_code_name = ccp.getSelectedCountryNameCode().toString().trim();
+
         String bio = edittextnio.getText().toString().trim();
+
 
         if (fname.equalsIgnoreCase("")) {
             edittextFname.setError("Enter first name");
@@ -319,6 +326,7 @@ public class EditProfileActivity extends AppCompatActivity {
             allHashMap.put("email", email);
             allHashMap.put("phone", phone);
             allHashMap.put("country_code", country_code);
+            allHashMap.put("country_code_name", country_code_name);
             allHashMap.put("bio", bio);
             allHashMap.put("church", church);
             allHashMap.put("device_token", PersistentUser.getPushToken(mContext));

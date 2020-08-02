@@ -110,6 +110,8 @@ public class SignupActivity extends AppCompatActivity {
         String password = editpassword.getText().toString().trim();
         String confirmpassword = editConfirmpassword.getText().toString().trim();
         String country_code = ccp.getSelectedCountryCode().toString().trim();
+        String country_code_name = ccp.getSelectedCountryNameCode().toString().trim();
+
         if (!checkboxterms.isChecked()) {
             ToastHelper.showToast(mContext, "Please check our term and condition");
             return;
@@ -153,6 +155,7 @@ public class SignupActivity extends AppCompatActivity {
             allHashMap.put("email", email);
             allHashMap.put("phone", phone);
             allHashMap.put("country_code", country_code);
+            allHashMap.put("country_code_name", country_code_name);
             allHashMap.put("country", country);
             allHashMap.put("church", church);
             allHashMap.put("city", city);
