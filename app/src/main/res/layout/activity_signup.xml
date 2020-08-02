@@ -30,15 +30,14 @@
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Signup"
-            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Signup"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="normal">
 
         </TextView>
-
 
 
         <LinearLayout
@@ -329,10 +328,37 @@
                         android:layout_marginStart="40dp"
                         android:layout_marginEnd="40dp"
                         android:background="@android:color/darker_gray"
-                        android:visibility="visible">
+                        android:visibility="visible"></View>
 
-                    </View>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
+                        <CheckBox
+                            android:id="@+id/checkboxterms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:button="@drawable/cb_check">
+
+                        </CheckBox>
+
+                        <TextView
+                            android:id="@+id/textiew"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Terms and Conditions"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"></TextView>
+
+
+                    </LinearLayout>
 
 
                     <TextView

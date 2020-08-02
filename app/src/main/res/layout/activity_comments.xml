@@ -51,10 +51,10 @@
         android:id="@+id/topView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/layouttopView"
         android:background="#9976B1"
         android:fontFamily="@font/font_medium"
         android:gravity="center_horizontal"
-        android:layout_below="@+id/layouttopView"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:text="Comment"
@@ -62,8 +62,6 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="normal"></TextView>
-
-
 
 
     <RelativeLayout
@@ -74,12 +72,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_feed"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/layoutinput">
+            android:layout_above="@+id/layoutinput"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -132,7 +130,6 @@
 
 
     </RelativeLayout>
-
 
 
 </RelativeLayout>

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +41,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText editConfirmpassword;
     private BusyDialog mBusyDialog;
     private Context mContext;
+    private CheckBox checkboxterms;
+    private TextView textiew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +76,16 @@ public class SignupActivity extends AppCompatActivity {
         editpassword = (EditText) this.findViewById(R.id.editpassword);
         editConfirmpassword = (EditText) this.findViewById(R.id.editConfirmpassword);
         ccp = (CountryCodePicker) this.findViewById(R.id.ccp);
-
-
+        textiew = (TextView) this.findViewById(R.id.textiew);
+        checkboxterms = (CheckBox) this.findViewById(R.id.checkboxterms);
+        checkboxterms.setChecked(true);
+        textiew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mm = new Intent(SignupActivity.this, OtherActivity.class);
+                startActivity(mm);
+            }
+        });
         try {
             String[] address = ConstantFunctions.getAddress();
             if (address.length > 1) {
@@ -98,8 +110,10 @@ public class SignupActivity extends AppCompatActivity {
         String password = editpassword.getText().toString().trim();
         String confirmpassword = editConfirmpassword.getText().toString().trim();
         String country_code = ccp.getSelectedCountryCode().toString().trim();
-
-        if (fname.equalsIgnoreCase("")) {
+        if (!checkboxterms.isChecked()) {
+            ToastHelper.showToast(mContext, "Please check our term and condition");
+            return;
+        } else if (fname.equalsIgnoreCase("")) {
             edittextFname.setError("Enter first name");
             return;
         } else if (lname.equalsIgnoreCase("")) {

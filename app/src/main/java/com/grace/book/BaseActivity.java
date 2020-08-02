@@ -95,8 +95,8 @@ public class BaseActivity extends AppCompatActivity {
         layoutsettings = (LinearLayout) this.findViewById(R.id.layoutsettings);
         layoutLogout = (LinearLayout) this.findViewById(R.id.layoutLogout);
 //
-        userImage = (ImageView) this.findViewById(R.id.userImage);
-        username = (TextView) this.findViewById(R.id.username);
+        userImage = (ImageView) this.findViewById(R.id.userImageSilder);
+        username = (TextView) this.findViewById(R.id.usernameSlider);
 //
         LinearLayout btnmenu = (LinearLayout) this.findViewById(R.id.btnmenu);
         btnmenu.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +122,7 @@ public class BaseActivity extends AppCompatActivity {
         userImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(BaseActivity.this, EditProfileActivity.class);
+                Intent mIntent = new Intent(mContext, EditProfileActivity.class);
                 startActivity(mIntent);
             }
         });

@@ -3,14 +3,22 @@ package com.grace.book;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.grace.book.adapter.CommentsAdapter;
-import com.grace.book.adapter.ItemlistAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.CommentsList;
 import com.grace.book.model.FeedList;
+import com.grace.book.model.UserPresenter;
 import com.grace.book.model.Usersdata;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
@@ -34,6 +42,11 @@ import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
+import com.otaliastudios.autocomplete.Autocomplete;
+import com.otaliastudios.autocomplete.AutocompleteCallback;
+import com.otaliastudios.autocomplete.AutocompletePolicy;
+import com.otaliastudios.autocomplete.AutocompletePresenter;
+import com.otaliastudios.autocomplete.CharPolicy;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,7 +55,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
 public class CommentActivity extends AppCompatActivity {
     private static final String TAG = CommentActivity.class.getSimpleName();
@@ -54,8 +66,9 @@ public class CommentActivity extends AppCompatActivity {
     private FeedList mFeedList;
     private BusyDialog mBusyDialog;
     private EditText edittextChat;
-
-
+    private HashMap<String, Usersdata> alHashMapData = new HashMap<>();
+    ArrayList<Usersdata> inputList = new ArrayList<>();
+    private Autocomplete mentionsAutocomplete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,26 +111,12 @@ public class CommentActivity extends AppCompatActivity {
                 if (message.equalsIgnoreCase("")) {
                     ToastHelper.showToast(mContext, "Please enter comment");
                 } else {
-                    addPostServerRequest(message);
+                    String userIds = setSpan(message);
+                    addPostServerRequest(message, userIds);
 
                 }
             }
         });
-        //textView
-//
-//        mSocialAutoCompleteTextView= (SocialAutoCompleteTextView)this.findViewById(R.id.textView);
-//
-//        Usersdata mUsersdata= new Usersdata();
-//        mUsersdata.setName("Biswas");
-//
-//        Usersdata mUsersdataa= new Usersdata();
-//        mUsersdataa.setName("Prosanto");
-//
-//
-//        ArrayAdapter<Usersdata> adapter = new ItemlistAdapter(mContext,new ArrayList<Usersdata>());
-//        adapter.add(mUsersdata);
-//        adapter.add(mUsersdataa);
-//        mSocialAutoCompleteTextView.setMentionAdapter(adapter);
 
         ServerRequest();
     }
@@ -134,7 +133,7 @@ public class CommentActivity extends AppCompatActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
-        HashMap<String, String> allHashMap = new HashMap<>();
+        final HashMap<String, String> allHashMap = new HashMap<>();
         String url = "";
         if (screen == 1) {
             url = AllUrls.BASEURL + "postcommnetlist";
@@ -155,6 +154,7 @@ public class CommentActivity extends AppCompatActivity {
         mBusyDialog = new BusyDialog(mContext);
         mBusyDialog.show();
         ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(String statusCode, String responseServer) {
                 mBusyDialog.dismis();
@@ -163,15 +163,29 @@ public class CommentActivity extends AppCompatActivity {
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
                         mFeedListAdapter.removeAllData();
-
+                        inputList.clear();
+                        alHashMapData.clear();
                         JSONArray jsonArray = mJsonObject.getJSONArray("data");
                         GsonBuilder builder = new GsonBuilder();
                         Gson mGson = builder.create();
                         List<CommentsList> posts = new ArrayList<CommentsList>();
                         posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), CommentsList[].class));
                         ArrayList<CommentsList> allLists = new ArrayList<CommentsList>(posts);
-                        mFeedListAdapter.addAllList(allLists);
                         Myapplication.selectionComment = allLists.size();
+
+                        for (CommentsList mCommentsList : allLists) {
+                            if (alHashMapData.containsKey(mCommentsList.getUser_id())) {
+
+                            } else {
+                                alHashMapData.put(mCommentsList.getUser_id(), mCommentsList.getmUsersdata());
+                                Usersdata mUsersdata = mCommentsList.getmUsersdata();
+                                mUsersdata.setName(mUsersdata.getFname() + " " + mUsersdata.getLname());
+                                inputList.add(mUsersdata);
+                            }
+                        }
+                        mFeedListAdapter.addAllinputListList(inputList);
+                        mFeedListAdapter.addAllList(allLists);
+                        setupMentionsAutocomplete();
 
                     } else {
                         String message = mJsonObject.getString("message");
@@ -197,7 +211,7 @@ public class CommentActivity extends AppCompatActivity {
         });
     }
 
-    private void addPostServerRequest(String message) {
+    private void addPostServerRequest(String message, String userIds) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
@@ -218,6 +232,7 @@ public class CommentActivity extends AppCompatActivity {
         allHashMap.put("message", message);
         allHashMap.put("comment_time", DateUtility.getCurrentTimeForsend());
         allHashMap.put("duration", DateUtility.getCurrentTimeForsend());
+        allHashMap.put("userIds", userIds);
 
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
@@ -234,7 +249,6 @@ public class CommentActivity extends AppCompatActivity {
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
                         edittextChat.setText("");
-
                         ServerRequest();
 
                     } else {
@@ -360,4 +374,53 @@ public class CommentActivity extends AppCompatActivity {
     }
 
 
+    private void setupMentionsAutocomplete() {
+        EditText edit = findViewById(R.id.edittextChat);
+        float elevation = 6f;
+        Drawable backgroundDrawable = new ColorDrawable(Color.WHITE);
+        AutocompletePolicy policy = new CharPolicy('@'); // Look for @mentions
+        AutocompletePresenter<Usersdata> presenter = new UserPresenter(this, inputList);
+        AutocompleteCallback<Usersdata> callback = new AutocompleteCallback<Usersdata>() {
+            @Override
+            public boolean onPopupItemClicked(@NonNull Editable editable, @NonNull Usersdata item) {
+                int[] range = CharPolicy.getQueryRange(editable);
+                if (range == null) return false;
+                int start = range[0];
+                int end = range[1];
+                String replacement = item.getFname() + " " + item.getLname();
+                editable.replace(start, end, replacement);
+                editable.setSpan(new StyleSpan(Typeface.BOLD), start, start + replacement.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                return true;
+            }
+
+            public void onPopupVisibilityChanged(boolean shown) {
+
+            }
+        };
+        mentionsAutocomplete = Autocomplete.<Usersdata>on(edit)
+                .with(elevation)
+                .with(backgroundDrawable)
+                .with(policy)
+                .with(presenter)
+                .with(callback)
+                .build();
+
+    }
+
+    private String setSpan(String text) {
+        String usersId = "";
+        if (inputList.size() > 0) {
+            for (int i = 0; i < inputList.size(); i++) {
+                if (text.contains(inputList.get(i).getName())) {
+                    usersId = usersId + "," + inputList.get(i).getId();
+                }
+            }
+        }
+        if (usersId.length() > 0)
+            usersId = usersId.substring(1, usersId.length());
+
+        return usersId;
+
+    }
 }
