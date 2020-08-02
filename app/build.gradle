@@ -58,5 +58,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.11.4'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
+
+
+
 }
 apply plugin: 'com.google.gms.google-services'

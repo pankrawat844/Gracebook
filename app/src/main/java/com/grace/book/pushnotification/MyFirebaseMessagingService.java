@@ -23,6 +23,7 @@ import com.grace.book.SplashActivity;
 import com.grace.book.chatmodel.MessageList;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.utils.Logger;
+import com.grace.book.utils.PersistentUser;
 
 
 import org.json.JSONObject;
@@ -94,9 +95,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+
     @Override
     public void onNewToken(String token) {
         Log.d(TAG, "Refreshed token: " + token);
+        PersistentUser.setPushToken(getApplicationContext(),token);
         sendRegistrationToServer(token);
     }
 

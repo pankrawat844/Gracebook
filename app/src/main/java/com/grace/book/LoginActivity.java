@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 //        edittextEMail.setText("prosanto.mbstu@gmail.com");
 //        editpassword.setText("123");
+
     }
 
     public void vaidation() {

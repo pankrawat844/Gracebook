@@ -76,6 +76,7 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewHolder instanceof ItemViewHolder) {
             final ItemViewHolder holder = (ItemViewHolder) viewHolder;
             Usersdata mJobList = allSearchList.get(position).getmUsersdata();
+
             try {
 
                 holder.layoutaccepted.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +92,16 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
                     }
                 });
 
-                ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImageFriendrequet);
-                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
-                holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
-                holder.userNumber.setText("Member of " + mJobList.getChurch()+" church");
-                holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
+                if(mJobList!=null){
+                    ConstantFunctions.loadImageForCircel(mJobList.getProfile_pic(), holder.userImage);
+                    holder.username.setText(mJobList.getFname() + " " + mJobList.getLname());
+                    holder.userNumber.setText("Member of " + mJobList.getChurch()+" church");
+                    holder.userLocation.setText(mJobList.getCity() + ", " + mJobList.getCountry());
+                }
+                else {
+                    Log.e("mJobList", "mJobList");
+
+                }
 
 
             } catch (Exception ex) {
@@ -117,11 +123,9 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private ImageView userImageFriendrequet;
         private LinearLayout layoutaccepted;
         private LinearLayout layoutDelete;
         private ImageView userImage;
-        private ImageView charUser;
         private TextView username;
         private TextView userNumber;
         private TextView userLocation;
@@ -130,7 +134,6 @@ public class FriendRequestListAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             layoutaccepted = (LinearLayout) itemView.findViewById(R.id.layoutaccepted);
             layoutDelete = (LinearLayout) itemView.findViewById(R.id.layoutDelete);
-            charUser = (ImageView) itemView.findViewById(R.id.charUser);
             userImage = (ImageView) itemView.findViewById(R.id.userImage);
             username = (TextView) itemView.findViewById(R.id.username);
             userNumber = (TextView) itemView.findViewById(R.id.userNumber);

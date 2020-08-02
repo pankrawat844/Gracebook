@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.grace.book.adapter.FeedListAdapter;
 import com.grace.book.adapter.PrayRequestAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.customview.EndlessRecyclerViewScrollListener;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.BannerList;
 import com.grace.book.model.FeedList;
@@ -104,6 +106,18 @@ public class PrayerActivity extends BaseActivity {
                 mPrayRequestAdapter.removeAllData();
                 ServerRequest("0");
                 swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+        recycler_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("totalItemsCount","are"+totalItemsCount);
+                if(totalItemsCount>20){
+                    int itemPages=totalItemsCount/20;
+                    itemPages=itemPages+1;
+                    ServerRequest(""+itemPages);
+                }
 
             }
         });

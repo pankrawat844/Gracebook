@@ -128,7 +128,7 @@ public class BaseActivity extends AppCompatActivity {
         });
 
         userDataList();
-        // setupDrawerToggle();
+        userServerRequest();
     }
 
     void setupDrawerToggle() {
@@ -410,25 +410,17 @@ public class BaseActivity extends AppCompatActivity {
             return;
         }
         HashMap<String, String> allHashMap = new HashMap<>();
-
         HashMap<String, String> allHashMapHeader = new HashMap<>();
         allHashMapHeader.put("appKey", AllUrls.APP_KEY);
         allHashMapHeader.put("authToken", PersistentUser.getUserToken(mContext));
-        final String url = AllUrls.BASEURL + "userdetails";
+        final String url = AllUrls.BASEURL + "loginTrack";
         ServerCallsProvider.volleyPostRequest(url, allHashMap, allHashMapHeader, TAG, new ServerResponse() {
             @Override
             public void onSuccess(String statusCode, String responseServer) {
                 try {
                     Logger.debugLog("responseServer", responseServer);
-                    JSONObject mJsonObject = new JSONObject(responseServer);
-                    if (mJsonObject.getBoolean("success")) {
-                        PersistentUser.setUserDetails(mContext, responseServer);
-                        userDataList();
-                    } else {
-                        String message = mJsonObject.getString("message");
-                        ToastHelper.showToast(mContext, message);
 
-                    }
+
                 } catch (Exception e) {
 
                 }
@@ -436,8 +428,13 @@ public class BaseActivity extends AppCompatActivity {
 
             @Override
             public void onFailed(String statusCode, String serverResponse) {
-                ToastHelper.showToast(mContext, serverResponse);
-                Logger.debugLog("onFailed serverResponse", serverResponse);
+                if (statusCode.equalsIgnoreCase("404")) {
+                    PersistentUser.resetAllData(mContext);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }

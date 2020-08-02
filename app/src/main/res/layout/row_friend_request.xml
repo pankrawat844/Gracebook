@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_medium"
-                android:text="Maria Snow"
+                android:text=""
                 android:textColor="#241332"
                 android:textSize="16sp"
                 android:textStyle="normal">
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_light"
                 android:maxLines="1"
-                android:text="Member of Emmanuel Church"
+                android:text=""
                 android:textColor="#241332"
                 android:textSize="14sp"
                 android:textStyle="normal">
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/font_light"
                 android:maxLines="1"
-                android:text="San Francisco, CA"
+                android:text=""
                 android:textColor="#241332"
                 android:textSize="14sp"
                 android:textStyle="normal">

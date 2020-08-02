@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class Usersdata implements Serializable {
     @SerializedName("id")
     private String id="";
+    @SerializedName("name")
+    private String name="";
     @SerializedName("fname")
     private String fname="";
     @SerializedName("lname")
@@ -50,6 +52,14 @@ public class Usersdata implements Serializable {
 
     @SerializedName("message")
     private MessageList mMessageList=null;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public MessageList getmMessageList() {
         return mMessageList;

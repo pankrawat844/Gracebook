@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -22,6 +23,7 @@ import com.grace.book.adapter.FeedListAdapter;
 import com.grace.book.adapter.MyPostListAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.customview.EndlessRecyclerViewScrollListener;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.BannerList;
 import com.grace.book.model.FeedList;
@@ -86,6 +88,17 @@ public class MyPostActivity extends AppCompatActivity {
                 mMyPostListAdapter.removeAllData();
                 ServerRequest("0");
                 swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+        recycler_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("totalItemsCount","are"+totalItemsCount);
+                if(totalItemsCount>20){
+                    int itemPages=totalItemsCount/20;
+                    itemPages=itemPages+1;
+                    ServerRequest(""+itemPages);
+                }
 
             }
         });

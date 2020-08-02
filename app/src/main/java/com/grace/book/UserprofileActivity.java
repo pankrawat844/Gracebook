@@ -23,6 +23,7 @@ import com.google.gson.GsonBuilder;
 import com.grace.book.adapter.MyPostListAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.customview.EndlessRecyclerViewScrollListener;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.FeedList;
 import com.grace.book.model.Usersdata;
@@ -156,6 +157,19 @@ public class UserprofileActivity extends AppCompatActivity {
         userprofole_bio.setText(Logger.EmptyString(mUsersdata.getBio()));
         userprofole_member.setText("Member of " + mUsersdata.getChurch()+" church");
         userprofole_location.setText(mUsersdata.getCity() + ", " + mUsersdata.getCountry());
+
+        recycler_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("totalItemsCount","are"+totalItemsCount);
+                if(totalItemsCount>20){
+                    int itemPages=totalItemsCount/20;
+                    itemPages=itemPages+1;
+                    serverRequest(""+itemPages);
+                }
+
+            }
+        });
     }
 
     public void userInformationShow() {

@@ -5,9 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,24 +18,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.grace.book.adapter.CommentsAdapter;
-import com.grace.book.adapter.FeedListAdapter;
+import com.grace.book.adapter.ItemlistAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.CommentsList;
 import com.grace.book.model.FeedList;
-import com.grace.book.model.GroupList;
+import com.grace.book.model.Usersdata;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
-import com.grace.book.utils.ConstantFunctions;
 import com.grace.book.utils.DateUtility;
 import com.grace.book.utils.Helpers;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
-import com.headerfooter.songhang.library.SmartRecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,8 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import static com.grace.book.myapplication.Myapplication.getContext;
+import java.util.Vector;
 
 public class CommentActivity extends AppCompatActivity {
     private static final String TAG = CommentActivity.class.getSimpleName();
@@ -57,6 +54,8 @@ public class CommentActivity extends AppCompatActivity {
     private FeedList mFeedList;
     private BusyDialog mBusyDialog;
     private EditText edittextChat;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +103,21 @@ public class CommentActivity extends AppCompatActivity {
                 }
             }
         });
+        //textView
+//
+//        mSocialAutoCompleteTextView= (SocialAutoCompleteTextView)this.findViewById(R.id.textView);
+//
+//        Usersdata mUsersdata= new Usersdata();
+//        mUsersdata.setName("Biswas");
+//
+//        Usersdata mUsersdataa= new Usersdata();
+//        mUsersdataa.setName("Prosanto");
+//
+//
+//        ArrayAdapter<Usersdata> adapter = new ItemlistAdapter(mContext,new ArrayList<Usersdata>());
+//        adapter.add(mUsersdata);
+//        adapter.add(mUsersdataa);
+//        mSocialAutoCompleteTextView.setMentionAdapter(adapter);
 
         ServerRequest();
     }

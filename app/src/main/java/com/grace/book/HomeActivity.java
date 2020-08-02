@@ -27,12 +27,14 @@ import com.grace.book.adapter.FeedListAdapter;
 import com.grace.book.adapter.HomeadvertismentAdapter;
 import com.grace.book.callbackinterface.FilterItemCallback;
 import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.customview.EndlessRecyclerViewScrollListener;
 import com.grace.book.customview.VerticalSpaceItemDecoration;
 import com.grace.book.model.BannerList;
 import com.grace.book.model.FeedList;
 import com.grace.book.myapplication.Myapplication;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.pageIndicator.CirclePageIndicator;
+import com.grace.book.utils.AlertMessage;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.ConstantFunctions;
@@ -130,6 +132,18 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
+        recycler_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Log.e("totalItemsCount","are"+totalItemsCount);
+                if(totalItemsCount>20){
+                    int itemPages=totalItemsCount/20;
+                    itemPages=itemPages+1;
+                    ServerRequest(""+itemPages);
+                }
+
+            }
+        });
     }
 
     @Override
@@ -212,7 +226,6 @@ public class HomeActivity extends BaseActivity {
             public void onSuccess(String statusCode, String responseServer) {
                 try {
                     mBusyDialog.dismis();
-                    Logger.debugLog("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
 
@@ -243,7 +256,6 @@ public class HomeActivity extends BaseActivity {
 
                     }
                 } catch (Exception e) {
-                    Logger.debugLog("Exception", e.getMessage());
 
                 }
             }
