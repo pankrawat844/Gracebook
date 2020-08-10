@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
 import com.grace.book.callbackinterface.ServerResponse;
+import com.grace.book.crashreport.ExceptionHandler;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.networkcalls.VolleyMultipartRequest;
 import com.grace.book.utils.AllUrls;
@@ -86,6 +88,7 @@ public class PostallActivity extends AppCompatActivity {
             group_id = getIntent().getStringExtra("group_id");
         }
         mContext = this;
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(mContext));
         initUi();
     }
 
@@ -174,6 +177,8 @@ public class PostallActivity extends AppCompatActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
+
+        Log.e("allHashMap",allHashMap.toString());
 
         HashMap<String, String> headerParams = new HashMap<>();
         headerParams.put("appKey", AllUrls.APP_KEY);

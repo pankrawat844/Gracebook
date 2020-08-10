@@ -200,6 +200,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             tools:ignore="LockedOrientationActivity"></activity>
+
+
+        <activity
+            android:name=".crashreport.CrashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity"></activity>
+
         <activity
             android:name=".VideoPlayertActivity"
             android:screenOrientation="portrait"
