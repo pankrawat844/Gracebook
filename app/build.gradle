@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.11.4'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.otaliastudios:autocomplete:1.1.0'
+    implementation 'com.balsikandar.android:crashreporter:1.1.0'
 
 
 

@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:largeHeap="true"
         android:name=".myapplication.Myapplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"

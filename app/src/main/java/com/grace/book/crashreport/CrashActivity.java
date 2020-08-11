@@ -23,19 +23,25 @@ import java.util.List;
 
 
 public class CrashActivity extends AppCompatActivity {
-
+	private String STACKTRACE= "";
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.crash_activity);
+		STACKTRACE=getIntent().getStringExtra("STACKTRACE");
+
 
 		final TextView textView = (TextView) findViewById(R.id.textView1);
 		textView.setText("Sorry, Something went wrong. \nPlease send error logs to developer.");
 
+
+
 		findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				checkFileUploadPermissions();
+
+				sendErrorMail(getApplicationContext(),STACKTRACE);
+				//checkFileUploadPermissions();
 				// so it will first save the error trace in vm folder of parent directory of SD card
 
 			}
@@ -109,11 +115,11 @@ public class CrashActivity extends AppCompatActivity {
 		sendIntent.setType("plain/text");
 		sendIntent.putExtra(Intent.EXTRA_EMAIL,
 				new String[] { "prosanto.mbstu@gmail.com" }); // your developer email id
-		sendIntent.putExtra(Intent.EXTRA_TEXT, body);
+		sendIntent.putExtra(Intent.EXTRA_TEXT, filePath);
 		sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-		sendIntent.putExtra(Intent.EXTRA_STREAM,
-				Uri.fromFile(new File(filePath)));
-		sendIntent.setType("message/rfc822");
+//		sendIntent.putExtra(Intent.EXTRA_STREAM,
+//				Uri.fromFile(new File(filePath)));
+		//sendIntent.setType("message/rfc822");
 		mContext.startActivity(Intent.createChooser(sendIntent, "Complete action using"));
 	}
 }

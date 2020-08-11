@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.balsikandar.crashreporter.CrashReporter;
 import com.google.firebase.FirebaseApp;
 
 public class Myapplication extends Application {
@@ -17,6 +18,7 @@ public class Myapplication extends Application {
     public static String NEW_MESSAGE_ACTION = "NEW_MESSAGE_ACTION";
     public static int selectionOrder = 0;
     public static int selectionComment = 0;
+    String crashReporterPath="/Android/data/Gracebook/files/crashReports";
 
     @Override
     public void onCreate() {
@@ -24,6 +26,7 @@ public class Myapplication extends Application {
         mInstance = this;
         mContext = this;
         FirebaseApp.initializeApp(this);
+        //CrashReporter.initialize(this, crashReporterPath);
 
 
     }

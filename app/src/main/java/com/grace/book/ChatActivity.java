@@ -22,12 +22,15 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,8 +47,10 @@ import com.google.gson.GsonBuilder;
 import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.chatadapter.CustomIncomingImageMessageViewHolder;
 import com.grace.book.chatadapter.CustomIncomingTextMessageViewHolder;
+import com.grace.book.chatadapter.CustomIncomingVideoMessageViewHolder;
 import com.grace.book.chatadapter.CustomOutcomingImageMessageViewHolder;
 import com.grace.book.chatadapter.CustomOutcomingTextMessageViewHolder;
+import com.grace.book.chatadapter.CustomOutcomingVideoMessageViewHolder;
 import com.grace.book.chatmodel.Message;
 import com.grace.book.chatmodel.MessageList;
 import com.grace.book.chatmodel.User;
@@ -64,6 +69,7 @@ import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
 import com.stfalcon.chatkit.commons.ImageLoader;
+import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.messages.MessageHolders;
 import com.stfalcon.chatkit.messages.MessagesList;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
@@ -85,15 +91,18 @@ import java.util.Map;
 
 import id.zelory.compressor.Compressor;
 
+import static com.grace.book.utils.ConstantFunctions.requestOptionsForRadious;
 import static com.grace.book.utils.ConstantFunctions.requestOptionsRadioMatch;
 
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements MessageHolders.ContentChecker<Message> {
     private final String TAG = ChatActivity.class.getSimpleName();
     final private int REQUEST_CODE_ASK_PERMISSIONS_AGENT = 100;
     List<String> permissions = new ArrayList<String>();
     private static final int CAMERA_TAKE_PHOTO = 10;
     private static final int GALLERY_TAKE_PHOTO = 12;
+    private static final int GALLERY_SELECT_VIDEO = 13;
+    private static final int CAMERA_SELECT_VIDEO = 14;
     private MessagesList messagesList;
     private MessagesListAdapter mMessagesListAdapter;
     private ImageLoader imageLoader;
@@ -107,12 +116,20 @@ public class ChatActivity extends AppCompatActivity {
     private LinearLayout fileattachment;
     private LinearLayout filesend;
     private String selectedImagePath = "";
+    private static final byte CONTENT_TYPE_VOICE = 1;
+    private int chat_for = 0;
+    static ChatActivity mChatActivity;
+
+    public static ChatActivity getChatActivity() {
+        return mChatActivity;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
         mContext = this;
+        mChatActivity = this;
         Bundle extra = getIntent().getBundleExtra("extra");
         mUsersdata = (Usersdata) extra.getSerializable("objects");
         mContext = this;
@@ -155,12 +172,20 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
         MessageHolders holdersConfig = new MessageHolders()
+                .registerContentType(
+                        CONTENT_TYPE_VOICE,
+                        CustomIncomingVideoMessageViewHolder.class,
+                        R.layout.item_custom_incoming_video_message,
+                        CustomOutcomingVideoMessageViewHolder.class,
+                        R.layout.item_custom_outcoming_video_message,
+                        this)
                 .setIncomingTextConfig(
                         CustomIncomingTextMessageViewHolder.class,
                         R.layout.item_custom_incoming_text_message)
                 .setOutcomingTextConfig(
                         CustomOutcomingTextMessageViewHolder.class,
                         R.layout.item_custom_outcoming_text_message)
+
                 .setIncomingImageConfig(
                         CustomIncomingImageMessageViewHolder.class,
                         R.layout.item_custom_incoming_image_message)
@@ -174,7 +199,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 hideSoftKeyboard(ChatActivity.this);
-                checkFileUploadPermissions();
+                popupMenu();
+
             }
         });
         filesend.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +263,13 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    public void showFullImage(String videoURL) {
+        Intent mIntent = new Intent(ChatActivity.this, VideoPlayertActivity.class);
+        mIntent.putExtra("url", videoURL);
+        startActivity(mIntent);
+
+    }
+
     private void serverdRequest(int limit) {
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
@@ -266,13 +299,15 @@ public class ChatActivity extends AppCompatActivity {
                         ArrayList<MessageList> allLists = new ArrayList<MessageList>(posts);
                         List<Message> messagesList = new ArrayList<>();
                         for (MessageList mServermessage : allLists) {
+                            Log.e("mServermessage", mServermessage.getType());
                             long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
                             String senderid = mServermessage.getSender_id();
-
                             if (mServermessage.getType().equalsIgnoreCase("0")) {
                                 messagesList.add(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time));
-                            } else {
+                            } else if (mServermessage.getType().equalsIgnoreCase("1")) {
                                 messagesList.add(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time));
+                            } else if (mServermessage.getType().equalsIgnoreCase("2")) {
+                                messagesList.add(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time));
                             }
                         }
                         mMessagesListAdapter.addToEnd(messagesList, false);
@@ -394,12 +429,13 @@ public class ChatActivity extends AppCompatActivity {
                         if (mServermessage.getType().equalsIgnoreCase("0")) {
                             mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
 
-                        } else {
+                        } else if (mServermessage.getType().equalsIgnoreCase("1")) {
                             mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
 
+                        } else if (mServermessage.getType().equalsIgnoreCase("2")) {
+                            mMessagesListAdapter.addToStart(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+
                         }
-
-
                     }
 
 
@@ -435,6 +471,17 @@ public class ChatActivity extends AppCompatActivity {
         long totaldurarion = Long.parseLong(durarion);
         Message message = new Message(messageId, user, null, new Date(totaldurarion));
         message.setImage(new Message.Image(imagefile));
+        message.setText(text);
+        return message;
+    }
+
+    public Message getVideoMessage(String userId, String messageId, String text, String imagefile, String durarion) {
+
+        Log.e("imagefile", imagefile);
+        User user = new User(userId, "Tobi", null, true);
+        long totaldurarion = Long.parseLong(durarion);
+        Message message = new Message(messageId, user, null, new Date(totaldurarion));
+        message.setVoice(new Message.Voice(imagefile, 0));
         message.setText(text);
         return message;
     }
@@ -489,7 +536,12 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                pickFromCamera();
+                if (chat_for == 0) {
+                    pickFromCamera();
+                } else if (chat_for == 1) {
+                    pickFromCameraforVideo();
+                }
+
 
             }
         });
@@ -497,8 +549,11 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
-                pickFromGallery();
-
+                if (chat_for == 0) {
+                    pickFromGallery();
+                } else if (chat_for == 1) {
+                    pickFromGalleryVideo();
+                }
             }
         });
     }
@@ -521,6 +576,18 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    public void pickFromCameraforVideo() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
+        takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Environment.getExternalStorageDirectory().getPath() + "videocapture_example.mp4");
+        startActivityForResult(takeVideoIntent, CAMERA_SELECT_VIDEO);
+    }
+
+    public void pickFromGalleryVideo() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, GALLERY_SELECT_VIDEO);
+    }
+
     public void pickFromGallery() {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, GALLERY_TAKE_PHOTO);
@@ -538,9 +605,9 @@ public class ChatActivity extends AppCompatActivity {
                 File file = new File(selectedImagePath2);
                 try {
                     File compressedImage = new Compressor(this)
-                            .setMaxWidth(640)
+                            .setMaxWidth(480)
                             .setMaxHeight(480)
-                            .setQuality(75)
+                            .setQuality(50)
                             .setCompressFormat(Bitmap.CompressFormat.JPEG)
                             .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                     Environment.DIRECTORY_PICTURES).getAbsolutePath())
@@ -562,9 +629,9 @@ public class ChatActivity extends AppCompatActivity {
                 File file = new File(photocreateImagePath);
                 try {
                     File compressedImage = new Compressor(this)
-                            .setMaxWidth(640)
+                            .setMaxWidth(480)
                             .setMaxHeight(480)
-                            .setQuality(75)
+                            .setQuality(50)
                             .setCompressFormat(Bitmap.CompressFormat.JPEG)
                             .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
                                     Environment.DIRECTORY_PICTURES).getAbsolutePath())
@@ -582,6 +649,32 @@ public class ChatActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            } else if (requestCode == GALLERY_SELECT_VIDEO) {
+                if (null == data)
+                    return;
+                Uri selectedImageUri = data.getData();
+                selectedImagePath = ImageFilePath.getPath(mContext, selectedImageUri);
+
+                HashMap<String, String> mJsonObject = new HashMap<>();
+                mJsonObject.put("type", "2");
+                mJsonObject.put("message", "");
+                mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
+                mJsonObject.put("receiver_id", mUsersdata.getId());
+                sendServerRequest(mJsonObject);
+
+
+            } else if (requestCode == CAMERA_SELECT_VIDEO) {
+                if (null == data)
+                    return;
+                Uri selectedImageUri = data.getData();
+                selectedImagePath = ImageFilePath.getPath(mContext, selectedImageUri);
+
+                HashMap<String, String> mJsonObject = new HashMap<>();
+                mJsonObject.put("type", "2");
+                mJsonObject.put("message", "");
+                mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
+                mJsonObject.put("receiver_id", mUsersdata.getId());
+                sendServerRequest(mJsonObject);
 
             }
         }
@@ -614,13 +707,18 @@ public class ChatActivity extends AppCompatActivity {
                 long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
                 String senderid = mServermessage.getSender_id();
                 if (senderid.equalsIgnoreCase(mUsersdata.getId())) {
+
                     if (mServermessage.getType().equalsIgnoreCase("0")) {
                         mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
 
-                    } else {
+                    } else if (mServermessage.getType().equalsIgnoreCase("1")) {
                         mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
 
+                    } else if (mServermessage.getType().equalsIgnoreCase("2")) {
+                        mMessagesListAdapter.addToStart(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+
                     }
+
                 } else {
                     String text = "New message";
                     String message = "";
@@ -684,5 +782,36 @@ public class ChatActivity extends AppCompatActivity {
         notificationManager.notify(0, notification);
     }
 
+    public void popupMenu() {
+        PopupMenu popup = new PopupMenu(ChatActivity.this, fileattachment);
+        popup.getMenuInflater().inflate(R.menu.menu_message_type, popup.getMenu());
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.action_video) {
+                    chat_for = 1;
+                    checkFileUploadPermissions();
+                    return true;
+                } else if (id == R.id.action_image) {
+                    chat_for = 0;
+                    checkFileUploadPermissions();
+                    return true;
+                }
+                return true;
+            }
+        });
 
+        popup.show();
+    }
+
+    @Override
+    public boolean hasContentFor(Message message, byte type) {
+        switch (type) {
+            case CONTENT_TYPE_VOICE:
+                return message.getVoice() != null
+                        && message.getVoice().getUrl() != null
+                        && !message.getVoice().getUrl().isEmpty();
+        }
+        return false;
+    }
 }

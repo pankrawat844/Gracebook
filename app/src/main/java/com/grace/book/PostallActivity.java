@@ -88,7 +88,8 @@ public class PostallActivity extends AppCompatActivity {
             group_id = getIntent().getStringExtra("group_id");
         }
         mContext = this;
-        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(mContext));
+       /// String filePath = "/Android/data/Gracebook/files/crashReports";
+        //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(mContext));
         initUi();
     }
 
