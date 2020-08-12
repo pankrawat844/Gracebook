@@ -226,6 +226,7 @@ public class HomeActivity extends BaseActivity {
             public void onSuccess(String statusCode, String responseServer) {
                 try {
                     mBusyDialog.dismis();
+                    Log.w("responseServer",responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
 

@@ -28,6 +28,9 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
 }
 
 dependencies {
@@ -60,6 +63,7 @@ dependencies {
     implementation 'com.otaliastudios:autocomplete:1.1.0'
     implementation 'com.balsikandar.android:crashreporter:1.1.0'
 
+    implementation 'com.koushikdutta.async:androidasync:3.0.8'
 
 
 

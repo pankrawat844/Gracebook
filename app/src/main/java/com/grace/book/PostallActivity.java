@@ -2,6 +2,7 @@ package com.grace.book;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +34,7 @@ import com.grace.book.callbackinterface.ServerResponse;
 import com.grace.book.crashreport.ExceptionHandler;
 import com.grace.book.networkcalls.ServerCallsProvider;
 import com.grace.book.networkcalls.VolleyMultipartRequest;
+import com.grace.book.utils.AlertMessage;
 import com.grace.book.utils.AllUrls;
 import com.grace.book.utils.BusyDialog;
 import com.grace.book.utils.DateUtility;
@@ -39,12 +43,18 @@ import com.grace.book.utils.ImageFilePath;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
+import com.grace.book.utils.ValidateEmail;
+import com.koushikdutta.async.http.AsyncHttpClient;
+import com.koushikdutta.async.http.AsyncHttpPost;
+import com.koushikdutta.async.http.AsyncHttpResponse;
+import com.koushikdutta.async.http.body.MultipartFormDataBody;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,13 +92,22 @@ public class PostallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Window win = getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
+
         setContentView(R.layout.activity_post_prayer);
         screenType = getIntent().getIntExtra("screenType", 0);
         if (getIntent().hasExtra("group_id")) {
             group_id = getIntent().getStringExtra("group_id");
         }
         mContext = this;
-       /// String filePath = "/Android/data/Gracebook/files/crashReports";
+
+
+        /// String filePath = "/Android/data/Gracebook/files/crashReports";
         //Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(mContext));
         initUi();
     }
@@ -165,8 +184,27 @@ public class PostallActivity extends AppCompatActivity {
             allHashMap.put("post_time", DateUtility.getCurrentTimeForsend());
             allHashMap.put("post_type", post_type);
             allHashMap.put("group_id", group_id);
-
             serverRequest(allHashMap);
+
+
+//            if (!selectedImagePath.equalsIgnoreCase("")) {
+//                byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
+//                long uploadData = data.length;
+//                long currentMemoryData = currentDeviceFreeMemoery();
+//                AlertMessage.showMessage(mContext, "uploadData: " + uploadData, "currentMemoryData: " + currentMemoryData);
+//
+////                if (uploadData >= currentMemoryData) {
+////                    showDialogForMemoryIssue();
+////                } else {
+////                    serverRequest(allHashMap);
+////                }
+//
+//            } else {
+//                // serverRequest(allHashMap);
+//            }
+
+
+            //
         }
 
 
@@ -178,16 +216,10 @@ public class PostallActivity extends AppCompatActivity {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
-
-        Log.e("allHashMap",allHashMap.toString());
-
-        HashMap<String, String> headerParams = new HashMap<>();
-        headerParams.put("appKey", AllUrls.APP_KEY);
-        headerParams.put("authToken", PersistentUser.getUserToken(mContext));
+        String message = edittextChat.getText().toString();
         mBusyDialog = new BusyDialog(mContext);
         mBusyDialog.show();
         String url = AllUrls.BASEURL + "addpost";
-
         if (screenType == 1)
             url = AllUrls.BASEURL + "addpost";
         else if (screenType == 2)
@@ -195,23 +227,32 @@ public class PostallActivity extends AppCompatActivity {
         else if (screenType == 3)
             url = AllUrls.BASEURL + "GroupPostAdd";
 
-        Map<String, VolleyMultipartRequest.DataPart> ByteData = new HashMap<>();
-
+        AsyncHttpPost post = new AsyncHttpPost(url);
+        post.addHeader("appKey", AllUrls.APP_KEY);
+        post.addHeader("authToken", PersistentUser.getUserToken(mContext));
+        MultipartFormDataBody body = new MultipartFormDataBody();
         if (!selectedImagePath.equalsIgnoreCase("")) {
-            String[] tokens = selectedImagePath.split("[\\\\|/]");
-            String fileName = tokens[tokens.length - 1];
-            byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
-            ByteData.put("file", new VolleyMultipartRequest.DataPart(fileName, data));
-
+            body.addFilePart("file", new File(selectedImagePath));
         }
-        ServerCallsProvider.VolleyMultipartRequest(url, allHashMap, headerParams, ByteData, new ServerResponse() {
+        body.addStringPart("details", message);
+        body.addStringPart("is_user", "1");
+        body.addStringPart("post_time", DateUtility.getCurrentTimeForsend());
+        body.addStringPart("post_type", post_type);
+        body.addStringPart("group_id", group_id);
+        post.setBody(body);
+
+        AsyncHttpClient.getDefaultInstance().executeString(post, new AsyncHttpClient.StringCallback() {
             @Override
-            public void onSuccess(String statusCode, String responseServer) {
-                if (mBusyDialog != null)
-                    mBusyDialog.dismis();
+            public void onCompleted(Exception ex, AsyncHttpResponse source, String result) {
+                mBusyDialog.dismis();
+                if (ex != null) {
+                    ex.printStackTrace();
+                    showDialogForMemoryIssue();
+                    return;
+                }
                 try {
-                    Logger.debugLog("responseServer", responseServer);
-                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    Logger.debugLog("responseServer", result);
+                    JSONObject mJsonObject = new JSONObject(result);
                     if (mJsonObject.getBoolean("success")) {
                         if (screenType == 1)
                             ToastHelper.showToast(mContext, "Post add successfully");
@@ -226,22 +267,64 @@ public class PostallActivity extends AppCompatActivity {
 
                     }
 
-                } catch (Exception ex) {
+                } catch (Exception excep) {
                 }
-            }
 
-            @Override
-            public void onFailed(String statusCode, String serverResponse) {
-                mBusyDialog.dismis();
-                try {
-                    Logger.debugLog("onFailed", serverResponse);
-
-
-                } catch (Exception ex) {
-
-                }
             }
         });
+
+
+//        HashMap<String, String> headerParams = new HashMap<>();
+//        headerParams.put("appKey", AllUrls.APP_KEY);
+//        headerParams.put("authToken", PersistentUser.getUserToken(mContext));
+//
+//
+//        Map<String, VolleyMultipartRequest.DataPart> ByteData = new HashMap<>();
+//        if (!selectedImagePath.equalsIgnoreCase("")) {
+//            String[] tokens = selectedImagePath.split("[\\\\|/]");
+//            String fileName = tokens[tokens.length - 1];
+//            byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
+//            ByteData.put("file", new VolleyMultipartRequest.DataPart(fileName, data));
+//
+//        }
+//        ServerCallsProvider.VolleyMultipartRequest(url, allHashMap, headerParams, ByteData, new ServerResponse() {
+//            @Override
+//            public void onSuccess(String statusCode, String responseServer) {
+//                if (mBusyDialog != null)
+//                    mBusyDialog.dismis();
+//                try {
+//                    Logger.debugLog("responseServer", responseServer);
+//                    JSONObject mJsonObject = new JSONObject(responseServer);
+//                    if (mJsonObject.getBoolean("success")) {
+//                        if (screenType == 1)
+//                            ToastHelper.showToast(mContext, "Post add successfully");
+//                        else if (screenType == 2)
+//                            ToastHelper.showToast(mContext, "Prayer request add successfully");
+//                        else if (screenType == 3)
+//                            ToastHelper.showToast(mContext, "Post add successfully");
+//
+//                        Intent mIntent = getIntent();
+//                        setResult(RESULT_OK, mIntent);
+//                        finish();
+//
+//                    }
+//
+//                } catch (Exception ex) {
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(String statusCode, String serverResponse) {
+//                mBusyDialog.dismis();
+//                try {
+//                    Logger.debugLog("onFailed", serverResponse);
+//
+//
+//                } catch (Exception ex) {
+//
+//                }
+//            }
+//        });
 
     }
 
@@ -457,5 +540,58 @@ public class PostallActivity extends AppCompatActivity {
         }
     }
 
+    public byte[] fullyReadFileToBytes(File f) throws IOException {
+        int size = (int) f.length();
+        byte bytes[] = new byte[size];
+        byte tmpBuff[] = new byte[size];
+        FileInputStream fis = new FileInputStream(f);
+        ;
+        try {
+
+            int read = fis.read(bytes, 0, size);
+            if (read < size) {
+                int remain = size - read;
+                while (remain > 0) {
+                    read = fis.read(tmpBuff, 0, remain);
+                    System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
+                    remain -= read;
+                }
+            }
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            fis.close();
+        }
+
+        return bytes;
+    }
+
+    public long currentDeviceFreeMemoery() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        return memoryInfo.availMem;
+    }
+
+    AlertDialog alertDialog;
+
+    public void showDialogForMemoryIssue() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View mView = inflater.inflate(R.layout.dialog_faild_upload, null);
+        builder.setView(mView);
+        builder.setCancelable(true);
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alertDialog.show();
+        final TextView Submit_btn = (TextView) mView.findViewById(R.id.Submit_btn);
+        Submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+            }
+        });
+    }
 
 }

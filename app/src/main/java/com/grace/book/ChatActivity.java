@@ -2,6 +2,7 @@ package com.grace.book;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -26,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,6 +71,10 @@ import com.grace.book.utils.ImageFilePath;
 import com.grace.book.utils.Logger;
 import com.grace.book.utils.PersistentUser;
 import com.grace.book.utils.ToastHelper;
+import com.koushikdutta.async.http.AsyncHttpClient;
+import com.koushikdutta.async.http.AsyncHttpPost;
+import com.koushikdutta.async.http.AsyncHttpResponse;
+import com.koushikdutta.async.http.body.MultipartFormDataBody;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.models.IMessage;
 import com.stfalcon.chatkit.messages.MessageHolders;
@@ -127,6 +134,13 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final Window win = getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD |
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
+
         setContentView(R.layout.activity_messages);
         mContext = this;
         mChatActivity = this;
@@ -388,42 +402,44 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
         });
     }
 
-    public void sendServerRequest(HashMap<String, String> allHashMap) {
+    public void sendServerRequest(String type) {
 
         if (!Helpers.isNetworkAvailable(mContext)) {
             Helpers.showOkayDialog(mContext, R.string.no_internet_connection);
             return;
         }
-
-        Log.e("allHashMap", allHashMap.toString());
-        HashMap<String, String> headerParams = new HashMap<>();
-        headerParams.put("appKey", AllUrls.APP_KEY);
-        headerParams.put("authToken", PersistentUser.getUserToken(mContext));
         String url = AllUrls.BASEURL + "sendMessage";
-        Map<String, VolleyMultipartRequest.DataPart> ByteData = new HashMap<>();
 
+        AsyncHttpPost post = new AsyncHttpPost(url);
+        post.addHeader("appKey", AllUrls.APP_KEY);
+        post.addHeader("authToken", PersistentUser.getUserToken(mContext));
+        MultipartFormDataBody body = new MultipartFormDataBody();
         if (!selectedImagePath.equalsIgnoreCase("")) {
-            mBusyDialog = new BusyDialog(mContext);
-            mBusyDialog.show();
-            String[] tokens = selectedImagePath.split("[\\\\|/]");
-            String fileName = tokens[tokens.length - 1];
-            byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
-            ByteData.put("file", new VolleyMultipartRequest.DataPart(fileName, data));
-
+            body.addFilePart("file", new File(selectedImagePath));
         }
-        ServerCallsProvider.VolleyMultipartRequest(url, allHashMap, headerParams, ByteData, new ServerResponse() {
+        body.addStringPart("message", "");
+        body.addStringPart("type", type);
+        body.addStringPart("receiver_id", mUsersdata.getId());
+        body.addStringPart("duration", DateUtility.getCurrentTimeForsend());
+        post.setBody(body);
+
+        AsyncHttpClient.getDefaultInstance().executeString(post, new AsyncHttpClient.StringCallback() {
             @Override
-            public void onSuccess(String statusCode, String responseServer) {
-                if (mBusyDialog != null)
-                    mBusyDialog.dismis();
+            public void onCompleted(Exception ex, AsyncHttpResponse source, String result) {
+                mBusyDialog.dismis();
+                if (ex != null) {
+                    ex.printStackTrace();
+                    showDialogForMemoryIssue();
+                    return;
+                }
                 try {
-                    Logger.debugLog("responseServer", responseServer);
-                    JSONObject mJsonObject = new JSONObject(responseServer);
+                    Logger.debugLog("responseServer", result);
+                    JSONObject mJsonObject = new JSONObject(result);
                     if (mJsonObject.getBoolean("success")) {
-                        JSONObject result = mJsonObject.getJSONObject("data");
+                        JSONObject resultArrya = mJsonObject.getJSONObject("data");
                         GsonBuilder builder = new GsonBuilder();
                         Gson mGson = builder.create();
-                        MessageList mServermessage = (MessageList) mGson.fromJson(result.toString(), MessageList.class);
+                        MessageList mServermessage = (MessageList) mGson.fromJson(resultArrya.toString(), MessageList.class);
                         long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
                         String senderid = mServermessage.getSender_id();
                         if (mServermessage.getType().equalsIgnoreCase("0")) {
@@ -438,25 +454,84 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                         }
                     }
 
-
-                } catch (Exception ex) {
+                } catch (Exception exException) {
                 }
-            }
 
-            @Override
-            public void onFailed(String statusCode, String serverResponse) {
-                if (mBusyDialog != null)
-                    mBusyDialog.dismis();
-
-                if (statusCode.equalsIgnoreCase("404")) {
-                    PersistentUser.resetAllData(mContext);
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
             }
         });
+
+
+        if (!selectedImagePath.equalsIgnoreCase("")) {
+            byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
+            long uploadData = data.length;
+            long currentMemoryData = currentDeviceFreeMemoery();
+            if (uploadData >= currentMemoryData) {
+                showDialogForMemoryIssue();
+                return;
+            }
+        }
+//        Log.e("allHashMap", allHashMap.toString());
+//        HashMap<String, String> headerParams = new HashMap<>();
+//        headerParams.put("appKey", AllUrls.APP_KEY);
+//        headerParams.put("authToken", PersistentUser.getUserToken(mContext));
+//        String url = AllUrls.BASEURL + "sendMessage";
+//        Map<String, VolleyMultipartRequest.DataPart> ByteData = new HashMap<>();
+//
+//        if (!selectedImagePath.equalsIgnoreCase("")) {
+//            mBusyDialog = new BusyDialog(mContext);
+//            mBusyDialog.show();
+//            String[] tokens = selectedImagePath.split("[\\\\|/]");
+//            String fileName = tokens[tokens.length - 1];
+//            byte[] data = ImageFilePath.readBytesFromFile(selectedImagePath);
+//            ByteData.put("file", new VolleyMultipartRequest.DataPart(fileName, data));
+//
+//        }
+//        ServerCallsProvider.VolleyMultipartRequest(url, allHashMap, headerParams, ByteData, new ServerResponse() {
+//            @Override
+//            public void onSuccess(String statusCode, String responseServer) {
+//                if (mBusyDialog != null)
+//                    mBusyDialog.dismis();
+//                try {
+//                    Logger.debugLog("responseServer", responseServer);
+//                    JSONObject mJsonObject = new JSONObject(responseServer);
+//                    if (mJsonObject.getBoolean("success")) {
+//                        JSONObject result = mJsonObject.getJSONObject("data");
+//                        GsonBuilder builder = new GsonBuilder();
+//                        Gson mGson = builder.create();
+//                        MessageList mServermessage = (MessageList) mGson.fromJson(result.toString(), MessageList.class);
+//                        long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
+//                        String senderid = mServermessage.getSender_id();
+//                        if (mServermessage.getType().equalsIgnoreCase("0")) {
+//                            mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
+//
+//                        } else if (mServermessage.getType().equalsIgnoreCase("1")) {
+//                            mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+//
+//                        } else if (mServermessage.getType().equalsIgnoreCase("2")) {
+//                            mMessagesListAdapter.addToStart(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+//
+//                        }
+//                    }
+//
+//
+//                } catch (Exception ex) {
+//                }
+//            }
+//
+//            @Override
+//            public void onFailed(String statusCode, String serverResponse) {
+//                if (mBusyDialog != null)
+//                    mBusyDialog.dismis();
+//
+//                if (statusCode.equalsIgnoreCase("404")) {
+//                    PersistentUser.resetAllData(mContext);
+//                    Intent intent = new Intent(mContext, LoginActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                    finish();
+//                }
+//            }
+//        });
 
     }
 
@@ -619,7 +694,8 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                     mJsonObject.put("message", "");
                     mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
                     mJsonObject.put("receiver_id", mUsersdata.getId());
-                    sendServerRequest(mJsonObject);
+
+                    sendServerRequest("1");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -644,7 +720,7 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                     mJsonObject.put("message", "");
                     mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
                     mJsonObject.put("receiver_id", mUsersdata.getId());
-                    sendServerRequest(mJsonObject);
+                    sendServerRequest("1");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -660,7 +736,7 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                 mJsonObject.put("message", "");
                 mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
                 mJsonObject.put("receiver_id", mUsersdata.getId());
-                sendServerRequest(mJsonObject);
+                sendServerRequest("2");
 
 
             } else if (requestCode == CAMERA_SELECT_VIDEO) {
@@ -674,7 +750,7 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                 mJsonObject.put("message", "");
                 mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
                 mJsonObject.put("receiver_id", mUsersdata.getId());
-                sendServerRequest(mJsonObject);
+                sendServerRequest("2");
 
             }
         }
@@ -813,5 +889,33 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                         && !message.getVoice().getUrl().isEmpty();
         }
         return false;
+    }
+
+    AlertDialog alertDialog;
+
+    public void showDialogForMemoryIssue() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View mView = inflater.inflate(R.layout.dialog_faild_upload, null);
+        builder.setView(mView);
+        builder.setCancelable(true);
+        alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        alertDialog.show();
+        final TextView Submit_btn = (TextView) mView.findViewById(R.id.Submit_btn);
+        Submit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+            }
+        });
+    }
+
+    public long currentDeviceFreeMemoery() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+        activityManager.getMemoryInfo(memoryInfo);
+        return memoryInfo.availMem;
     }
 }
