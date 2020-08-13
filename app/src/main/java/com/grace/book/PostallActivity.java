@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -123,6 +124,10 @@ public class PostallActivity extends AppCompatActivity {
         imageImages = (ImageView) this.findViewById(R.id.imageImages);
         edittextChat = (EditText) this.findViewById(R.id.edittextChat);
         prayerTitel = (TextView) this.findViewById(R.id.prayerTitel);
+
+        edittextChat.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+
         if (screenType == 0) {
             prayerTitel.setText("Create your post");
         } else if (screenType == 1) {
@@ -243,32 +248,32 @@ public class PostallActivity extends AppCompatActivity {
 
         AsyncHttpClient.getDefaultInstance().executeString(post, new AsyncHttpClient.StringCallback() {
             @Override
-            public void onCompleted(Exception ex, AsyncHttpResponse source, String result) {
+            public void onCompleted(final Exception ex, AsyncHttpResponse source,final String result) {
                 mBusyDialog.dismis();
-                if (ex != null) {
-                    ex.printStackTrace();
-                    showDialogForMemoryIssue();
-                    return;
-                }
-                try {
-                    Logger.debugLog("responseServer", result);
-                    JSONObject mJsonObject = new JSONObject(result);
-                    if (mJsonObject.getBoolean("success")) {
-                        if (screenType == 1)
-                            ToastHelper.showToast(mContext, "Post add successfully");
-                        else if (screenType == 2)
-                            ToastHelper.showToast(mContext, "Prayer request add successfully");
-                        else if (screenType == 3)
-                            ToastHelper.showToast(mContext, "Post add successfully");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (ex != null) {
+                            ex.printStackTrace();
+                            showDialogForMemoryIssue();
+                            return;
+                        }
+                        try {
+                            Logger.debugLog("responseServer", result);
+                            JSONObject mJsonObject = new JSONObject(result);
+                            if (mJsonObject.getBoolean("success")) {
+                                Intent mIntent = getIntent();
+                                setResult(RESULT_OK, mIntent);
+                                finish();
 
-                        Intent mIntent = getIntent();
-                        setResult(RESULT_OK, mIntent);
-                        finish();
+                            }
 
+                        } catch (Exception excep) {
+                            Log.e("excep", excep.getMessage());
+                        }
                     }
+                });
 
-                } catch (Exception excep) {
-                }
 
             }
         });

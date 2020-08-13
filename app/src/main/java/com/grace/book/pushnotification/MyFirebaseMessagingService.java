@@ -118,7 +118,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         resultIntent.putExtra("push_message", message);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), channelId)
-                .setSmallIcon(R.drawable.ic_stat_tab_app_icon)
+                .setSmallIcon(R.drawable.ic_stat_union_5)
                 .setContentTitle(title)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setDefaults(Notification.DEFAULT_SOUND)
@@ -129,10 +129,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setSmallIcon(R.drawable.ic_stat_tab_app_icon);
+            mBuilder.setSmallIcon(R.drawable.ic_stat_union_5);
             mBuilder.setColor(getResources().getColor(R.color.colorPrimary));
         } else {
-            mBuilder.setSmallIcon(R.drawable.ic_stat_tab_app_icon);
+            mBuilder.setSmallIcon(R.drawable.ic_stat_union_5);
         }
         Notification notification = mBuilder.build();
         notification.defaults |= Notification.DEFAULT_VIBRATE;

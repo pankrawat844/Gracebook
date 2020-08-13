@@ -15,6 +15,7 @@
 
     <color name="selected_color">#ef7521</color>
     <color name="tabsScrollColor">#e64a19</color>
+    <color name="color_notification">#4B0082</color>
 
 
 </resources>

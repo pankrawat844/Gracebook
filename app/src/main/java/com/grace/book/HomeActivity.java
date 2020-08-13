@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -135,11 +136,11 @@ public class HomeActivity extends BaseActivity {
         recycler_feed.addOnScrollListener(new EndlessRecyclerViewScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Log.e("totalItemsCount","are"+totalItemsCount);
-                if(totalItemsCount>20){
-                    int itemPages=totalItemsCount/20;
-                    itemPages=itemPages+1;
-                    ServerRequest(""+itemPages);
+                Log.e("totalItemsCount", "are" + totalItemsCount);
+                if (totalItemsCount > 20) {
+                    int itemPages = totalItemsCount / 20;
+                    itemPages = itemPages + 1;
+                    ServerRequest("" + itemPages);
                 }
 
             }
@@ -226,7 +227,7 @@ public class HomeActivity extends BaseActivity {
             public void onSuccess(String statusCode, String responseServer) {
                 try {
                     mBusyDialog.dismis();
-                    Log.w("responseServer",responseServer);
+                    Log.w("responseServer", responseServer);
                     JSONObject mJsonObject = new JSONObject(responseServer);
                     if (mJsonObject.getBoolean("success")) {
 
@@ -243,6 +244,7 @@ public class HomeActivity extends BaseActivity {
                                 headeAdvertisemnetLayout.setVisibility(View.GONE);
                             } else {
                                 headeAdvertisemnetLayout.setVisibility(View.VISIBLE);
+
                             }
 
                         }
@@ -253,7 +255,7 @@ public class HomeActivity extends BaseActivity {
                         posts = Arrays.asList(mGson.fromJson(jsonArray.toString(), FeedList[].class));
                         ArrayList<FeedList> allLists = new ArrayList<FeedList>(posts);
                         mFeedListAdapter.addAllList(allLists);
-
+                        startTherHandelar();
 
                     }
                 } catch (Exception e) {
@@ -359,5 +361,30 @@ public class HomeActivity extends BaseActivity {
             }
         });
     }
+
+    private Handler mHandler = new Handler();
+    public void startTherHandelar() {
+        mHandler.removeCallbacks(mUpdateTimeTask);
+        mHandler.postDelayed(mUpdateTimeTask, 10);
+    }
+
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            try {
+                if (pager != null) {
+                    int currentPostion = pager.getCurrentItem();
+                    int totalPage = pager.getAdapter().getCount() - 1;
+                    if (currentPostion >= totalPage) {
+                        pager.setCurrentItem(0);
+                    } else {
+                        currentPostion = currentPostion + 1;
+                        pager.setCurrentItem(currentPostion);
+                    }
+                }
+            }
+            catch (Exception ex){}
+            mHandler.postDelayed(this, 2000);
+        }
+    };
 
 }

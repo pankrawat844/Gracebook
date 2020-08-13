@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,6 +101,10 @@ public class EditProfileActivity extends AppCompatActivity {
         edittextphone = (EditText) this.findViewById(R.id.edittextphone);
         ccp = (CountryCodePicker) this.findViewById(R.id.ccp);
         edittextchurch = (EditText) this.findViewById(R.id.edittextchurch);
+
+        edittextFname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        edittextLname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        edittextchurch.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
         findViewById(R.id.btinSave).setOnClickListener(new View.OnClickListener() {
             @Override

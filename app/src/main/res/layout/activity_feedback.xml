@@ -42,6 +42,7 @@
             android:textStyle="normal"></TextView>
     </RelativeLayout>
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -69,213 +70,320 @@
             android:text="Submit"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal"
+            android:visibility="invisible"></TextView>
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/monotype_corsiva"
+        android:text="Usually replies within a day"
+        android:textColor="#9272A7"
+        android:textSize="16sp">
 
-    <ScrollView
+    </TextView>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.stfalcon.chatkit.messages.MessagesList
+            android:id="@+id/messagesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_above="@+id/layoutinput"
+            app:incomingBubbleDrawable="@drawable/roundcorner_in_message"
+            app:incomingBubblePaddingBottom="15dp"
+            app:incomingBubblePaddingLeft="15dp"
+            app:incomingBubblePaddingRight="15dp"
+            app:incomingBubblePaddingTop="15dp"
+            app:incomingImageTimeTextColor="@color/gray"
+            app:incomingTextColor="@color/black"
+            app:incomingTimeTextColor="@color/black"
+            app:outcomingBubbleDrawable="@drawable/roundcorner_out_message"
+            app:outcomingBubblePaddingBottom="15dp"
+            app:outcomingBubblePaddingLeft="15dp"
+            app:outcomingBubblePaddingRight="15dp"
+            app:outcomingBubblePaddingTop="15dp"
+            app:outcomingImageTimeTextColor="@color/gray"
+            app:outcomingTextColor="@color/black"
+            app:outcomingTimeTextColor="@color/gray"
+            app:textAutoLink="all" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/font_medium"
-                android:text="Full Name"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal">
 
-            </TextView>
+        <RelativeLayout
+            android:id="@+id/layoutinput"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="#9599B3">
 
-            <EditText
-                android:id="@+id/edittextFname"
-                android:layout_width="match_parent"
+
+            <LinearLayout
+                android:id="@+id/fileattachment"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/font_medium"
-                android:gravity="start|center_vertical"
-                android:hint="Full Name"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/ash_ash"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/circel_shape"
+                android:gravity="center"
+                android:visibility="gone">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/plush_icon"
+                    android:tint="@color/white" />
+            </LinearLayout>
 
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible">
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/filesend"
+                android:layout_toRightOf="@+id/fileattachment"
+                android:gravity="center_vertical">
 
-            </View>
+                <EditText
+                    android:id="@+id/edittextChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded_inputbox_chat"
+                    android:maxLines="2"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/font_medium"
-                android:text="Email"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal">
+            </LinearLayout>
 
-            </TextView>
-
-            <EditText
-                android:id="@+id/edittexEmail"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/filesend"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/font_medium"
-                android:gravity="start|center_vertical"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/ash_ash"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/circel_shape_chat"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_send_icon"
+                    android:tint="@color/white" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible">
-
-            </View>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/font_medium"
-                android:text="Subject"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal">
-
-            </TextView>
-
-            <EditText
-                android:id="@+id/edittexSubject"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/font_medium"
-                android:gravity="start|center_vertical"
-                android:hint="Subject"
-                android:inputType="none"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/ash_ash"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+    </RelativeLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible">
+    <!--    <ScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
 
-            </View>
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical">-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/font_medium"
-                android:text="Message"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal">
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="20dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:text="Full Name"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:textStyle="normal">-->
 
-            </TextView>
+    <!--            </TextView>-->
 
-            <EditText
-                android:id="@+id/edittextMessage"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/transparent"
-                android:fontFamily="@font/font_medium"
-                android:gravity="start|top"
-                android:hint="Message"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="@color/ash_ash"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@android:color/darker_gray"
-                android:visibility="visible">
-
-            </View>
-
-            <!--        <LinearLayout-->
-            <!--            android:id="@+id/tvSubmit"-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="45dp"-->
-            <!--            android:layout_marginLeft="20sp"-->
-            <!--            android:layout_marginRight="20sp"-->
-            <!--            android:layout_marginTop="30dp"-->
-            <!--            android:background="@drawable/rounded_add_button"-->
-            <!--            android:gravity="center"-->
-            <!--            android:visibility="visible">-->
-
-            <!--            <TextView-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Submit"-->
-            <!--                android:textColor="@color/black"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="normal"></TextView>-->
-            <!--        </LinearLayout>-->
+    <!--            <EditText-->
+    <!--                android:id="@+id/edittextFname"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="40dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@color/transparent"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:gravity="start|center_vertical"-->
+    <!--                android:hint="Full Name"-->
+    <!--                android:inputType="textEmailAddress"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:textColor="@color/ash_ash"-->
+    <!--                android:textSize="14sp"-->
+    <!--                android:textStyle="normal" />-->
 
 
-        </LinearLayout>
+    <!--            <View-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="1dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@android:color/darker_gray"-->
+    <!--                android:visibility="visible">-->
 
-    </ScrollView>
+    <!--            </View>-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="10dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:text="Email"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:textStyle="normal">-->
+
+    <!--            </TextView>-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edittexEmail"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="40dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@color/transparent"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:gravity="start|center_vertical"-->
+    <!--                android:hint="Email"-->
+    <!--                android:inputType="textEmailAddress"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:textColor="@color/ash_ash"-->
+    <!--                android:textSize="14sp"-->
+    <!--                android:textStyle="normal" />-->
+
+
+    <!--            <View-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="1dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@android:color/darker_gray"-->
+    <!--                android:visibility="visible">-->
+
+    <!--            </View>-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="10dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:text="Subject"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:textStyle="normal">-->
+
+    <!--            </TextView>-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edittexSubject"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="40dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@color/transparent"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:gravity="start|center_vertical"-->
+    <!--                android:hint="Subject"-->
+    <!--                android:inputType="none"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:textColor="@color/ash_ash"-->
+    <!--                android:textSize="14sp"-->
+    <!--                android:textStyle="normal" />-->
+
+
+    <!--            <View-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="1dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@android:color/darker_gray"-->
+    <!--                android:visibility="visible">-->
+
+    <!--            </View>-->
+
+    <!--            <TextView-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="10dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:text="Message"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="16sp"-->
+    <!--                android:textStyle="normal">-->
+
+    <!--            </TextView>-->
+
+    <!--            <EditText-->
+    <!--                android:id="@+id/edittextMessage"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="80dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginTop="5dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@color/transparent"-->
+    <!--                android:fontFamily="@font/font_medium"-->
+    <!--                android:gravity="start|top"-->
+    <!--                android:hint="Message"-->
+    <!--                android:inputType="textEmailAddress"-->
+    <!--                android:maxLines="1"-->
+    <!--                android:singleLine="true"-->
+    <!--                android:textColor="@color/ash_ash"-->
+    <!--                android:textSize="14sp"-->
+    <!--                android:textStyle="normal" />-->
+
+    <!--            <View-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="1dp"-->
+    <!--                android:layout_marginLeft="20dp"-->
+    <!--                android:layout_marginRight="20dp"-->
+    <!--                android:background="@android:color/darker_gray"-->
+    <!--                android:visibility="visible">-->
+
+    <!--            </View>-->
+
+    <!--            &lt;!&ndash;        <LinearLayout&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:id="@+id/tvSubmit"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:layout_height="45dp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:layout_marginLeft="20sp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:layout_marginRight="20sp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:layout_marginTop="30dp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:background="@drawable/rounded_add_button"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:gravity="center"&ndash;&gt;-->
+    <!--            &lt;!&ndash;            android:visibility="visible">&ndash;&gt;-->
+
+    <!--            &lt;!&ndash;            <TextView&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:text="Submit"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:textColor="@color/black"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:textSize="20sp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:textStyle="normal"></TextView>&ndash;&gt;-->
+    <!--            &lt;!&ndash;        </LinearLayout>&ndash;&gt;-->
+
+
+    <!--        </LinearLayout>-->
+
+    <!--    </ScrollView>-->
 
 </LinearLayout>

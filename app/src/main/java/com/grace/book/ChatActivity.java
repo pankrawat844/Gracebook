@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -164,6 +165,7 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
         messagesList = (MessagesList) this.findViewById(R.id.messagesList);
         fileattachment = (LinearLayout) this.findViewById(R.id.fileattachment);
         filesend = (LinearLayout) this.findViewById(R.id.filesend);
+        edittextChat.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 
 
         imageLoader = new ImageLoader() {
@@ -409,6 +411,8 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
             return;
         }
         String url = AllUrls.BASEURL + "sendMessage";
+        mBusyDialog = new BusyDialog(mContext);
+        mBusyDialog.show();
 
         AsyncHttpPost post = new AsyncHttpPost(url);
         post.addHeader("appKey", AllUrls.APP_KEY);
@@ -425,37 +429,43 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
 
         AsyncHttpClient.getDefaultInstance().executeString(post, new AsyncHttpClient.StringCallback() {
             @Override
-            public void onCompleted(Exception ex, AsyncHttpResponse source, String result) {
+            public void onCompleted(Exception ex, AsyncHttpResponse source, final String result) {
                 mBusyDialog.dismis();
                 if (ex != null) {
                     ex.printStackTrace();
                     showDialogForMemoryIssue();
                     return;
                 }
-                try {
-                    Logger.debugLog("responseServer", result);
-                    JSONObject mJsonObject = new JSONObject(result);
-                    if (mJsonObject.getBoolean("success")) {
-                        JSONObject resultArrya = mJsonObject.getJSONObject("data");
-                        GsonBuilder builder = new GsonBuilder();
-                        Gson mGson = builder.create();
-                        MessageList mServermessage = (MessageList) mGson.fromJson(resultArrya.toString(), MessageList.class);
-                        long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
-                        String senderid = mServermessage.getSender_id();
-                        if (mServermessage.getType().equalsIgnoreCase("0")) {
-                            mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Logger.debugLog("responseServer", result);
+                            JSONObject mJsonObject = new JSONObject(result);
+                            if (mJsonObject.getBoolean("success")) {
+                                JSONObject resultArrya = mJsonObject.getJSONObject("data");
+                                GsonBuilder builder = new GsonBuilder();
+                                Gson mGson = builder.create();
+                                MessageList mServermessage = (MessageList) mGson.fromJson(resultArrya.toString(), MessageList.class);
+                                long time = DateUtility.dateToMillisecond(mServermessage.getDuration());
+                                String senderid = mServermessage.getSender_id();
+                                if (mServermessage.getType().equalsIgnoreCase("0")) {
+                                    mMessagesListAdapter.addToStart(addMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), "" + time), true);
 
-                        } else if (mServermessage.getType().equalsIgnoreCase("1")) {
-                            mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+                                } else if (mServermessage.getType().equalsIgnoreCase("1")) {
+                                    mMessagesListAdapter.addToStart(getImageMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
 
-                        } else if (mServermessage.getType().equalsIgnoreCase("2")) {
-                            mMessagesListAdapter.addToStart(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+                                } else if (mServermessage.getType().equalsIgnoreCase("2")) {
+                                    mMessagesListAdapter.addToStart(getVideoMessage(senderid, mServermessage.getId(), mServermessage.getMessage(), mServermessage.getImagepath(), "" + time), true);
+
+                                }
+                            }
+
+                        } catch (Exception exException) {
 
                         }
                     }
-
-                } catch (Exception exException) {
-                }
+                });
 
             }
         });
@@ -679,50 +689,50 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
                 String selectedImagePath2 = ImageFilePath.getPath(mContext, selectedImageUri);
                 File file = new File(selectedImagePath2);
                 try {
-                    File compressedImage = new Compressor(this)
-                            .setMaxWidth(480)
-                            .setMaxHeight(480)
-                            .setQuality(50)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                            .compressToFile(file);
-                    selectedImagePath = compressedImage.getAbsolutePath();
+//                    File compressedImage = new Compressor(this)
+//                            .setMaxWidth(640)
+//                            .setMaxHeight(480)
+//                            .setQuality(75)
+//                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+//                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+//                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
+//                            .compressToFile(file);
+//
+                    selectedImagePath = file.getAbsolutePath();
                     edittextChat.setText("");
-                    HashMap<String, String> mJsonObject = new HashMap<>();
-                    mJsonObject.put("type", "1");
-                    mJsonObject.put("message", "");
-                    mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
-                    mJsonObject.put("receiver_id", mUsersdata.getId());
-
+//                    HashMap<String, String> mJsonObject = new HashMap<>();
+//                    mJsonObject.put("type", "1");
+//                    mJsonObject.put("message", "");
+//                    mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
+//                    mJsonObject.put("receiver_id", mUsersdata.getId());
                     sendServerRequest("1");
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             } else if (requestCode == CAMERA_TAKE_PHOTO) {
                 File file = new File(photocreateImagePath);
                 try {
-                    File compressedImage = new Compressor(this)
-                            .setMaxWidth(480)
-                            .setMaxHeight(480)
-                            .setQuality(50)
-                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
-                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
-                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
-                            .compressToFile(file);
+//                    File compressedImage = new Compressor(this)
+//                            .setMaxWidth(640)
+//                            .setMaxHeight(480)
+//                            .setQuality(75)
+//                            .setCompressFormat(Bitmap.CompressFormat.JPEG)
+//                            .setDestinationDirectoryPath(Environment.getExternalStoragePublicDirectory(
+//                                    Environment.DIRECTORY_PICTURES).getAbsolutePath())
+//                            .compressToFile(file);
 
-                    selectedImagePath = compressedImage.getAbsolutePath();
+                    selectedImagePath = file.getAbsolutePath();
                     edittextChat.setText("");
-                    HashMap<String, String> mJsonObject = new HashMap<>();
-                    mJsonObject.put("type", "1");
-                    mJsonObject.put("message", "");
-                    mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
-                    mJsonObject.put("receiver_id", mUsersdata.getId());
+//                    HashMap<String, String> mJsonObject = new HashMap<>();
+//                    mJsonObject.put("type", "1");
+//                    mJsonObject.put("message", "");
+//                    mJsonObject.put("duration", DateUtility.getCurrentTimeForsend());
+//                    mJsonObject.put("receiver_id", mUsersdata.getId());
                     sendServerRequest("1");
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (requestCode == GALLERY_SELECT_VIDEO) {
@@ -827,7 +837,7 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
         resultIntent.putExtra("push_message", message);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), channelId)
-                .setSmallIcon(R.drawable.ic_stat_tab_app_icon)
+                .setSmallIcon(R.drawable.ic_stat_union_5)
                 .setContentTitle(title)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setDefaults(Notification.DEFAULT_SOUND)
@@ -838,10 +848,10 @@ public class ChatActivity extends AppCompatActivity implements MessageHolders.Co
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setSmallIcon(R.drawable.ic_stat_tab_app_icon);
-            mBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+            mBuilder.setSmallIcon(R.drawable.ic_stat_union_5);
+            mBuilder.setColor(getResources().getColor(R.color.color_notification));
         } else {
-            mBuilder.setSmallIcon(R.drawable.ic_stat_tab_app_icon);
+            mBuilder.setSmallIcon(R.drawable.ic_stat_union_5);
         }
         Notification notification = mBuilder.build();
         notification.defaults |= Notification.DEFAULT_VIBRATE;

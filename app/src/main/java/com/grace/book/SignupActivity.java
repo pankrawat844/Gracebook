@@ -3,6 +3,7 @@ package com.grace.book;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -74,6 +75,12 @@ public class SignupActivity extends AppCompatActivity {
         edittextphone = (EditText) this.findViewById(R.id.edittextphone);
         editChurch = (EditText) this.findViewById(R.id.editChurch);
         editpassword = (EditText) this.findViewById(R.id.editpassword);
+        edittextFname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        edittextLname.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        editChurch.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        editCountry.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        editCity.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        
         editConfirmpassword = (EditText) this.findViewById(R.id.editConfirmpassword);
         ccp = (CountryCodePicker) this.findViewById(R.id.ccp);
         textiew = (TextView) this.findViewById(R.id.textiew);

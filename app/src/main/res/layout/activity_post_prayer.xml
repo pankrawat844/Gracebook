@@ -69,10 +69,10 @@
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/rounded_inputbox_post50"
             android:fontFamily="@font/font_regular"
             android:gravity="center"
-            android:layout_marginRight="10dp"
             android:text="POST"
             android:textColor="@color/black"
             android:textSize="16sp"
@@ -97,8 +97,8 @@
             android:hint="Type your text here.."
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:paddingRight="20dp"
+            android:paddingBottom="5dp"
             android:textSize="14sp"
             android:textStyle="normal" />
 
@@ -117,8 +117,8 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:tint="#52A875"
-                    android:src="@drawable/ic_photo_camera_24px"></ImageView>
+                    android:src="@drawable/ic_photo_camera_24px"
+                    android:tint="#52A875"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -143,8 +143,8 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:tint="#52A875"
-                    android:src="@drawable/ic_videocam_24px"></ImageView>
+                    android:src="@drawable/ic_videocam_24px"
+                    android:tint="#52A875"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -168,8 +168,8 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:tint="#52A875"
-                    android:src="@drawable/ic_mic_24px"></ImageView>
+                    android:src="@drawable/ic_mic_24px"
+                    android:tint="#52A875"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -192,8 +192,9 @@
 
             <ImageView
                 android:id="@+id/imageImages"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:adjustViewBounds="true"></ImageView>
 
             <ImageView
@@ -202,9 +203,9 @@
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="20dp"
-                android:tint="#52A875"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_delete_24px"></ImageView>
+                android:src="@drawable/ic_delete_24px"
+                android:tint="#52A875"></ImageView>
 
         </RelativeLayout>
 
