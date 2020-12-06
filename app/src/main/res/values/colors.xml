@@ -16,6 +16,10 @@
     <color name="selected_color">#ef7521</color>
     <color name="tabsScrollColor">#e64a19</color>
     <color name="color_notification">#4B0082</color>
-
+    <color name="perpal">#9a76b3</color>
+    <color name="dark_perpal">#440066</color>
+    <color name="btn_friend">#944a97</color>
+    <color name="dark_grey">#5d5d5d</color>
+    <color name="colorGreen">#BA2419</color>
 
 </resources>

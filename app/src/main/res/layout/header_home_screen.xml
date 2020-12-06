@@ -3,35 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F1F0F2"
-    android:orientation="vertical">
+    android:orientation="vertical"
 
-    <RelativeLayout
+    >
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/headeAdvertisemnetLayout"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="180dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/pager"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="wrap_content">
 
-        <com.grace.book.pageIndicator.CirclePageIndicator
-            android:id="@+id/viewpager_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
-            app:fillColor="@color/colorPrimary"
-            app:pageColor="@color/ash_ash"
-            app:radius="5dp"
-            app:snap="true"
-            app:strokeColor="@color/ash_ash" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
+                android:visibility="visible" />
 
-    </RelativeLayout>
+            <com.zocia.book.pageIndicator.CirclePageIndicator
+                android:id="@+id/viewpager_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:padding="10dp"
+                app:fillColor="@color/colorPrimary"
+                app:pageColor="@color/ash_ash"
+                app:radius="5dp"
+                app:snap="true"
+                app:strokeColor="@color/ash_ash" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>

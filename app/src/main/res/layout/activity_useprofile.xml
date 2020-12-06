@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/font_medium"
-            android:text="gracebook"
+            android:text="ZOCIA"
             android:textAllCaps="true"
             android:textColor="#270E3B"
             android:textSize="16sp"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal" />
     </RelativeLayout>
 
     <RelativeLayout

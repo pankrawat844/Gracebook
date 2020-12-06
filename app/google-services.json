@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "340572528307",
-    "firebase_url": "https://gracebook-8f9a1.firebaseio.com",
-    "project_id": "gracebook-8f9a1",
-    "storage_bucket": "gracebook-8f9a1.appspot.com"
+    "project_number": "676937763770",
+    "firebase_url": "https://zocia-3653c.firebaseio.com",
+    "project_id": "zocia-3653c",
+    "storage_bucket": "zocia-3653c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340572528307:android:67a9a57c69186245441ac6",
+        "mobilesdk_app_id": "1:676937763770:android:cbcd25e920ba608e466b83",
         "android_client_info": {
-          "package_name": "com.grace.book"
+          "package_name": "com.zocia.book"
         }
       },
       "oauth_client": [
         {
-          "client_id": "340572528307-ud8t7d194jcabl3ho86laloft0ufsr2u.apps.googleusercontent.com",
+          "client_id": "676937763770-369jmogp33rbca8dajbs40pgefgtfoob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.zocia.book",
+            "certificate_hash": "4a488879d3b10450810f07d312224c9ac1c4cbda"
+          }
+        },
+        {
+          "client_id": "676937763770-ijnvspp5cbpkpnnqqv4d610s1cip92mm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDHaDS4BoZW-CNPI4T9giUNdP6wVhuzq0s"
+          "current_key": "AIzaSyCcPzElLS5mg8tUU_U5QGOZG0m2GtTak6k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "340572528307-ud8t7d194jcabl3ho86laloft0ufsr2u.apps.googleusercontent.com",
+              "client_id": "676937763770-ijnvspp5cbpkpnnqqv4d610s1cip92mm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

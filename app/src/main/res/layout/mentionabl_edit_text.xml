@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.grace.book.mentionedittext.view.widget.CustomEditText
+    <com.zocia.book.mentionedittext.view.widget.CustomEditText
         android:id="@+id/met"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

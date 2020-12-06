@@ -68,26 +68,14 @@
 
         <LinearLayout
             android:id="@+id/AddBeliever"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:background="@drawable/add_freind_bg"
+            android:background="@drawable/like_flat"
             android:gravity="center"
             android:orientation="vertical">
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_medium"
-                android:gravity="center_horizontal"
-                android:text="Add Friend"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="normal">
-
-            </TextView>
 
         </LinearLayout>
 

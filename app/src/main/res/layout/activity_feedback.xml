@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -35,11 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/font_medium"
-            android:text="gracebook"
+            android:text="ZOCIA"
             android:textAllCaps="true"
             android:textColor="#270E3B"
             android:textSize="16sp"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal" />
     </RelativeLayout>
 
 
@@ -53,11 +52,11 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/font_medium"
-            android:text="My prayer partner"
+            android:text="Support"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal" />
 
         <TextView
             android:id="@+id/tvSubmit"
@@ -71,7 +70,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="normal"
-            android:visibility="invisible"></TextView>
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <TextView

@@ -6,17 +6,43 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSwitchThumbNormal">#954b96</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">#954b96</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="CustomAlertDialogStyle" parent="android:Theme.Holo.Light.Dialog">
         <item name="android:background">@drawable/bg_custom_progress</item>
         <item name="android:windowBackground">@color/transparent</item>
     </style>
+
     <style name="BrandedCheckBox" parent="AppTheme">
         <item name="colorAccent">#aaf000</item>
         <item name="colorControlNormal">#ff0000</item>
     </style>
+
+    <style name="Switch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:theme">@style/ThemeOverlay.MySwitchCompat</item>
+    </style>
+
+    <style name="ThemeOverlay.MySwitchCompat" parent="">
+        <item name="colorControlActivated">@color/perpal</item>
+        <item name="colorSwitchThumbNormal">@color/dark_grey</item>
+        <item name="colorButtonNormal">@color/perpal</item>
+        <item name="android:colorForeground">#42221f1f</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title" />
+
+    <style name="TextAppearance.AppCompat.Notification.Time" parent="@android:style/TextAppearance.StatusBar.EventContent.Title" />
+
+    <style name="TextAppearance.AppCompat.Notification.Info" parent="@android:style/TextAppearance.StatusBar.EventContent.Title" />
 </resources>

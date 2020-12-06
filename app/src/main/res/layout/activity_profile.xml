@@ -47,6 +47,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20sp"
         android:layout_marginBottom="20sp"
+        android:visibility="gone"
         android:background="@drawable/circel_shape"
         android:gravity="center">
 

@@ -41,6 +41,7 @@
                 android:fontFamily="@font/font_light"
                 android:text="Member of Emmanuel Church"
                 android:textColor="#241332"
+                android:visibility="gone"
                 android:textSize="14sp"
                 android:textStyle="normal">
 

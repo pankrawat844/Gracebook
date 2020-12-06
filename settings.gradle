@@ -1,2 +1,4 @@
+include ':gracebook_app'
+include ':chat21'
 rootProject.name='Gracebook'
 include ':app'

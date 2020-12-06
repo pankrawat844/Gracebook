@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--firebase database reference (optional)-->
+    <string name="chat_firebase_url" translatable="false"></string>
+
+    <string name="chat_firebase_cloud_functions_url" translatable="false">https://us-central1-chat-v2-dev.cloudfunctions.net</string>
+
+
+    <!--firebase storage reference (optional)-->
+    <string name="chat_firebase_storage_bucket" translatable="false">gs://zocia-3653c.appspot.com/</string>
+
+    <!--unique identifier of the app in which it is messaging-->
+    <string name="chat_firebase_appId" translatable="false">tilechat</string>
+    <!--<string name="chat_firebase_appId" translatable="false">got_chat</string>-->
+</resources>

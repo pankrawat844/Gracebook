@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F0F2"
+    android:background="#fff"
     tools:context=".MessageUserListActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -35,4 +35,8 @@
         </TextView>
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

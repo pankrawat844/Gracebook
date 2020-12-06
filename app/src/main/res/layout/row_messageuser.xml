@@ -2,58 +2,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100sp"
-        android:background="@drawable/chat_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
-            android:src="@drawable/ic_account_circle_24px" />
+        <FrameLayout
+            android:layout_width="80sp"
+            android:layout_height="80sp"
+            android:background="@drawable/chat_user_bg"
+            android:backgroundTint="@color/white"
+            android:paddingRight="5dp">
 
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:src="@drawable/logo" />
+        </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20sp"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/username"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/nameofitme"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/franklin"
+                    android:text="fsdf"
+                    android:textAllCaps="true"
+                    android:textColor="#0C090A"
+                    android:textSize="17sp"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/verify"
+                    app:layout_constraintBottom_toBottomOf="@+id/username"
+                    app:layout_constraintStart_toEndOf="@+id/username"
+                    app:layout_constraintTop_toTopOf="@+id/username" />
 
                 <TextView
                     android:id="@+id/nameofitme"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_marginRight="10sp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:fontFamily="@font/librefranklin_medium"
+                    android:text="dsf"
+                    android:textColor="#5d5d5d"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/positon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#979797"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#979797"
+                android:text="sdfdsfs"
+                android:textColor="#5d5d5d"
                 android:textSize="14sp" />
 
 
@@ -61,5 +99,9 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#D8D3D3" />
 
 </LinearLayout>

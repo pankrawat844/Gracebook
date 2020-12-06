@@ -22,7 +22,7 @@
             android:layout_marginRight="20dp"
             android:fontFamily="@font/font_medium"
             android:gravity="center_horizontal"
-            android:text="OutOfMemory!!!"
+            android:text="File too large!!!"
             android:textColor="#000000"
             android:textSize="16dp"
             android:textStyle="bold" />
@@ -36,7 +36,7 @@
             android:layout_marginRight="20dp"
             android:fontFamily="@font/font_medium"
             android:gravity="center_horizontal"
-            android:text="Your device don't have enough memory space for uplaod this file"
+            android:text="File you are trying to upload is too large in size. Please retry with small file size."
             android:textColor="#000000"
             android:textSize="14dp"
             android:textStyle="normal" />
@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
-            android:background="#007140"></View>
+            android:background="#007140" />
 
         <LinearLayout
             android:layout_width="match_parent"

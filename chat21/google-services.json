@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "676937763770",
+    "firebase_url": "https://zocia-3653c.firebaseio.com",
+    "project_id": "zocia-3653c",
+    "storage_bucket": "zocia-3653c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676937763770:android:cbcd25e920ba608e466b83",
+        "android_client_info": {
+          "package_name": "org.chat21.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676937763770-369jmogp33rbca8dajbs40pgefgtfoob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.chat21.android",
+            "certificate_hash": "4a488879d3b10450810f07d312224c9ac1c4cbda"
+          }
+        },
+        {
+          "client_id": "676937763770-ijnvspp5cbpkpnnqqv4d610s1cip92mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcPzElLS5mg8tUU_U5QGOZG0m2GtTak6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676937763770-ijnvspp5cbpkpnnqqv4d610s1cip92mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

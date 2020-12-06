@@ -27,10 +27,11 @@
                 android:background="@drawable/tab_selected_deselecte"></View>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/btn_tab_home" />
+                android:src="@drawable/feed"
+                android:tint="#3D3C3A" />
 
 
         </LinearLayout>
@@ -42,7 +43,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <View
                 android:layout_width="match_parent"
@@ -52,15 +54,39 @@
             </View>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
-
-                android:src="@drawable/btn_tab_prayer" />
+                android:src="@drawable/forum"
+                android:tint="#3D3C3A" />
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_friend_finder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/tab_selected_deselecte">
+
+            </View>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/friend_finder_tab"
+                android:tint="#3D3C3A" />
+
+        </LinearLayout>
         <LinearLayout
             android:id="@+id/layout_chat"
             android:layout_width="0dp"
@@ -78,11 +104,12 @@
             </View>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
+                android:src="@drawable/chat_tab"
 
-                android:src="@drawable/btn_tab_chat" />
+                android:tint="#3D3C3A" />
 
 
         </LinearLayout>
@@ -105,11 +132,12 @@
             </View>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_tab_friend" />
+                android:background="@drawable/friends_tab"
+
+                android:backgroundTint="#3D3C3A" />
 
 
         </LinearLayout>
@@ -130,11 +158,11 @@
             </View>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="10dp"
-
-                android:background="@drawable/btn_tab_group" />
+                android:background="@drawable/group_tab"
+                android:backgroundTint="#3D3C3A" />
 
 
         </LinearLayout>
@@ -145,6 +173,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <View

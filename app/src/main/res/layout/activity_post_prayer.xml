@@ -4,23 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1F0F2"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:background="@color/perpal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/path_post"
+            android:tint="@color/white">
+
+        </ImageView>
 
         <TextView
+            android:id="@+id/prayerTitel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:fontFamily="@font/font_medium"
-            android:text="gracebook"
+            android:text="CREATE YOUR POST"
             android:textAllCaps="true"
-            android:textColor="#270E3B"
+            android:textColor="#fff"
             android:textSize="16sp"
-            android:textStyle="normal"></TextView>
+            android:textStyle="normal" />
     </RelativeLayout>
 
     <View
@@ -30,54 +44,6 @@
 
     </View>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
-
-        <LinearLayout
-            android:id="@+id/layoutBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/path_post">
-
-            </ImageView>
-
-            <TextView
-                android:id="@+id/prayerTitel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/font_medium"
-                android:text="Create your post"
-                android:textAllCaps="true"
-                android:textColor="#270E3B"
-                android:textSize="14sp"
-                android:textStyle="normal"></TextView>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/postView"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/rounded_inputbox_post50"
-            android:fontFamily="@font/font_regular"
-            android:gravity="center"
-            android:text="POST"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="normal"></TextView>
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -87,48 +53,66 @@
         android:layout_marginRight="20sp"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/post_btn"
+            android:padding="10dp"
+            android:text="Post anything that interests you. Only users with your interest can see your post." />
+
         <EditText
             android:id="@+id/edittextChat"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@drawable/rounded_inputbox_post"
+            android:layout_height="130dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/font_medium"
             android:gravity="left|top"
+            android:background="@drawable/post_btn"
             android:hint="Type your text here.."
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
             android:paddingRight="20dp"
             android:paddingBottom="5dp"
             android:textSize="14sp"
+            android:text=""
             android:textStyle="normal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20sp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/addPostImage"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:layout_gravity="center"
+                android:background="@drawable/post_btn"
+                android:backgroundTint="@color/green"
+                android:gravity="center"
+                android:paddingLeft="10dp"
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_photo_camera_24px"
-                    android:tint="#52A875"></ImageView>
+                android:paddingRight="5dp">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:fontFamily="@font/font_light"
+                    android:fontFamily="@font/franklin"
                     android:text="Image"
-                    android:textColor="#D8A42B"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_photo_camera_24px"
+                    android:tint="@color/white"></ImageView>
 
             </LinearLayout>
 
@@ -138,24 +122,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
-                android:gravity="center_vertical">
+                android:background="@drawable/post_btn"
+                android:backgroundTint="#7e46aa"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_videocam_24px"
-                    android:tint="#52A875"></ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:fontFamily="@font/font_light"
+                    android:fontFamily="@font/franklin"
                     android:text="Video"
-                    android:textColor="#D8A42B"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
-                    android:textStyle="normal"></TextView>
+                    android:textStyle="normal" />
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_videocam_24px"
+                    android:tint="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,32 +152,255 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20sp"
-                android:gravity="center_vertical">
+                android:background="@drawable/post_btn"
+                android:backgroundTint="@color/green"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_mic_24px"
-                    android:tint="#52A875"></ImageView>
+                android:paddingRight="5dp">
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:fontFamily="@font/font_light"
+                    android:fontFamily="@font/franklin"
                     android:text="Audio"
-                    android:textColor="#D8A42B"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="normal"></TextView>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_mic_24px"
+                    android:tint="@color/white"></ImageView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/selectCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/franklin"
+            android:text="SELECT CATEGORY"
+            android:textSize="16dp" />
+
+        <LinearLayout
+            android:id="@+id/categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/interest1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/post_btn"
+                    android:fontFamily="@font/franklin"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Art"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"></TextView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/interest2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/post_btn"
+                    android:fontFamily="@font/franklin"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Nature"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"></TextView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20sp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/interest3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/post_btn"
+                    android:fontFamily="@font/franklin"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Busines"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"></TextView>
+
 
             </LinearLayout>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/categories2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0sp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:id="@+id/interest4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/post_btn"
+                    android:fontFamily="@font/franklin"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Creativity"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"></TextView>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/interest5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/post_btn"
+                    android:fontFamily="@font/franklin"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="Fashion"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="gone"></TextView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20sp">
+            android:layout_height="?actionBarSize">
+
+            <LinearLayout
+                android:id="@+id/layoutBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_medium"
+                    android:text=""
+                    android:textAllCaps="true"
+                    android:textColor="#270E3B"
+                    android:textSize="14sp"
+                    android:textStyle="normal"></TextView>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/postView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/rounded_button"
+                android:fontFamily="@font/font_regular"
+                android:gravity="center"
+                android:text="POST"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imageImages"
